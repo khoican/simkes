@@ -66,7 +66,7 @@ $(document).ready(function() {
                 {
                     data: '',
                     render: function(data, type, row) {
-                        if (url == 'kunjungan/antrian-obat') {
+                        if (url == '/kunjungan/antrian-obat') {
                             return `
                                 <div class="d-flex gap-1 w-100">
                                     <form action="/kunjungan/panggil/${row.id_kunjungan}" method="POST">
