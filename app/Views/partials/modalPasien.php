@@ -95,16 +95,10 @@
                         </div>
                         <div class="w-50">
                             <label for="pekerjaan" class="form-label">Pekerjaan</label>
-                            <input type="text" class="form-control form-control-sm" id="pekerjaan" name="pekerjaan"
-                                required>
+                            <input type="text" class="form-control form-control-sm" id="pekerjaan" name="pekerjaan">
                         </div>
                     </div>
                     <div class="d-flex gap-3 mb-3">
-                        <div class="w-50">
-                            <label for="kpl_keluarga" class="form-label">Nama Kepala Keluarga</label>
-                            <input type="text" class="form-control form-control-sm" id="kpl_keluarga"
-                                name="kpl_keluarga" required>
-                        </div>
                         <div class="d-flex gap-1 w-50">
                             <div class="w-50">
                                 <label class="form-label">Posisi Dalam Keluarga</label>
@@ -126,6 +120,11 @@
                                     <?php endfor; ?>
                                 </select>
                             </div>
+                        </div>
+                        <div class="w-50">
+                            <label for="kpl_keluarga" class="form-label">Nama Kepala Keluarga</label>
+                            <input type="text" class="form-control form-control-sm" id="kpl_keluarga"
+                                name="kpl_keluarga" required>
                         </div>
                     </div>
                     <div class="d-flex gap-3 mb-3">
@@ -189,7 +188,9 @@
                                     name="poli" required>
                                     <option selected>Pilih Poli</option>
                                     <?php foreach ($polis as $key => $value) : ?>
-                                    <option value="<?= $value['id'] ?>"><?= $value['nama'] ?></option>
+                                    <option value="<?= $value['id'] ?>" class="text-uppercase">poli
+                                        <?= $value['nama'] ?>
+                                    </option>
                                     <?php endforeach; ?>
                                 </select>
                             </div>
@@ -255,6 +256,22 @@ $(document).ready(function() {
         $('#tgl_antrian').val(moment().format('DD-MM-YYYY'));
         $('#wkt_antrian').val(moment().format('HH:mm:ss'));
     }, 1000)
+
+    $(document).on('input', '#bpjs', function() {
+        if ($(this).val()) {
+            $('#pembayaran').val('jkn');
+        } else {
+            $('#pembayaran').val('umum');
+        }
+    })
+
+    $(document).on('input', '#pss_dlm_keluarga', function() {
+        if ($(this).val() === 'kepala keluarga') {
+            $('#kpl_keluarga').val($('#nama').val());
+        } else {
+            $('#kpl_keluarga').val('');
+        }
+    })
 
     // handle dropdown posisi dalam keluarga dan dropdown posisi anak
     $('#pss_dlm_keluarga').on('change', function() {

@@ -10,15 +10,15 @@ class PoliSeeder extends Seeder
     {
         $data = [
             [
-                'nama' => 'Poli Umum',
+                'nama' => 'umum',
                 'kode' => 'A'
             ],
             [
-                'nama' => 'Poli KIA',
+                'nama' => 'kia',
                 'kode' => 'B'
             ],
             [
-                'nama' => 'Poli Gigi',
+                'nama' => 'gigi',
                 'kode' => 'C'
             ],
         ];

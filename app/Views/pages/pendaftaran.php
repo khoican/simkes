@@ -68,6 +68,8 @@ $(document).ready(function() {
         createdRow: function(row, data, dataIndex) {
             $('td', row).eq(0).addClass('text-start');
             $('td', row).eq(1).addClass('text-start');
+            $('td', row).eq(2).addClass('text-uppercase');
+            $('td', row).eq(3).addClass('text-uppercase');
         },
         paging: true
     })

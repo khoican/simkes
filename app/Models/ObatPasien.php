@@ -12,7 +12,7 @@ class ObatPasien extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_pasien', 'id_obat', 'id_rekmed', 'qty', 'status'];
+    protected $allowedFields    = ['id_pasien', 'id_obat', 'id_rekmed', 'note', 'status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -85,7 +85,7 @@ class ObatPasien extends Model
 
         foreach($obats as $obat) {
             if ($obat['status'] == 'sudah') {
-                $total += $obat['qty'] * $obat['harga'];
+                $total += $obat['harga'];
             }
         }
         return format_numerik($total);

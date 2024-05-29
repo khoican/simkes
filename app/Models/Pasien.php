@@ -126,6 +126,31 @@ class Pasien extends Model
                     ->first();
     }
 
+    public function getLatestNoRekmed() {
+        $norm = $this->orderBy('id', 'DESC')->first();
+
+        if ($norm) {
+            return $norm['no_rekam_medis'];
+        }
+
+        return null;
+    }
+
+    public function generateNoRekmed() {
+        $norm = $this->getLatestNoRekmed();
+        $defaultKode = '00000000';
+        $newrm = '';
+        if ($norm !== null) {
+            $currentrm = substr($norm, -8);
+            $newKode = intval($currentrm) + 1;
+            $newrm = $defaultKode.'-'.str_pad($newKode, 8, '0', STR_PAD_LEFT);
+        } else {
+            $newrm = $defaultKode.'-00000001';
+        };
+
+        return $newrm;
+    } 
+
     public function postPasien($data) {
         if ($this->insert($data)) {
             $response = $this->db->insertID();

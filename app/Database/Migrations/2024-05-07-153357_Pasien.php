@@ -16,7 +16,7 @@ class Pasien extends Migration
             ],
             'no_rekam_medis' => [
                 'type' => 'VARCHAR',
-                'constraint' => 16
+                'constraint' => 20
             ],
             'nik' => [
                 'type' => 'VARCHAR',
@@ -57,7 +57,8 @@ class Pasien extends Migration
             ],
             'pekerjaan' => [
                 'type' => 'VARCHAR',
-                'constraint' => 255
+                'constraint' => 255,
+                'null' => true
             ],
             'kpl_keluarga' => [
                 'type' => 'VARCHAR',

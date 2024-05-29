@@ -29,7 +29,7 @@ class ObatPasien extends Migration
                 'constraint' => 11,
                 'null' => true
             ],
-            'qty' => [
+            'note' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,
                 'null' => true
