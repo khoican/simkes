@@ -35,6 +35,8 @@
 <script>
 $(document).ready(function() {
     $('#dataTable').DataTable({
+        processing: true,
+        order: [0, 'desc'],
         ordering: true,
         ajax: {
             url: 'pendaftaran/get-pasien',

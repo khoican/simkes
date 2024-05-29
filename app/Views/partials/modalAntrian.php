@@ -31,8 +31,8 @@ $(document).ready(function() {
                         <input name="id_pasien" value="${pasienId}" hidden>
                         <input name="id_poli" value="${item.id}" hidden>
                         <input name="no_antrian" value="${item.antrian}" hidden>
-                        <button type="submit" class="btn ${bg[index]} shadow w-100 h-100"  id="add-antrian">
-                            <p class="mb-0">${item.nama}</p>
+                        <button type="submit" class="btn ${bg[index]} text-uppercase shadow w-100 h-100"  id="add-antrian">
+                            <p class="mb-0">poli ${item.nama}</p>
                             <h1>${item.antrian}</h1>
                         </button>
                     </form>

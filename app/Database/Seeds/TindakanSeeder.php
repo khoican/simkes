@@ -11,15 +11,15 @@ class TindakanSeeder extends Seeder
         $data = [
             [
                 'kode' => 'A01',
-                'tindakan' => 'Pengobatan',
+                'tindakan' => 'pengobatan 1',
             ],
             [
                 'kode' => 'A02',
-                'tindakan' => 'Pengobatan Khusus',
+                'tindakan' => 'pengobatan 2',
             ],
             [
                 'kode' => 'A03',
-                'tindakan' => 'Pengobatan Khusus 2',
+                'tindakan' => 'pengobatan 3',
             ],
         ];
         $this->db->table('tindakans')->insertBatch($data);

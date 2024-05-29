@@ -28,11 +28,7 @@ class ObatPasien extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [
-        'id_pasien' => 'required',
-        'id_obat' => 'required',
-        'id_rekmed' => 'required',
-    ];
+    protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
@@ -55,6 +51,10 @@ class ObatPasien extends Model
             return $errors;
         }
         return $this->db->insertID();
+    }
+
+    public function getObatPasienByPasienId ($pasienId) {
+        return $this->where('rekmeds.id_pasien', $pasienId)->select('rekmeds.created_at, rekmeds.id')->join('rekmeds', 'obat_pasien.id_rekmed = rekmeds.id')->findAll();
     }
 
     public function getObatPasienById ($id) {

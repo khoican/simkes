@@ -25,6 +25,11 @@ class DiagnosaPasien extends Migration
             'id_rekmed' => [
                 'type' => 'INT',
                 'null' => true
+            ],
+            'status' => [
+                'type' => 'ENUM',
+                'constraint' => ['utama', 'sekunder'],
+                'default' => 'sekunder'
             ]
         ]);
 

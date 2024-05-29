@@ -5,7 +5,7 @@
 <div class="bg-white p-4 border rounded-3 mt-5">
     <div class="w-100 fs-6">
         <div class="d-flex justify-content-end">
-            <button type="button" class="btn btn-sm btn-primary" data-bs-toggle="modal"
+            <button type="button" id="add" class="btn btn-sm btn-primary" data-bs-toggle="modal"
                 data-bs-target="#exampleModal"><i class="bi bi-plus"></i> Tambah Data</button>
         </div>
         <table class="table table-hover fs-6 border mb-0 w-100" id="diagnosa-table">
@@ -49,10 +49,15 @@
 
 <script>
 $(document).ready(function() {
+    $('#add').on('shown.bs.modal', function() {
+        $('#diagnosa').focus()
+    })
+
     $(document).on('click', '.edit', function() {
         let id = $(this).data('id')
         $('#exampleModalLabel').text('Edit Data');
         $('#diagnosaForm').attr('action', '/diagnosa/update/' + id)
+        $('#diagnosa').focus()
 
         $.ajax({
             url: '/diagnosa/' + id,

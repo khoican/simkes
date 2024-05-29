@@ -203,15 +203,16 @@
 
                 <div class="d-flex gap-3 mb-3">
                     <div class="w-50">
-                        <p class="mb-1">Diagnosa Pasien</p>
-                        <select class="form-select-sm diagnosa text-capitalize" name="diagnosa[]" data-width="100%"
-                            data-placeholder="Pilih Diagnosa" multiple>
+                        <p class="mb-1">Diagnosa Utama</p>
+                        <select class="form-select-sm diagnosa text-capitalize" name="diagnosa-utama" data-width="100%"
+                            data-placeholder="Pilih Diagnosa Utama">
+                            <option></option>
                             <?php foreach($diagnosas as $diagnosa) : ?>
                             <?php 
                             $selected = '';
                             if ($method != 'post') {
                                 foreach ($diagnosaPasiens as $diagnosaPasien) {
-                                    if ($diagnosaPasien['id_diagnosa'] == $diagnosa['id']) {
+                                    if ($diagnosaPasien['id_diagnosa'] == $diagnosa['id'] && $diagnosaPasien['status'] == 'utama') {
                                         $selected = 'selected';
                                         break;
                                     }
@@ -219,23 +220,22 @@
                             }
                             ?>
 
-                            <option value=" <?= $diagnosa['id'] ?>" <?= $selected ?>>
+                            <option value=" <?= $diagnosa['id'] ?>" class="text-uppercase" <?= $selected ?>>
                                 <?= $diagnosa['kode'] ?> -
                                 <?= $diagnosa['diagnosa'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                     <div class="w-50">
-                        <p class="mb-1">Tindakan Terhadap Pasien</p>
-                        <select class="form-select-sm diagnosa" name="tindakan[]" data-width="100%"
-                            data-placeholder="Pilih Tindakan" multiple>
-                            <?php foreach($tindakans as $tindakan) : ?>
-
-                            <?php 
+                        <p class="mb-1">Diagnosa Sekunder</p>
+                        <select class="form-select-sm diagnosa text-capitalize" name="diagnosa-sekunder"
+                            data-width="100%" data-placeholder="Pilih Diagnosa Sekunder">
+                            <option></option>
+                            <?php foreach($diagnosas as $diagnosa) : 
                             $selected = '';
                             if ($method != 'post') {
-                                foreach ($tindakanPasiens as $tindakanPasien) {
-                                    if ($tindakanPasien['id_tindakan'] == $tindakan['id']) {
+                                foreach ($diagnosaPasiens as $diagnosaPasien) {
+                                    if ($diagnosaPasien['id_diagnosa'] == $diagnosa['id'] && $diagnosaPasien['status'] == 'sekunder') {
                                         $selected = 'selected';
                                         break;
                                     }
@@ -243,13 +243,37 @@
                             }
                             ?>
 
-                            <option value="<?= $tindakan['id'] ?>" <?= $selected ?>><?= $tindakan['kode'] ?> -
-                                <?= $tindakan['tindakan'] ?></option>
+                            <option value=" <?= $diagnosa['id'] ?>" class="text-uppercase" <?= $selected ?>>
+                                <?= $diagnosa['kode'] ?> -
+                                <?= $diagnosa['diagnosa'] ?></option>
                             <?php endforeach; ?>
                         </select>
                     </div>
                 </div>
+                <div class="w-100 mb-3">
+                    <p class="mb-1">Tindakan Terhadap Pasien</p>
+                    <select class="form-select-sm diagnosa" name="tindakan[]" data-width="100%"
+                        data-placeholder="Pilih Tindakan" multiple>
+                        <?php foreach($tindakans as $tindakan) : ?>
 
+                        <?php 
+                        $selected = '';
+                        if ($method != 'post') {
+                            foreach ($tindakanPasiens as $tindakanPasien) {
+                                if ($tindakanPasien['id_tindakan'] == $tindakan['id']) {
+                                    $selected = 'selected';
+                                    break;
+                                }
+                            }
+                        }
+                        ?>
+
+                        <option value="<?= $tindakan['id'] ?>" class="text-uppercase" <?= $selected ?>>
+                            <?= $tindakan['kode'] ?> -
+                            <?= $tindakan['tindakan'] ?></option>
+                        <?php endforeach; ?>
+                    </select>
+                </div>
                 <div class="d-flex justify-content-between align-items-center mb-1">
                     <p class="mb-0">Resep Obat</p>
                     <div class="btn btn-sm btn-primary fs-6" id="tambah">
@@ -268,12 +292,20 @@
                             <?php foreach($obats as $obat) : 
                                         $selected = ($obat['id'] == $obatPasien['id_obat']) ? 'selected' : '';
                                     ?>
-                            <option value="<?= $obat['id'] ?>" <?= $selected ?>><?= $obat['kode'] ?> -
+                            <option value="<?= $obat['id'] ?>" class="text-uppercase" <?= $selected ?>>
+                                <?= $obat['kode'] ?> -
                                 <?= $obat['obat'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input type="number" class="form-control form-control-sm" style="width: 20%;" name="qty[]"
-                            placeholder="Quantity" value="<?= $obatPasien['qty'] ?>">
+                        <div class="d-flex align-items-center gap-1" style="width: 20%;">
+                            <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep[]"
+                                placeholder="eg. 3" value="<?= substr($obatPasien['note'], 0, 1) ?>">
+                            <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
+                                <i class="bi bi-x fs-4"></i>
+                            </div>
+                            <input type="number" class="form-control form-control-sm" style="width: 40%;"
+                                name="resep2[]" placeholder="eg. 1" value="<?= substr($obatPasien['note'], 4, 1) ?>">
+                        </div>
                         <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="<?= $index ?>"
                             style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
                     </div>
@@ -284,12 +316,19 @@
                             class="form-select-sm diagnosa w-75">
                             <option></option>
                             <?php foreach($obats as $obat) :?>
-                            <option value="<?= $obat['id'] ?>"><?= $obat['kode'] ?> -
+                            <option value="<?= $obat['id'] ?>" class="text-uppercase"><?= $obat['kode'] ?> -
                                 <?= $obat['obat'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input type="number" class="form-control form-control-sm" style="width: 20%;" name="qty[]"
-                            placeholder="Quantity">
+                        <div class="d-flex align-items-center gap-1" style="width: 20%;">
+                            <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep[]"
+                                placeholder="eg. 3">
+                            <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
+                                <i class="bi bi-x fs-4"></i>
+                            </div>
+                            <input type="number" class="form-control form-control-sm" style="width: 40%;"
+                                name="resep2[]" placeholder="eg. 1">
+                        </div>
                         <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="0"
                             style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
                     </div>
@@ -298,8 +337,9 @@
             </div>
 
             <div id="onsubmit">
-                <button type="submit" class="btn btn-primary rounded-pill">Simpan</button>
-                <a href="/pemeriksaan" class="btn btn-outline-secondary rounded-pill">Batal</a>
+                <button type="submit" class="btn btn-primary rounded-pill" id='submit'>Simpan</button>
+                <a href="/pemeriksaan/<?= $kunjunganId['id'] ?>"
+                    class="btn btn-outline-secondary rounded-pill">Batal</a>
             </div>
         </form>
     </div>
@@ -318,7 +358,7 @@ $(document).ready(function() {
             $('.form-control').attr('readonly', true);
             $('.form-check-input, .form-select-sm').attr('disabled', true);
             $('#tambah, .delete-resep').remove();
-            $('#onsubmit').remove();
+            $('#submit').remove();
         }
     }
     method();
@@ -330,6 +370,7 @@ $(document).ready(function() {
             selectionCssClass: 'select2--small',
             dropdownCssClass: 'select2--small',
             closeOnSelect: true,
+            allowClear: true,
             width: $(this).data('width') ? $(this).data('width') : $(this).hasClass('w-100') ? '100%' :
                 'style',
         });
@@ -348,8 +389,15 @@ $(document).ready(function() {
                     <option value="<?= $obat['id'] ?>"><?= $obat['kode'] ?> - <?= $obat['obat'] ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="number" class="form-control form-control-sm" style="width: 20%;" name="qty[]"
-                    placeholder="Quantity">
+                <div class="d-flex align-items-center gap-1" style="width: 20%;">
+                    <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep[]"
+                        placeholder="eg. 3">
+                    <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
+                        <i class="bi bi-x fs-4"></i>
+                    </div>
+                    <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep2[]"
+                        placeholder="eg. 1">
+                </div>
                 <button type="button" class="btn btn-sm btn-danger fs-6" data-id="${id}" style="width: 5%;"><i
                         class="bi bi-trash fs-6"></i></button>
             </div>

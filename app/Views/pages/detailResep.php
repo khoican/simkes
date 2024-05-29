@@ -8,9 +8,10 @@
     </div>
 
     <div class="w-100">
-        <?php foreach($rekmeds as $rekmed) : ?>
+        <?php foreach($rekmeds as $rekmed) : 
+            if($rekmed['status'] != 'tanpa obat') : ?>
         <div
-            class="w-100 fs-6 bg-primary text-white d-flex align-items-center  justify-content-between p-3 rounded-3 border border-primary mb-1">
+            class="w-100 fs-6 <?php if($rekmed['status'] == 'selesai') : ?>bg-outline-primary<?php else : ?>bg-primary text-white<?php endif ?> d-flex align-items-center  justify-content-between p-3 rounded-3 border border-primary mb-1">
             <div>
                 <p class="mb-0"><?= format_date($rekmed['created_at']) ?></p>
             </div>
@@ -20,7 +21,7 @@
             </div>
         </div>
         <div id="rekmed-<?= $rekmed['id'] ?>"></div>
-        <?php endforeach; ?>
+        <?php endif; endforeach; ?>
     </div>
 </div>
 
@@ -84,8 +85,8 @@ $(document).ready(function() {
                                 <input type="hidden" value="${obat.id_obat}" id="obat-${obat.id}">
                                 <input type="text" class="form-control form-control-sm" style="width: 70%;"
                                     value="${obat.obat}" readonly>
-                                <input type="number" class="form-control form-control-sm text-center" style="width: 20%;"
-                                    value="${obat.qty}" id="qty-${obat.id}" readonly>
+                                <input type="text" class="form-control form-control-sm text-center" style="width: 20%;"
+                                    value="${obat.note}" id="qty-${obat.id}" readonly>
                                 <button class="submit ${obat.id} btn btn-sm ${Number(obat.qty) > Number(obat.stok) ? 'btn-secondary disabled' : 'btn-primary'} ${status}" data-id="${obat.id}" data-harga="${obat.harga}" data-row-id="${id}"><i class="bi bi-plus"></i></button>
                             </div>
                         `

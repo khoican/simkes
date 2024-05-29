@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DiagnosaPasien extends Model
+class QuantityObat extends Model
 {
-    protected $table            = 'diagnosa_pasiens';
+    protected $table            = 'quantity_obats';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_pasien', 'id_diagnosa', 'id_rekmed', 'status'];
+    protected $allowedFields    = ['id_obat', 'masuk', 'keluar'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -21,18 +21,14 @@ class DiagnosaPasien extends Model
     protected array $castHandlers = [];
 
     // Dates
-    protected $useTimestamps = false;
+    protected $useTimestamps = true;
     protected $dateFormat    = 'datetime';
     protected $createdField  = 'created_at';
     protected $updatedField  = 'updated_at';
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [
-        'id_pasien' => 'required',
-        'id_diagnosa' => 'required',
-        'id_rekmed' => 'required',
-    ];
+    protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
@@ -48,11 +44,7 @@ class DiagnosaPasien extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getDiagnosaByRekmedId($rekmedId) {
-        return $this->where('id_rekmed', $rekmedId)->select('diagnosas.diagnosa, diagnosa_pasiens.*')->join('diagnosas', 'diagnosa_pasiens.id_diagnosa = diagnosas.id')->findAll();
-    }
-
-    public function postDiagnosaPasien($data) {
+    public function postQuantityObat($data) {
         if ($this->insert($data) === false) {
             $errors = $this->errors();
             log_message('error', print_r($errors, true));
@@ -61,8 +53,12 @@ class DiagnosaPasien extends Model
         return $this->db->insertID();
     }
 
-    public function deleteDiagnosaPasienByRekmedId($rekmedId) {
-        $this->where('id_rekmed', $rekmedId)->set('id_pasien', null)->set('id_diagnosa', null)->update();
-        return $this->where('id_rekmed', $rekmedId)->delete();
+    public function deleteQuantityObat($id) {
+        if ($this->delete($id) === false) {
+            $errors = $this->errors();
+            log_message('error', print_r($errors, true));
+            return $errors;
+        }
+        return true;
     }
 }

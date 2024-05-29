@@ -10,17 +10,27 @@ input::-webkit-inner-spin-button {
 .form-select-sm~.select2-container--bootstrap-5 .select2-selection--multiple .select2-selection__rendered .select2-selection__choice {
     display: inline-block !important;
     margin-right: 5px !important;
+    text-transform: uppercase;
 }
 
 .select2-container--bootstrap-5 .select2--small.select2-dropdown .select2-results__options .select2-results__option, .select2-container--bootstrap-5 .select2--small.select2-dropdown .select2-search .select2-search__field {
-    text-transform: capitalize;
+    text-transform: uppercase;
 }
+
+.select2-container--bootstrap-5 .select2-selection--single .select2-selection__rendered {
+    text-transform: uppercase;
+}
+
 
 input[type=number] {
   -moz-appearance: textfield;
 }
 
 input {
+    text-transform: uppercase;
+}
+
+select, select option {
     text-transform: uppercase;
 }
 

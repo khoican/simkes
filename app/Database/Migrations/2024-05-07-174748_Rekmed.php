@@ -66,7 +66,7 @@ class Rekmed extends Migration
             ],
             'status' => [
                 'type' => 'ENUM',
-                'constraint' => ['proses', 'selesai'],
+                'constraint' => ['proses', 'selesai', 'tanpa obat'],
                 'default' => 'proses',
             ],
             'id_pasien' => [

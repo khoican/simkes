@@ -36,7 +36,11 @@ class KunjunganController extends BaseController
     }
 
     public function getKunjunganStatus($status) {
-        $kunjungans = $this->kunjunganModel->getKunjunganByStatus($status);
+        if ($status != 'all') {
+            $kunjungans = $this->kunjunganModel->getKunjunganByStatus($status);
+        } else {
+            $kunjungans = $this->kunjunganModel->getAllKunjungan();
+        }
         return $this->response->setJSON($kunjungans);
     }
 

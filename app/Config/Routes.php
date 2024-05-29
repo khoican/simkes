@@ -90,6 +90,7 @@ $routes->get('all', 'ObatController::getObat');
 $routes->get('(:num)', 'ObatController::getObatById/$1');
 $routes->post('store', 'ObatController::postObat');
 $routes->post('update/(:num)', 'ObatController::editObat/$1');
+$routes->post('updateStok/(:num)', 'ObatController::updateStok/$1');
 $routes->post('delete/(:num)', 'ObatController::deleteObat/$1');
 });
 

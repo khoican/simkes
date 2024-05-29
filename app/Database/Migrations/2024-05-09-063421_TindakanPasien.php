@@ -25,7 +25,7 @@ class TindakanPasien extends Migration
             'id_rekmed' => [
                 'type' => 'INT',
                 'null' => true
-            ]
+            ],
         ]);
 
         $this->forge->addKey('id', true);

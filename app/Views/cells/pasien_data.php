@@ -6,7 +6,7 @@
         </div>
 
         <div class="mt-3 text-center w-100 bg-white rounded-pill p-2">
-            <h1 class="fw-semibold fs-5 mb-0"><?= esc($pasienData['nama_pasien']) ?></h1>
+            <h1 class="fw-semibold fs-5 mb-0 text-capitalize"><?= esc($pasienData['nama_pasien']) ?></h1>
             </h1>
             <p class="mb-0 fw-medium" style="font-size: 0.7rem">No. RM <?= esc($pasienData['no_rekam_medis']) ?></p>
         </div>

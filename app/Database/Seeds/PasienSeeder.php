@@ -24,7 +24,7 @@ class PasienSeeder extends Seeder
                 $pss_anak = $faker->numberBetween(1, 15);
             }
             $data[] = [
-                'no_rekam_medis' => $faker->numerify('################'),
+                'no_rekam_medis' => $faker->numerify('00000000-000000##'),
                 'nik' => $faker->numerify('################'),
                 'no_bpjs' => $faker->optional()->numerify('################'),
                 'nama' => $faker->name,

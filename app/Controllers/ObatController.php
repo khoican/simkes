@@ -4,15 +4,18 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Obat;
+use App\Models\QuantityObat;
 use CodeIgniter\HTTP\ResponseInterface;
 
 class ObatController extends BaseController
 {
     protected $obatModel;
+    protected $quantityObatModel;
 
     public function __construct()
     {
         $this->obatModel = new Obat();
+        $this->quantityObatModel = new QuantityObat();
     }
 
     public function index()
@@ -58,7 +61,6 @@ class ObatController extends BaseController
             'obat' => $this->request->getPost('obat'),
             'jenis' => $this->request->getPost('jenis'),
             'bentuk' => $this->request->getPost('bentuk'),
-            'stok' => $this->request->getPost('stok'),
             'harga' => $this->request->getPost('harga'),
         ];
 
@@ -66,6 +68,29 @@ class ObatController extends BaseController
             session()->setFlashdata('pesan', 'Data obat berhasil diubah');
         } else {
             session()->setFlashdata('error', 'Data obat gagal diubah');
+        }
+
+        return redirect()->to('/obat');
+    }
+
+    public function updateStok($id) {
+        $obat = $this->obatModel->getObatById($id);
+
+        $data = [
+            'stok' => intval($obat['stok']) + intval($this->request->getPost('qty-masuk')),
+        ];
+
+        if ($this->obatModel->updateObat($id, $data)) {
+            $updateStok = [
+                'id_obat' => $id,
+                'masuk' => $this->request->getPost('qty-masuk'),
+            ];
+
+            $this->quantityObatModel->postQuantityObat($updateStok);
+
+            session()->setFlashdata('pesan', 'Stok obat berhasil ditambah');
+        } else {
+            session()->setFlashdata('error', 'Stok obat gagal diubah');
         }
 
         return redirect()->to('/obat');

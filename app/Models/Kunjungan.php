@@ -95,6 +95,16 @@ class Kunjungan extends Model
         return $this->where('id', $id)->select('id_poli')->first();
     }
 
+    public function getAllKunjungan() {
+    $today = date('Y-m-d');
+    return $this->select('kunjungans.*, pasiens.*, pasiens.nama as nama_pasien, polis.*, alamats.*, kunjungans.id as id_kunjungan')
+                ->join('pasiens', 'pasiens.id = kunjungans.id_pasien')
+                ->join('polis', 'polis.id = kunjungans.id_poli')
+                ->join('alamats', 'alamats.id = pasiens.id_alamat')
+                ->where('DATE(kunjungans.created_at)', $today)
+                ->findAll();
+}
+
     public function getKunjunganByStatus($status) {
         $today = date('Y-m-d');
         return $this->where('status', $status)->where('DATE(kunjungans.created_at)', $today)->select('kunjungans.*, pasiens.*, pasiens.nama as nama_pasien, polis.*, alamats.*, kunjungans.id as id_kunjungan')->join('pasiens', 'pasiens.id = kunjungans.id_pasien')->join('polis', 'polis.id = kunjungans.id_poli')->join('alamats', 'alamats.id = pasiens.id_alamat')->get()->getResultArray();
@@ -106,6 +116,10 @@ class Kunjungan extends Model
 
     public function getKunjunganById($id) {
         return $this->where('kunjungans.id', $id)->select('kunjungans.*, pasiens.pekerjaan as pekerjaan_pasien')->join('pasiens', 'pasiens.id = kunjungans.id_pasien')->first();
+    }
+
+    public function getKunjunganByRekmedId($rekmedId) {
+        return $this->where('rekmeds.id', $rekmedId)->select('kunjungans.id')->join('rekmeds', 'kunjungans.id_pasien = rekmeds.id_pasien')->orderBy('kunjungans.created_at', 'desc')->first();
     }
 
     public function getCountKunjunganToday() {

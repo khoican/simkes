@@ -7,6 +7,7 @@ use App\Models\Kunjungan;
 use App\Models\Obat;
 use App\Models\ObatPasien;
 use App\Models\Pasien;
+use App\Models\QuantityObat;
 use App\Models\Rekmed;
 use CodeIgniter\HTTP\ResponseInterface;
 use Faker\Core\Number;
@@ -18,6 +19,7 @@ class ApotekController extends BaseController
     protected $rekmedModel;
     protected $kunjunganModel;
     protected $obatPasienModel;
+    protected $quantityObatModel;
     protected $db;
 
     public function __construct() {
@@ -26,6 +28,7 @@ class ApotekController extends BaseController
         $this->rekmedModel = new Rekmed();
         $this->kunjunganModel = new Kunjungan();
         $this->obatPasienModel = new ObatPasien();
+        $this->quantityObatModel = new QuantityObat();
         $this->db = db_connect();
     }
 
@@ -43,7 +46,6 @@ class ApotekController extends BaseController
     public function getResep($kunjunganId) {
         $pasienId = $this->kunjunganModel->getPasienId($kunjunganId);
         $rekmeds = $this->rekmedModel->getRekmedByPasienId($pasienId);
-
         return view('pages/detailResep', [
             'pasienId' => $pasienId,
             'rekmeds' => $rekmeds,
@@ -66,17 +68,22 @@ class ApotekController extends BaseController
             
             if ($this->obatPasienModel->updateObatPasien($id, $data)) {
                 $obatId = $this->request->getPost('obatId');
-                $qty = intval($this->request->getPost('qty'));
                 $rekmedId = $this->request->getPost('rekmedId');
                 $obat = $this->obatModel->getObatById($obatId);
 
                 if ($obat) {
                     $curentStok = intval($obat['stok']);
                     $updateObat = [ 
-                        'stok' => $curentStok - $qty,
+                        'stok' => $curentStok - 1,
                     ];
                     
                     if ($this->obatModel->updateObat($obatId, $updateObat)) {
+                        $updateQuantity = [
+                            'id_obat' => $obatId,
+                            'keluar' => 1
+                        ];
+                        $this->quantityObatModel->postQuantityObat($updateQuantity);
+
                         $total = $this->obatPasienModel->getTotalHargaByRekmedId($rekmedId);
                         return $this->response->setJSON(['data' => $data, 'total' => $total]);
                     }
