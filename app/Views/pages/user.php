@@ -37,16 +37,18 @@
                     <?php csrf_field() ?>
                     <div class="w-100 mb-2">
                         <label for="nama" class="form-label mb-1">Nama</label>
-                        <input type="text" class="form-control form-control-sm" id="nama" name="nama" required>
+                        <input type="text" class="form-control form-control-sm" id="nama" name="nama"
+                            style="text-transform: none;" required>
                     </div>
                     <div class="w-100 mb-2">
                         <label for="username" class="form-label mb-1">Username</label>
-                        <input type="text" class="form-control form-control-sm" id="username" name="username" required>
+                        <input type="text" class="form-control form-control-sm" id="username" name="username" required
+                            style="text-transform: none;">
                     </div>
                     <div class="w-100 mb-2" id="passwordInput">
                         <label for="password" class="form-label mb-1">Password</label>
                         <input type="password" class="form-control form-control-sm" id="password" name="password"
-                            required>
+                            style="text-transform: none;" required>
                     </div>
                     <div class="w-100 mb-2">
                         <p class="form-label mb-1">Role</p>
@@ -82,18 +84,18 @@
                     <?php csrf_field() ?>
                     <div class="w-100 mb-4">
                         <label for="oldPassword" class="form-label mb-1">Password Lama</label>
-                        <input type="password" class="form-control form-control-sm" id="oldPassword" name="oldPassword"
-                            required>
+                        <input type="password" class="form-control form-control-sm" id="oldPassword"
+                            style="text-transform: none;" name="oldPassword" required>
                     </div>
                     <div class="w-100 mb-2">
                         <label for="newPassword" class="form-label mb-1">Password Baru</label>
-                        <input type="password" class="form-control form-control-sm" id="newPassword" name="newPassword"
-                            required>
+                        <input type="password" class="form-control form-control-sm" id="newPassword"
+                            style="text-transform: none;" name="newPassword" required>
                     </div>
                     <div class="w-100 mb-2">
                         <label for="confirmPassword" class="form-label mb-1">Konfirmasi Password</label>
                         <input type="password" class="form-control form-control-sm" id="confirmPassword"
-                            name="confirmPassword" required>
+                            style="text-transform: none;" name="confirmPassword" required>
                     </div>
                 </div>
                 <div class="modal-footer">

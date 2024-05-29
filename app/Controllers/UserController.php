@@ -67,7 +67,9 @@ class UserController extends BaseController
                 session()->set('name', $usernameIsExist['nama']);
                 session()->set('role', $usernameIsExist['role']);
                 session()->set('isLogin', true);
-                return redirect()->to('/dashboard');
+
+                session()->setFlashdata('pesan', 'Login berhasil');
+                return redirect()->to('/');
             } else {
                 session()->setFlashdata('error', 'Password salah');
             }

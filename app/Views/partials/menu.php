@@ -22,10 +22,18 @@
 $(document).ready(function() {
     let path = window.location.pathname.split('/');
 
+    console.log(path);
     $('.nav-link').each(function() {
-        if ($(this).attr('href').replace('/', '') == path[1]) {
-            $(this).addClass('text-primary');
-            $(this).removeClass('text-secondary');
+        if (path[1] === 'index.php') {
+            if ($(this).attr('href').replace('/', '') == path[2]) {
+                $(this).addClass('text-primary');
+                $(this).removeClass('text-secondary');
+            }
+        } else {
+            if ($(this).attr('href').replace('/', '') == path[1]) {
+                $(this).addClass('text-primary');
+                $(this).removeClass('text-secondary');
+            }
         }
     })
 
