@@ -166,7 +166,7 @@ class RekmedController extends BaseController
                 }
             }
         } else {
-            $this->rekmedModel->editRekmed($idRekmed, ['status' => $status]);
+            $this->rekmedModel->editRekmed($idRekmed, ['status' => 'tanpa obat']);
         }
         
         $dataKunjungan = [
