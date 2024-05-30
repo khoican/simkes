@@ -14,8 +14,8 @@
                     <th style="width: 5%;">No</th>
                     <th style="width: 30%;">Nama</th>
                     <th style="width: 30%;">Username</th>
-                    <th style="width: 25%;">Role</th>
-                    <th style="width: 10%;">Aksi</th>
+                    <th style="width: 20%;">Role</th>
+                    <th style="width: 15%;">Aksi</th>
                 </tr>
             </thead>
             <tbody>

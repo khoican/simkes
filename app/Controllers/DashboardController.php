@@ -31,21 +31,25 @@ class DashboardController extends BaseController
         $mostTindakan = $this->tindakanPasienModel->getMostTindakanPasien();
         $countKunjungan = $this->kunjunganModel->getCountKunjunganToday();
         $countPasien = $this->pasienModel->getCountNewPasien();
-        $countObatMasuk = '';
-        if ($this->quantityObatModel->getCountQuantityObatMasuk() != null) {
-            $countObatMasuk = $this->quantityObatModel->getCountQuantityObatMasuk();
-        } else {
+        $countObatMasuk = $this->quantityObatModel->getCountQuantityObatMasuk();
+        if($countObatMasuk == null) {
             $countObatMasuk = 0;
         }
-        $countObatKeluar = '';
-        if ($this->quantityObatModel->getCountQuantityObatKeluar() != null) {
-            $countObatKeluar = $this->quantityObatModel->getCountQuantityObatKeluar();
-        } else {
+        $countObatKeluar = $this->quantityObatModel->getCountQuantityObatKeluar();
+        if($countObatKeluar == null) {
             $countObatKeluar = 0;
         }
         $historyObat = $this->quantityObatModel->getQuantityObat();
         
-        return view('pages/dashboard/main', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan, 'countPasien' => $countPasien, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar, 'historyObat' => $historyObat]);
+        if (session()->get('role') == 'kepala' || session()->get('role') == 'rekmed') {
+            return view('pages/dashboard/main', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan, 'countPasien' => $countPasien, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar, 'historyObat' => $historyObat]);
+        } else if (session()->get('role') == 'loket') {
+            return view('pages/dashboard/loket', ['countKunjungan' => $countKunjungan, 'countPasien' => $countPasien]);
+        } else if (session()->get('role') == 'dokter') {
+            return view('pages/dashboard/dokter', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan]);
+        } else if (session()->get('role') == 'apotek') {
+            return view('pages/dashboard/apotek', ['countKunjungan' => $countKunjungan, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar, 'historyObat' => $historyObat]);
+        }
     }
     
     public function getTotalKunjungan($year, $month) {

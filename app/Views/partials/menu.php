@@ -3,11 +3,25 @@
         <div class="d-flex gap-5 align-items-center fs-5">
             <a href="/" class="nav-link fw-medium text-secondary"><i class="bi bi-house-door-fill"></i>
                 Dashboard</a>
+            <?php if(session()->get('role') == 'loket') : ?>
+            <a href="/pendaftaran" class="nav-link fw-medium text-secondary"><i class="bi bi-file-text-fill"></i>
+                Pendaftaran</a>
+
+            <?php elseif(session()->get('role') == 'dokter'): ?>
+            <a href="/pemeriksaan" class="nav-link fw-medium text-secondary"><i class="bi bi-heart-pulse-fill"></i>
+                Pemeriksaan</a>
+
+            <?php elseif(session()->get('role') == 'apotek'): ?>
+            <a href="/apotek" class="nav-link fw-medium text-secondary"><i class="bi bi-capsule"></i> Apotek</a>
+
+            <?php elseif(session()->get('role') == 'rekmed'): ?>
             <a href="/pendaftaran" class="nav-link fw-medium text-secondary"><i class="bi bi-file-text-fill"></i>
                 Pendaftaran</a>
             <a href="/pemeriksaan" class="nav-link fw-medium text-secondary"><i class="bi bi-heart-pulse-fill"></i>
                 Pemeriksaan</a>
             <a href="/apotek" class="nav-link fw-medium text-secondary"><i class="bi bi-capsule"></i> Apotek</a>
+
+            <?php endif; ?>
         </div>
 
         <div class="d-flex align-items-center fw-medium gap-3 fs-6" style="width: 30%;">

@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
 
-    <link rel="stylesheet" href="<?=base_url('css/bootstrap.css')?>">
-    <link rel="stylesheet" href="<?=base_url('css/bootstrap-icons.css')?>">
-    <link rel="stylesheet" href="<?=base_url('css/index.css')?>">
-    <script src="<?=base_url('js/jquery.js')?>"></script>
-    <script src="<?=base_url('js/bootstrap.js')?>"></script>
+    <link rel="stylesheet" href="<?= base_url('assets/app.css') ?>">
 
     <style>
     input {
@@ -66,7 +62,8 @@
         </div>
     </div>
 
-    <script>
+    <script src="<?= base_url('assets/app.js') ?>" type="module"></script>
+    <script type="module">
     $(document).ready(function() {
         $('#passwordError').hide();
         $('#username').on('input', function() {

@@ -45,11 +45,21 @@ class QuantityObat extends Model
     protected $afterDelete    = [];
 
     public function getCountQuantityObatMasuk() {
-        return $this->select('SUM(masuk) as total')->where('created_at', date('Y-m-d'))->get()->getRow('total');
+        $result = $this->db->table('quantity_obats')
+                        ->select('SUM(masuk) as total')
+                        ->where('DATE(created_at)', date('Y-m-d'))
+                        ->get()
+                        ->getRowArray();
+        return $result ? $result['total'] : '0';
     }
 
     public function getCountQuantityObatKeluar() {
-        return $this->select('SUM(keluar) as total')->where('created_at', date('Y-m-d'))->get()->getRow('total');
+        $result = $this->db->table('quantity_obats')
+                        ->select('SUM(keluar) as total')
+                        ->where('DATE(created_at)', date('Y-m-d'))
+                        ->get()
+                        ->getRowArray();
+        return $result ? $result['total'] : '0';
     }
 
     public function getQuantityObat() {

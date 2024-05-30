@@ -89,7 +89,7 @@ $routes->group('tindakan', function($routes) {
 });
 
 // Obat
-$routes->group('obat', function($routes) {
+$routes->group('obat',function($routes) {
     $routes->get('/', 'ObatController::index');
     $routes->get('all', 'ObatController::getObat');
     $routes->get('(:num)', 'ObatController::getObatById/$1');
@@ -109,4 +109,5 @@ $routes->group('user', function($routes) {
     $routes->post('changepassword/(:num)', 'UserController::changePassword/$1');
     $routes->post('delete/(:num)', 'UserController::deleteUser/$1');
     $routes->post('login', 'UserController::auth');
+    $routes->post('logout', 'UserController::logout');
 });

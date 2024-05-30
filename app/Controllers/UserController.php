@@ -131,4 +131,9 @@ class UserController extends BaseController
         }
         return redirect()->to('/user');
     }
+
+    public function logout() {
+        session()->destroy();
+        return redirect()->to('/login');
+    }
 }
