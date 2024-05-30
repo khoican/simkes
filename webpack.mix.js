@@ -7,11 +7,11 @@ mix.js('src/app.js', 'assets')
 
 mix.autoload({
 	jquery: ['$', 'window.jQuery', 'jQuery'],
-	bootstrap: ['$', 'window.bootstrap', 'bootstrap'],
-	moment: ['$', 'window.moment', 'moment'],
-	'@popperjs/core': ['$', 'window.Popper', 'Popper'],
-	DataTable: ['$', 'window.DataTable', 'DataTable'],
-	select2: ['$', 'window.select2', 'select2'],
+	'popper.js/dist/umd/popper.js': ['Popper'],
+	bootstrap: ['bootstrap'],
+	moment: ['moment'],
+	'datatables.net-bs5': ['DataTable'],
+	select2: ['select2'],
 });
 
 if (mix.inProduction()) {

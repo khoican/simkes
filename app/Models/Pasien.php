@@ -116,7 +116,7 @@ class Pasien extends Model
     }
 
     public function getCountNewPasien() {
-        return $this->db->table($this->table)->where('created_at', date('Y-m-d'))->countAllResults();
+        return $this->where('DATE(created_at)', date('Y-m-d'))->countAllResults();
     }
 
     public function getAllPasien() {

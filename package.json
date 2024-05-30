@@ -26,6 +26,7 @@
 		"sass-loader": "^12.1.0"
 	},
 	"dependencies": {
+		"chart.js": "^4.4.3",
 		"datatables.net-bs5": "^2.0.8",
 		"datatables.net-dt": "^2.0.8",
 		"moment": "^2.30.1",

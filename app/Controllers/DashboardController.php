@@ -43,7 +43,13 @@ class DashboardController extends BaseController
         } else {
             $countObatKeluar = 0;
         }
-
+        
         return view('pages/dashboard/main', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan, 'countPasien' => $countPasien, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar]);
+    }
+    
+    public function getTotalKunjungan($year, $month) {
+        $kunjungan = $this->kunjunganModel->getTotalKunjunganPerMonth($year, $month);
+        
+        return $this->response->setJSON($kunjungan);
     }
 }

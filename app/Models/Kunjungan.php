@@ -126,6 +126,39 @@ class Kunjungan extends Model
         return $this->where('DATE(kunjungans.created_at)', date('Y-m-d'))->countAllResults();
     }
 
+    public function getTotalKunjunganPerMonth($year, $month = null) {
+       $builder = $this->db->table($this->table);
+
+        if ($year) {
+            if ($month != 'all') {
+                $builder->select('DATE(created_at) as date, COUNT(*) as total')
+                        ->where('YEAR(created_at)', $year)
+                        ->where('MONTH(created_at)', $month)
+                        ->groupBy('DATE(created_at)');
+            } else {
+                $builder->select('DATE(created_at) as date, COUNT(*) as total')
+                        ->where('YEAR(created_at)', $year)
+                        ->groupBy('DATE(created_at)');
+            }
+        } else {
+            return null;
+        }
+
+        $query = $builder->get();
+        $results = $query->getResultArray();
+
+        // Format the results as [date: 'YYYY-MM-DD', count: total]
+        $formattedResults = array_map(function($row) {
+            return [
+                'date' => $row['date'],
+                'count' => $row['total']
+            ];
+        }, $results);
+
+        return $formattedResults;
+    }
+
+
     public function postKunjungan($data) {
         if ($this->insert($data)) {
             return true;
