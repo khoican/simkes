@@ -115,6 +115,10 @@ class Pasien extends Model
         return $data;
     }
 
+    public function getCountNewPasien() {
+        return $this->db->table($this->table)->where('created_at', date('Y-m-d'))->countAllResults();
+    }
+
     public function getAllPasien() {
         return $this->db->table($this->table)->select('pasiens.id as pasien_id, alamats.id as alamat_id, pasiens.*, alamats.*')->join('alamats', 'alamats.id = pasiens.id_alamat')->orderBy('pasiens.created_at', 'DESC')->get()->getResultArray();
     }

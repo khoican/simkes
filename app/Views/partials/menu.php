@@ -18,11 +18,11 @@
     </div>
 </menu>
 
-<script>
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     let path = window.location.pathname.split('/');
 
-    console.log(path);
     $('.nav-link').each(function() {
         if (path[1] === 'index.php') {
             if ($(this).attr('href').replace('/', '') == path[2]) {
@@ -35,13 +35,12 @@ $(document).ready(function() {
                 $(this).removeClass('text-secondary');
             }
         }
-    })
+    });
 
     setInterval(() => {
-        $('document').ready(function() {
-            $('#date').text(moment().format('DD MMMM YYYY'));
-            $('#time').text(moment().format('HH:mm:ss'));
-        })
+        $('#date').text(moment().format('DD MMMM YYYY'));
+        $('#time').text(moment().format('HH:mm:ss'));
     }, 1000);
 })
 </script>
+<?= $this->endSection() ?>

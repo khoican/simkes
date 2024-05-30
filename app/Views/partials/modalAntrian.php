@@ -10,7 +10,8 @@
     </div>
 </div>
 
-<script>
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     $('#dataTable tbody').on('click', '.add-antrian', function() {
         let pasienId = $(this).data('id');
@@ -20,30 +21,35 @@ $(document).ready(function() {
             type: 'GET',
             success: function(data) {
                 let element = $('#antrian');
-                let bg = ['btn-success', 'btn-warning', 'btn-info', 'btn-danger',
-                    'btn-primary', 'btn-secondary'
+                let bg = [
+                    'btn-success',
+                    'btn-warning',
+                    'btn-info',
+                    'btn-danger',
+                    'btn-primary',
+                    'btn-secondary',
                 ];
-                element.empty()
+                element.empty();
 
                 data.forEach(function(item, index) {
                     element.append(`
-                    <form id="antrianForm" class="flex-grow-1" action="/kunjungan/store" method="POST">
-                        <input name="id_pasien" value="${pasienId}" hidden>
-                        <input name="id_poli" value="${item.id}" hidden>
-                        <input name="no_antrian" value="${item.antrian}" hidden>
-                        <button type="submit" class="btn ${bg[index]} text-uppercase shadow w-100 h-100"  id="add-antrian">
-                            <p class="mb-0">poli ${item.nama}</p>
-                            <h1>${item.antrian}</h1>
-                        </button>
-                    </form>
-                    `)
-                })
+                            <form id="antrianForm" class="flex-grow-1" action="/kunjungan/store" method="POST">
+                                <input name="id_pasien" value="${pasienId}" hidden>
+                                <input name="id_poli" value="${item.id}" hidden>
+                                <input name="no_antrian" value="${item.antrian}" hidden>
+                                <button type="submit" class="btn ${bg[index]} text-uppercase shadow w-100 h-100"  id="add-antrian">
+                                    <p class="mb-0">poli ${item.nama}</p>
+                                    <h1>${item.antrian}</h1>
+                                </button>
+                            </form>
+                            `);
+                });
             },
             error: function() {
                 console.log('error');
-            }
-        })
-    })
+            },
+        });
+    });
 
     $('#modalAntrian').on('hidden.bs.modal', function() {
         resetForm();
@@ -54,3 +60,4 @@ $(document).ready(function() {
     }
 })
 </script>
+<?= $this->endSection() ?>

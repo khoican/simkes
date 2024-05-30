@@ -48,6 +48,10 @@ class DiagnosaPasien extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getMostDiagnosaPasien() {
+        return $this->select('COUNT(id_diagnosa) as total, diagnosas.diagnosa')->join('diagnosas', 'diagnosa_pasiens.id_diagnosa = diagnosas.id')->groupBy('diagnosa')->orderBy('total', 'DESC')->limit(10)->findAll();
+    }
+
     public function getDiagnosaByRekmedId($rekmedId) {
         return $this->where('id_rekmed', $rekmedId)->select('diagnosas.diagnosa, diagnosa_pasiens.*')->join('diagnosas', 'diagnosa_pasiens.id_diagnosa = diagnosas.id')->findAll();
     }

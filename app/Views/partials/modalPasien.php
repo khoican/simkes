@@ -249,13 +249,13 @@
     </div>
 </div>
 
-<script>
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
-    // set waktu untuk form tanggal antrian dan waktu antrian
     setInterval(function() {
         $('#tgl_antrian').val(moment().format('DD-MM-YYYY'));
         $('#wkt_antrian').val(moment().format('HH:mm:ss'));
-    }, 1000)
+    }, 1000);
 
     $(document).on('input', '#bpjs', function() {
         if ($(this).val()) {
@@ -263,7 +263,7 @@ $(document).ready(function() {
         } else {
             $('#pembayaran').val('umum');
         }
-    })
+    });
 
     $(document).on('input', '#pss_dlm_keluarga', function() {
         if ($(this).val() === 'kepala keluarga') {
@@ -271,7 +271,7 @@ $(document).ready(function() {
         } else {
             $('#kpl_keluarga').val('');
         }
-    })
+    });
 
     // handle dropdown posisi dalam keluarga dan dropdown posisi anak
     $('#pss_dlm_keluarga').on('change', function() {
@@ -280,19 +280,22 @@ $(document).ready(function() {
         } else {
             $('#pss_anak').prop('disabled', true);
         }
-    })
+    });
 
     $('#add-pasien').on('click', function() {
         resetForm();
         $('#exampleModalLabel').text('Tambah Data Pasien');
         $('#pasienForm').attr('action', 'pendaftaran/pasien/store');
-    })
+    });
 
     // fetch data pasien by id
     $('#dataTable tbody').on('click', '.edit-pasien', function() {
         let pasienId = $(this).data('id');
         $('#exampleModalLabel').text('Edit Data Pasien');
-        $('#pasienForm').attr('action', 'pendaftaran/pasien/update/' + pasienId);
+        $('#pasienForm').attr(
+            'action',
+            'pendaftaran/pasien/update/' + pasienId,
+        );
         resetForm();
 
         $.ajax({
@@ -302,7 +305,7 @@ $(document).ready(function() {
                 $('#id_alamat').val(data.id_alamat);
                 $('#no_rekam_medis').val(data.no_rekam_medis);
                 $('#nik').val(data.nik);
-                $('#bpjs').val(data.no_bpjs)
+                $('#bpjs').val(data.no_bpjs);
                 $('#nama').val(data.nama);
                 $('#jk').val(data.jk);
                 $('#tgl_lahir').val(data.tgl_lahir);
@@ -323,17 +326,19 @@ $(document).ready(function() {
                 $('#telepon').val(data.telepon);
                 $('#telepon2').val(data.telepon2);
                 $('#pembayaran').val(data.pembayaran);
-                $('#knjn_sehat').prop('checked', data.knjn_sehat == 1)
-                $('input[name="tkp"][value="' + data.tkp + '"]').prop('checked', true);
+                $('#knjn_sehat').prop('checked', data.knjn_sehat == 1);
+                $('input[name="tkp"][value="' + data.tkp + '"]').prop(
+                    'checked',
+                    true,
+                );
                 if (data.pss_dlm_keluarga === 'anak') {
                     $('#pss_anak').prop('disabled', false);
                 } else {
                     $('#pss_anak').prop('disabled', true);
                 }
-            }
-        })
-
-    })
+            },
+        });
+    });
 
     $('#exampleModal').on('hidden.bs.modal', function() {
         resetForm();
@@ -347,3 +352,4 @@ $(document).ready(function() {
     }
 })
 </script>
+<?= $this->endSection() ?>

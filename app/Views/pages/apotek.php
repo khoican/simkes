@@ -26,7 +26,10 @@
     </div>
 </div>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     function initializeDataTable(url) {
         // Hancurkan DataTable jika sudah ada
@@ -40,60 +43,71 @@ $(document).ready(function() {
             order: [0, 'asc'],
             ajax: {
                 url: url,
-                dataSrc: ''
+                dataSrc: '',
             },
             columns: [{
-                    data: 'no_antrian'
+                    data: 'no_antrian',
                 },
                 {
-                    data: 'no_rekam_medis'
+                    data: 'no_rekam_medis',
                 },
                 {
-                    data: 'nik'
+                    data: 'nik',
                 },
                 {
-                    data: 'nama_pasien'
+                    data: 'nama_pasien',
                 },
                 {
                     data: '',
                     render: function(data, type, row) {
                         return row.kelurahan + ', ' + row.kecamatan;
-                    }
+                    },
                 },
                 {
-                    data: 'nama'
+                    data: 'nama',
                 },
                 {
                     data: '',
                     render: function(data, type, row) {
                         if (url == '/kunjungan/antrian-obat') {
                             return `
-                                <div class="d-flex gap-1 w-100">
-                                    <form action="/kunjungan/panggil/${row.id_kunjungan}" method="POST">
-                                        <button type="submit" class="btn rounded-pill ${row.panggil == 1 ? 'btn-outline-primary disabled' : 'btn-primary'} btn-sm">Panggil</button>
-                                    </form>
-                                    <form action="/apotek/${row.id_kunjungan}" method="POST">
-                                        <button type="submit" class="btn rounded-pill ${row.panggil == 1 ? 'btn-primary' : 'btn-outline-primary disabled'} btn-sm">Lihat Obat</button>
-                                    </form>
-                                    </div>
-                                    `;
-
+                                    <div class="d-flex gap-1 w-100">
+                                        <form action="/kunjungan/panggil/${
+                                            row.id_kunjungan
+                                        }" method="POST">
+                                            <button type="submit" class="btn rounded-pill ${
+                                                row.panggil == 1
+                                                    ? 'btn-outline-primary disabled'
+                                                    : 'btn-primary'
+                                            } btn-sm">Panggil</button>
+                                        </form>
+                                        <form action="/apotek/${
+                                            row.id_kunjungan
+                                        }" method="POST">
+                                            <button type="submit" class="btn rounded-pill ${
+                                                row.panggil == 1
+                                                    ? 'btn-primary'
+                                                    : 'btn-outline-primary disabled'
+                                            } btn-sm">Lihat Obat</button>
+                                        </form>
+                                        </div>
+                                        `;
                         } else {
                             return `
-                                    <form action="/apotek/${row.id_kunjungan}" method="POST">
-                                        <button type="submit" class="btn rounded-pill btn-primary btn-sm">Lihat Obat</button>
-                                    </form>
-
-                            `
+                                        <form action="/apotek/${row.id_kunjungan}" method="POST">
+                                            <button type="submit" class="btn rounded-pill btn-primary btn-sm">Lihat Obat</button>
+                                        </form>
+    
+                                `;
                         }
-                    }
-                }
+                    },
+                },
             ],
             paging: true,
             pageLength: 5,
             lengthMenu: [
                 [5, 10, 25, 50, -1],
-                [5, 10, 25, 50, "All"]
+                [5, 10, 25, 50, 'All'],
             ],
             createdRow: function(row, data, dataIndex) {
                 $('td', row).eq(0).addClass('text-center fw-semibold');
@@ -103,8 +117,8 @@ $(document).ready(function() {
             },
             columnDefs: [{
                 targets: [0],
-                className: 'dt-head-center'
-            }]
+                className: 'dt-head-center',
+            }, ],
         });
     }
 
@@ -112,10 +126,9 @@ $(document).ready(function() {
 
     $('.status').on('click', function() {
         let status = $(this).data('status');
-        console.log(status);
         initializeDataTable(`/kunjungan/${status}`);
     });
-});
+})
 </script>
 
 <?= $this->endSection() ?>

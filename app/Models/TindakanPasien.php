@@ -44,6 +44,15 @@ class TindakanPasien extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    public function getMostTindakanPasien() {
+        return $this->select('tindakans.tindakan, COUNT(tindakan_pasiens.id_pasien) as total')
+                    ->join('tindakans', 'tindakan_pasiens.id_tindakan = tindakans.id')
+                    ->groupBy('tindakans.tindakan')
+                    ->orderBy('total', 'DESC')
+                    ->limit(10)
+                    ->findAll();
+    }
+
     public function postTindakanPasien($data) {
         if ($this->insert($data) === false) {
             $errors = $this->errors();

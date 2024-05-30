@@ -107,7 +107,10 @@
     </div>
 </div>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     $('#nama').on('input', function() {
         let value = $(this).val()

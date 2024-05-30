@@ -91,7 +91,10 @@
     </div>
 </div>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     $(document).on('click', '.update-stok', function() {
         let nama = $(this).data('nama')

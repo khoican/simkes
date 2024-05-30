@@ -26,7 +26,10 @@
     </div>
 </div>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     function initializeDataTable(url) {
         $('#antrian').DataTable({
@@ -112,7 +115,6 @@ $(document).ready(function() {
     // Re-initialize DataTable on status change
     $('.status').on('click', function() {
         let status = $(this).data('status');
-        console.log(status);
         initializeDataTable(`/kunjungan/${status}`);
     });
 });

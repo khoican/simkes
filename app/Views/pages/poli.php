@@ -47,7 +47,10 @@
     </div>
 </div>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     $(document).on('click', '.edit', function() {
         let id = $(this).data('id')

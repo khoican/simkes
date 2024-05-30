@@ -47,65 +47,68 @@
     </div>
 </div>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     $('#add').on('shown.bs.modal', function() {
-        $('#diagnosa').focus()
-    })
+        $('#diagnosa').focus();
+    });
 
     $(document).on('click', '.edit', function() {
-        let id = $(this).data('id')
+        let id = $(this).data('id');
         $('#exampleModalLabel').text('Edit Data');
-        $('#diagnosaForm').attr('action', '/diagnosa/update/' + id)
-        $('#diagnosa').focus()
+        $('#diagnosaForm').attr('action', '/diagnosa/update/' + id);
+        $('#diagnosa').focus();
 
         $.ajax({
             url: '/diagnosa/' + id,
             method: 'GET',
             success: function(data) {
-                $('#diagnosa').val(data.diagnosa)
-            }
-        })
-    })
+                $('#diagnosa').val(data.diagnosa);
+            },
+        });
+    });
 
     $('#diagnosa-table').DataTable({
         ordering: true,
         order: [0, 'asc'],
         ajax: {
             url: '/diagnosa/all',
-            dataSrc: ''
+            dataSrc: '',
         },
         columns: [{
                 data: '',
                 render: function(data, type, row, meta) {
-                    return meta.row + meta.settings._iDisplayStart + 1
-                }
+                    return meta.row + meta.settings._iDisplayStart + 1;
+                },
             },
             {
-                data: 'kode'
+                data: 'kode',
             },
             {
-                data: 'diagnosa'
+                data: 'diagnosa',
             },
             {
                 data: '',
                 render: function(data, type, row) {
                     return `
-                    <button class="btn btn-sm btn-warning edit" data-id="${row.id}" data-bs-toggle="modal"
-                data-bs-target="#exampleModal"><i class="bi bi-pencil-square"></i></button>
-
-                    <form action="/diagnosa/delete/${row.id}" method="POST" class="d-inline">
-                    <button type="submit" class="btn btn-sm btn-danger" data-id="${row.id}"><i class="bi bi-trash-fill"></i></button>
-                    </form>
-                    `
-                }
-            }
+                            <button class="btn btn-sm btn-warning edit" data-id="${row.id}" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal"><i class="bi bi-pencil-square"></i></button>
+        
+                            <form action="/diagnosa/delete/${row.id}" method="POST" class="d-inline">
+                            <button type="submit" class="btn btn-sm btn-danger" data-id="${row.id}"><i class="bi bi-trash-fill"></i></button>
+                            </form>
+                            `;
+                },
+            },
         ],
         createdRow: function(row, data, dataIndex) {
             $('td', row).eq(0).addClass('text-center fw-semibold');
             $('td', row).eq(2).addClass('text-uppercase');
         },
-    })
+    });
 })
 </script>
 

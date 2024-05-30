@@ -345,7 +345,10 @@
     </div>
 </div>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     function method() {
         if ($('#method').val() == 'post') {

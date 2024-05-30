@@ -32,7 +32,10 @@
 <?= $this->include('partials/modalPasien') ?>
 <?= $this->include('partials/modalAntrian') ?>
 
-<script>
+<?= $this->endSection() ?>
+
+<?= $this->section('script') ?>
+<script type="module">
 $(document).ready(function() {
     $('#dataTable').DataTable({
         processing: true,
@@ -43,28 +46,28 @@ $(document).ready(function() {
             dataSrc: '',
         },
         columns: [{
-                data: 'no_rekam_medis'
+                data: 'no_rekam_medis',
             },
             {
-                data: 'nik'
+                data: 'nik',
             },
             {
-                data: 'nama'
+                data: 'nama',
             },
             {
                 data: 'null',
                 render: function(data, type, row) {
-                    return row.kelurahan + ', ' + row.kecamatan
-                }
+                    return row.kelurahan + ', ' + row.kecamatan;
+                },
             },
             {
                 data: '',
                 render: function(data, type, row) {
                     return `
-                    <button type="button" class="edit-pasien btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${row.pasien_id}"><i class="bi bi-pencil-square"></i></button>
-                    <button type="button" class="add-antrian btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAntrian" data-id="${row.pasien_id}"><i class="bi bi-plus text-white"></i></button>
-                    `
-                }
+                            <button type="button" class="edit-pasien btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${row.pasien_id}"><i class="bi bi-pencil-square"></i></button>
+                            <button type="button" class="add-antrian btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAntrian" data-id="${row.pasien_id}"><i class="bi bi-plus text-white"></i></button>
+                            `;
+                },
             },
         ],
         createdRow: function(row, data, dataIndex) {
@@ -73,10 +76,9 @@ $(document).ready(function() {
             $('td', row).eq(2).addClass('text-uppercase');
             $('td', row).eq(3).addClass('text-uppercase');
         },
-        paging: true
-    })
-});
+        paging: true,
+    });
+})
 </script>
-
 
 <?= $this->endSection() ?>
