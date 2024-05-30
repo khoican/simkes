@@ -136,9 +136,9 @@ class Kunjungan extends Model
                         ->where('MONTH(created_at)', $month)
                         ->groupBy('DATE(created_at)');
             } else {
-                $builder->select('DATE(created_at) as date, COUNT(*) as total')
+                $builder->select('MONTH(created_at) as date, COUNT(*) as total')
                         ->where('YEAR(created_at)', $year)
-                        ->groupBy('DATE(created_at)');
+                        ->groupBy('MONTH(created_at)');
             }
         } else {
             return null;

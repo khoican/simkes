@@ -43,8 +43,9 @@ class DashboardController extends BaseController
         } else {
             $countObatKeluar = 0;
         }
+        $historyObat = $this->quantityObatModel->getQuantityObat();
         
-        return view('pages/dashboard/main', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan, 'countPasien' => $countPasien, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar]);
+        return view('pages/dashboard/main', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan, 'countPasien' => $countPasien, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar, 'historyObat' => $historyObat]);
     }
     
     public function getTotalKunjungan($year, $month) {

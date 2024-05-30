@@ -70,6 +70,77 @@
 
         <canvas id="chart" width="400" height="100"></canvas>
     </div>
+    <div class=" mt-5 fs-6">
+        <div class="d-flex gap-3 mb-4">
+            <div class="w-50 p-4 bg-white rounded-3">
+                <h5 class="fw-semibold fs-4">Penyakin Terbanyak</h5>
+
+                <table class="mt-3 table table-hover border">
+                    <thead class="table-primary">
+                        <tr>
+                            <th style="width: 10%;">No</th>
+                            <th style="width: 90%;">Diagnosa Penyakit</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($mostDiagnosa as $key => $value) : ?>
+                        <tr>
+                            <td class="text-center fw-medium"><?= $key + 1 ?></td>
+                            <td class="text-capitalize fw-medium"><?= $value['diagnosa'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+            <div class="w-50 p-4 bg-white rounded-3">
+                <h5 class="fw-semibold fs-4">Tindakan Terbanyak</h5>
+
+                <table class="mt-3 table table-hover border">
+                    <thead class="table-primary">
+                        <tr>
+                            <th style="width: 10%;">No</th>
+                            <th style="width: 90%;">Jenis Tindakan</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php foreach($mostTindakan as $key => $value) : ?>
+                        <tr>
+                            <td class="text-center fw-medium"><?= $key + 1 ?></td>
+                            <td class="text-capitalize fw-medium"><?= $value['tindakan'] ?></td>
+                        </tr>
+                        <?php endforeach; ?>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+    <div class="mt-5 fs-6 p-4 bg-white rounded-3">
+        <h5 class="fw-semibold fs-4">History Stok Obat</h5>
+
+        <table class="mt-3 table table-hover border">
+            <thead class="table-primary">
+                <tr class="text-center">
+                    <th style="width: 10%;">No</th>
+                    <th style="width: 60%;">Obat</th>
+                    <th style="width: 10%;">Obat Masuk</th>
+                    <th style="width: 10%;">Obat Keluar</th>
+                    <th style="width: 10%;">Stok</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach($historyObat as $key => $value) : ?>
+                <tr>
+                    <td class="text-center fw-medium"><?= $key + 1 ?></td>
+                    <td class="text-capitalize fw-medium"><?= $value['obat'] ?></td>
+                    <td class="text-capitalize text-center">
+                        <?php if($value['masuk'] != null) { echo $value['masuk']; } else { echo '0'; } ?></td>
+                    <td class="text-capitalize text-center">
+                        <?php if($value['keluar'] != null) { echo $value['keluar']; } else { echo '0'; } ?></td>
+                    <td class="text-capitalize text-center"><?= $value['stok'] ?></td>
+                </tr>
+                <?php endforeach; ?>
+        </table>
+    </div>
 </main>
 <?= $this->endSection() ?>
 

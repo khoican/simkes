@@ -52,6 +52,16 @@ class QuantityObat extends Model
         return $this->select('SUM(keluar) as total')->where('created_at', date('Y-m-d'))->get()->getRow('total');
     }
 
+    public function getQuantityObat() {
+    return $this->db->table('quantity_obats')
+                    ->select('obats.id, obats.obat, obats.stok, SUM(quantity_obats.masuk) as masuk, SUM(quantity_obats.keluar) as keluar')
+                    ->join('obats', 'obats.id = quantity_obats.id_obat')
+                    ->groupBy('quantity_obats.id_obat, obats.id, obats.obat, obats.stok')
+                    ->get()
+                    ->getResultArray();
+    }
+
+
     public function postQuantityObat($data) {
         if ($this->insert($data) === false) {
             $errors = $this->errors();

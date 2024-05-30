@@ -47,7 +47,15 @@ class ObatController extends BaseController
             'harga' => $this->request->getPost('harga'),
         ];
         
-        if ($this->obatModel->postObat($data)) {
+        $ObatId = $this->obatModel->postObat($data);
+        if ($ObatId) {
+            $dataStok = [
+                'id_obat' => $ObatId,
+                'masuk' => $this->request->getPost('stok'),
+            ];
+
+            $this->quantityObatModel->postQuantityObat($dataStok);
+
             session()->setFlashdata('pesan', 'Data obat berhasil ditambahkan');
         } else {
             session()->setFlashdata('error', 'Data obat gagal ditambahkan');
