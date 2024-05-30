@@ -18244,19 +18244,6 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
-/***/ "./src/select2.scss":
-/*!**************************!*\
-  !*** ./src/select2.scss ***!
-  \**************************/
-/***/ ((__unused_webpack_module, __webpack_exports__, __webpack_require__) => {
-
-"use strict";
-__webpack_require__.r(__webpack_exports__);
-// extracted by mini-css-extract-plugin
-
-
-/***/ }),
-
 /***/ "./node_modules/moment/locale/af.js":
 /*!******************************************!*\
   !*** ./node_modules/moment/locale/af.js ***!
@@ -59711,8 +59698,7 @@ $.each( DataTable, function ( prop, val ) {
 /******/ 		// [resolve, reject, Promise] = chunk loading, 0 = chunk loaded
 /******/ 		var installedChunks = {
 /******/ 			"/assets/app": 0,
-/******/ 			"assets/app": 0,
-/******/ 			"assets/select2": 0
+/******/ 			"assets/app": 0
 /******/ 		};
 /******/ 		
 /******/ 		// no chunk on demand loading
@@ -59762,9 +59748,8 @@ $.each( DataTable, function ( prop, val ) {
 /******/ 	// startup
 /******/ 	// Load entry module and return exports
 /******/ 	// This entry module depends on other loaded chunks and execution need to be delayed
-/******/ 	__webpack_require__.O(undefined, ["assets/app","assets/select2"], () => (__webpack_require__("./src/app.js")))
-/******/ 	__webpack_require__.O(undefined, ["assets/app","assets/select2"], () => (__webpack_require__("./src/app.scss")))
-/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/app","assets/select2"], () => (__webpack_require__("./src/select2.scss")))
+/******/ 	__webpack_require__.O(undefined, ["assets/app"], () => (__webpack_require__("./src/app.js")))
+/******/ 	var __webpack_exports__ = __webpack_require__.O(undefined, ["assets/app"], () => (__webpack_require__("./src/app.scss")))
 /******/ 	__webpack_exports__ = __webpack_require__.O(__webpack_exports__);
 /******/ 	
 /******/ })()

@@ -125,3 +125,5 @@ nb-configuration.xml
 /results/
 /phpunit*.xml
 node_modules
+/public/assets/app.css
+/public/assets/app.js
