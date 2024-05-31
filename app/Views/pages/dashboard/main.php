@@ -17,7 +17,8 @@
             <i class="bi bi-heart-pulse-fill fs-1"></i>
             <div class="text-end">
                 <p class="mb-0 text-secondary" style="font-size: 12px;">Penyakit Terbanyak</p>
-                <p class="mb-0 fs-2 fw-bold text-capitalize"><?= $mostDiagnosa[0]['diagnosa'] ?></p>
+                <p class="mb-0 fs-2 fw-bold text-capitalize">
+                    <?= $mostDiagnosa ? $mostDiagnosa[0]['diagnosa'] : 'Data Tidak Tersedia' ?></p>
             </div>
         </div>
         <div class=" border border-info rounded-3 text-info p-3 d-flex justify-content-between shadow-sm"
@@ -41,7 +42,9 @@
             <i class="bi bi-bandaid-fill fs-1"></i>
             <div class="text-end">
                 <p class="mb-0 text-secondary" style="font-size: 12px;">Tindakan Terbanyak</p>
-                <p class="mb-0 fs-2 fw-bold text-capitalize"><?= $mostTindakan[0]['tindakan'] ?></p>
+                <p class="mb-0 fs-2 fw-bold text-capitalize">
+                    <?= $mostTindakan ? $mostTindakan[0]['tindakan'] : 'Data Tidak Tersedia' ?>
+                </p>
             </div>
         </div>
         <div class="border border-secondary rounded-3 text-secondary p-3 d-flex justify-content-between shadow-sm"

