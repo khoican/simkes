@@ -54,14 +54,24 @@ Untuk cloning aplikasi dari github, silahkan ikuti langkah berikut:
 
 4. **Migrasi Database**
    buat terlebih dahulu database dengan nama `simkes_db`, dapat menggunakan metode manual atau menggunakan perintah berikut:
+
     ```sh
         php spark db:create simkes_db
     ```
+
     setelah database berhasil terbuat, selanjutnya proses migrasi tabel menggunakan perintah berikut:
+
     ```sh
         php spark migrate
     ```
-5. **Running Laravel Mix**
+
+    setelah database terbuat, selanjutnya menjalankan seeder untuk mengisi database
+
+    ```sh
+        php spark db:seed Seed
+    ```
+
+5. **Running Laravel Mix (opsional)**
    sebelum menjalankan website, jalankan terlebih dahulu laravel mix untuk proses build dependency frontend
 
     ```sh
@@ -75,10 +85,19 @@ Untuk cloning aplikasi dari github, silahkan ikuti langkah berikut:
     ```
 
 6. **Running Website**
-   untuk menjalankan website pada komputer loka, dapat menggunakan perintah berikut:
+   untuk menjalankan website pada komputer lokal, dapat menggunakan perintah berikut:
+
     ```sh
         php spark serve
     ```
+
+    untuk dapat login dan mengakses fitur didalam website, gunakan akun berikut untuk login:
+
+    - Username : admin
+    - Password : adminsimkes123
+
+    **_catatan_**: akun ini bersifat temporary dan hanya bisa digunakan sekali saja, setelah login menggunakan akun ini pastikan anda sudah menambahkan pengguna baru sebelum anda logout dari website
+
     aplikasi siap untuk digunakan
 
 ## Notes
