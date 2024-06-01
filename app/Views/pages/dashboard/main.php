@@ -86,12 +86,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($mostDiagnosa as $key => $value) : ?>
+                        <?php 
+                        if (count($mostDiagnosa) > 0) :
+                        foreach($mostDiagnosa as $key => $value) : ?>
                         <tr>
                             <td class="text-center fw-medium"><?= $key + 1 ?></td>
                             <td class="text-capitalize fw-medium"><?= $value['diagnosa'] ?></td>
                         </tr>
                         <?php endforeach; ?>
+                        <?php else : ?>
+                        <tr>
+                            <td class="text-center fw-medium" colspan="2">Data Tidak Tersedia</td>
+                        </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -106,12 +113,19 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach($mostTindakan as $key => $value) : ?>
+                        <?php 
+                        if (count($mostTindakan) > 0) :
+                        foreach($mostTindakan as $key => $value) : ?>
                         <tr>
                             <td class="text-center fw-medium"><?= $key + 1 ?></td>
                             <td class="text-capitalize fw-medium"><?= $value['tindakan'] ?></td>
                         </tr>
                         <?php endforeach; ?>
+                        <?php else : ?>
+                        <tr>
+                            <td class="text-center fw-medium" colspan="2">Data Tidak Tersedia</td>
+                        </tr>
+                        <?php endif; ?>
                     </tbody>
                 </table>
             </div>
@@ -131,7 +145,9 @@
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($historyObat as $key => $value) : ?>
+                <?php 
+                if (count($historyObat) > 0) :
+                foreach($historyObat as $key => $value) : ?>
                 <tr>
                     <td class="text-center fw-medium"><?= $key + 1 ?></td>
                     <td class="text-capitalize fw-medium"><?= $value['obat'] ?></td>
@@ -142,6 +158,11 @@
                     <td class="text-capitalize text-center"><?= $value['stok'] ?></td>
                 </tr>
                 <?php endforeach; ?>
+                <?php else : ?>
+                <tr>
+                    <td class="text-center fw-medium" colspan="5">Data Tidak Tersedia</td>
+                </tr>
+                <?php endif; ?>
         </table>
     </div>
 </main>
