@@ -11,3 +11,15 @@
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 <?php endif; ?>
+
+<?= $this->section('script') ?>
+
+<script type="module">
+$(document).ready(function() {
+    $('.alert').fadeTo(2000, 0).slideUp(500, function() {
+        $('.alert').remove();
+    })
+})
+</script>
+
+<?= $this->endSection() ?>
