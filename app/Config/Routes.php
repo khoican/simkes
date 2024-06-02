@@ -10,7 +10,7 @@ $routes->get('/login', function() {
 });
 
 // Home
-$routes->get('/', 'DashboardController::index');
+$routes->get('/', 'DashboardController::index', ['filters' => 'auth']);
 $routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2');
 
 // Pendaftaran (Pasien)

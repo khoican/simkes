@@ -23,6 +23,15 @@
             <tbody>
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-center gap-3">
+            <div class="text-center btn btn-success" style="width: 15%">
+                <p class="mb-0 fw-medium fs-6">Poli Sekarang</p>
+                <div>
+                    <h1 class="mb-0 fw-bold">A01</h1>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 
@@ -71,6 +80,9 @@ $(document).ready(function() {
                             return `
                                 <div class="d-flex gap-1 w-100">
                                     <form action="/kunjungan/panggil/${row.id_kunjungan}" method="POST">
+                                        <input type="hidden" name="no_antrian" value="${row.no_antrian}">
+                                        <input type="hidden" name="id_poli" value="${row.id_poli}">
+                                        <input type="hidden" name="status" value="pemeriksaan">
                                         <button type="submit" class="btn rounded-pill ${row.panggil == 1 ? 'btn-outline-primary disabled' : 'btn-primary'} btn-sm">Panggil</button>
                                     </form>
                                     <form action="/pemeriksaan/${row.id_kunjungan}" method="POST">

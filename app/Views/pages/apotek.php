@@ -75,6 +75,9 @@ $(document).ready(function() {
                                         <form action="/kunjungan/panggil/${
                                             row.id_kunjungan
                                         }" method="POST">
+                                            <input type="hidden" name="no_antrian" value="${row.no_antrian}">
+                                            <input type="hidden" name="id_poli" value="${row.id_poli}">
+                                            <input type="hidden" name="status" value="apotek">
                                             <button type="submit" class="btn rounded-pill ${
                                                 row.panggil == 1
                                                     ? 'btn-outline-primary disabled'

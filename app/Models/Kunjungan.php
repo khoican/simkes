@@ -62,7 +62,7 @@ class Kunjungan extends Model
         return $data;
     }
 
-    protected function getLastAntrian($poli) {
+    public function getLastAntrian($poli) {
         $today = date('Y-m-d');
         $data = $this->where('id_poli', $poli)
                  ->like('created_at', $today, 'after')

@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Kunjungan;
+use App\Models\KunjunganHistory;
 use App\Models\Pasien;
 use App\Models\Poli;
 use App\Models\Rekmed;
@@ -15,6 +16,7 @@ class KunjunganController extends BaseController
     protected $pasienModel;
     protected $rekmedModel;
     protected $poliModel;
+    protected $kunjunganHistoryModel;
 
     public function __construct()
     {
@@ -22,13 +24,18 @@ class KunjunganController extends BaseController
         $this->pasienModel = new Pasien();
         $this->rekmedModel = new Rekmed();
         $this->poliModel = new Poli();
+        $this->kunjunganHistoryModel = new KunjunganHistory();
     }
 
     public function pemeriksaan()
     {
-        $kunjungans = $this->kunjunganModel->getKunjunganByStatus('antrian');
+        $kunjungans = [];
+        $poliId = $this->poliModel->getAllPoli();
 
-        return view('pages/pemeriksaan', ['kunjungans' => $kunjungans]);
+        foreach ($poliId as $poli) {
+            $kunjungans[$poli['id']] = $this->kunjunganHistoryModel->getKunjunganHstoryByPoli($poli['id'], 'pemeriksaan');
+        }
+        return view('pages/pemeriksaan', [ $kunjungans]);
     }
 
     public function apotek() {
@@ -90,6 +97,13 @@ class KunjunganController extends BaseController
         ];
         $result = $this->kunjunganModel->updateKunjungan($id, $data);
         if ($result) {
+            $dataKunjungan = [
+                'no_antrian' => $this->request->getPost('no_antrian'),
+                'id_poli'    => $this->request->getPost('id_poli'),
+                'status'     => $this->request->getPost('status'),
+            ];
+            $this->kunjunganHistoryModel->postKunjunganHistory($dataKunjungan);
+
             session()->setFlashData('pesan', 'Pasien dipanggil');
         } else {
             session()->setFlashData('error', 'Gagal Memanggil Pasien');
