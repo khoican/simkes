@@ -108,7 +108,6 @@ class Filters extends BaseFilters
      * @var array<string, array<string, list<string>>>
      */
     public array $filters = [
-        'auth' => ['before' => ['/', '/pendaftaran/*', '/pemeriksaan/*', '/apotek/*', '/obat/*', '/diagnosa/*', '/tindakan/*']],
         'role' => [
             'pendaftaran/*' => ['loket', 'rekmed'],
             'pemeriksaan/*' => ['dokter', 'rekmed'],

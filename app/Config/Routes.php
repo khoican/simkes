@@ -8,13 +8,15 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/login', function() {
     return view('pages/auth/login');
 });
+$routes->post('user/login', 'UserController::auth');
 
 // Home
+
 $routes->get('/', 'DashboardController::index', ['filters' => 'auth']);
-$routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2');
+$routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2', ['filter' => 'auth']);
 
 // Pendaftaran (Pasien)
-$routes->group('pendaftaran', function($routes) {
+$routes->group('pendaftaran', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'PasienController::index');
     $routes->get('get-pasien', 'PasienController::fetchPasien');
     $routes->get('get-pasien/(:num)', 'PasienController::getPasien/$1');
@@ -23,7 +25,7 @@ $routes->group('pendaftaran', function($routes) {
 });
 
 // Pemeriksaan
-$routes->group('pemeriksaan', function($routes) {
+$routes->group('pemeriksaan', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::pemeriksaan');
     $routes->get('(:num)', 'RekmedController::getByUser/$1');
     $routes->get('(:num)/new', 'RekmedController::create/$1');
@@ -33,7 +35,7 @@ $routes->group('pemeriksaan', function($routes) {
 });
 
 // Apotek
-$routes->group('apotek', function($routes) {
+$routes->group('apotek', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::apotek');
     $routes->post('(:num)', 'ApotekController::apotekPasien/$1');
     $routes->get('(:num)', 'ApotekController::getResep/$1');
@@ -43,7 +45,7 @@ $routes->group('apotek', function($routes) {
 });
 
 // Kunjungan
-$routes->group('kunjungan', function($routes) {
+$routes->group('kunjungan', ['filter' => 'auth'], function($routes) {
     $routes->get('generate-antrian', 'KunjunganController::generateAntrian');
     $routes->get('(:any)', 'KunjunganController::getKunjunganStatus/$1');
     $routes->post('store', 'KunjunganController::store');
@@ -52,14 +54,14 @@ $routes->group('kunjungan', function($routes) {
 });
 
 // Rekam Medis
-$routes->group('rekmed', function($routes) {
+$routes->group('rekmed', ['filter' => 'auth'], function($routes) {
     $routes->post('store/(:num)', 'RekmedController::store/$1');
     $routes->post('update/(:num)', 'RekmedController::update/$1');
     $routes->post('delete/(:num)/(:num)', 'RekmedController::delete/$1/$2');
 });
 
 // Poli
-$routes->group('poli', function($routes) {
+$routes->group('poli', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'PoliController::index');
     $routes->get('all', 'PoliController::getPoli');
     $routes->get('(:num)', 'PoliController::getPoliById/$1');
@@ -69,7 +71,7 @@ $routes->group('poli', function($routes) {
 });
 
 // Diagnosa
-$routes->group('diagnosa', function($routes) {
+$routes->group('diagnosa', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'DiagnosaController::index');
     $routes->get('all', 'DiagnosaController::getDiagnosa');
     $routes->get('(:num)', 'DiagnosaController::getDiagnosaById/$1');
@@ -79,7 +81,7 @@ $routes->group('diagnosa', function($routes) {
 });
 
 // Tindakan
-$routes->group('tindakan', function($routes) {
+$routes->group('tindakan', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'TindakanController::index');
     $routes->get('all', 'TindakanController::getTindakan');
     $routes->get('(:num)', 'TindakanController::getTindakanById/$1');
@@ -89,7 +91,7 @@ $routes->group('tindakan', function($routes) {
 });
 
 // Obat
-$routes->group('obat',function($routes) {
+$routes->group('obat',['filter' => 'auth'], function($routes) {
     $routes->get('/', 'ObatController::index');
     $routes->get('all', 'ObatController::getObat');
     $routes->get('(:num)', 'ObatController::getObatById/$1');
@@ -100,7 +102,7 @@ $routes->group('obat',function($routes) {
 });
 
 // User
-$routes->group('user', function($routes) {
+$routes->group('user', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'UserController::index');
     $routes->get('all', 'UserController::getUser');
     $routes->get('(:num)', 'UserController::getUserById/$1');
@@ -108,6 +110,5 @@ $routes->group('user', function($routes) {
     $routes->post('update/(:num)', 'UserController::editUser/$1');
     $routes->post('changepassword/(:num)', 'UserController::changePassword/$1');
     $routes->post('delete/(:num)', 'UserController::deleteUser/$1');
-    $routes->post('login', 'UserController::auth');
     $routes->post('logout', 'UserController::logout');
 });
