@@ -12,7 +12,7 @@ class KunjunganHistory extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['no_antrian', 'id_poli'];
+    protected $allowedFields    = ['no_antrian', 'id_poli', 'status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;

@@ -24,7 +24,7 @@ class Pasien extends Migration
             ],
             'no_bpjs' => [
                 'type' => 'VARCHAR',
-                'constraint' => 16,
+                'constraint' => 13,
                 'null' => true
             ],
             'nama' => [

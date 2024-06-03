@@ -23,6 +23,19 @@
             <tbody>
             </tbody>
         </table>
+
+        <div class="d-flex justify-content-center gap-3">
+            <?php foreach ($polis as $poli) : ?>
+            <?php if (isset($kunjungans[$poli['id']])) : ?>
+            <div class="text-center btn btn-success poli-card">
+                <p class="mb-0 fw-medium fs-6 text-capitalize">poli <?= esc($kunjungans[$poli['id']]['nama']) ?></p>
+                <div>
+                    <h1 class="mb-0 fw-bold"><?= esc($kunjungans[$poli['id']]['no_antrian']) ?></h1>
+                </div>
+            </div>
+            <?php endif; ?>
+            <?php endforeach; ?>
+        </div>
     </div>
 </div>
 

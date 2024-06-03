@@ -35,11 +35,18 @@ class KunjunganController extends BaseController
         foreach ($poliId as $poli) {
             $kunjungans[$poli['id']] = $this->kunjunganHistoryModel->getKunjunganHstoryByPoli($poli['id'], 'pemeriksaan');
         }
-        return view('pages/pemeriksaan', [ $kunjungans]);
+        return view('pages/pemeriksaan', [ 'kunjungans' => $kunjungans, 'polis' => $poliId]);
     }
 
     public function apotek() {
-        return view('pages/apotek');
+        $kunjungans = [];
+        $poliId = $this->poliModel->getAllPoli();
+
+        foreach ($poliId as $poli) {
+            $kunjungans[$poli['id']] = $this->kunjunganHistoryModel->getKunjunganHstoryByPoli($poli['id'], 'apotek');
+        }
+
+        return view('pages/apotek', [ 'kunjungans' => $kunjungans, 'polis' => $poliId]);
     }
 
     public function getKunjunganStatus($status) {
@@ -102,6 +109,7 @@ class KunjunganController extends BaseController
                 'id_poli'    => $this->request->getPost('id_poli'),
                 'status'     => $this->request->getPost('status'),
             ];
+
             $this->kunjunganHistoryModel->postKunjunganHistory($dataKunjungan);
 
             session()->setFlashData('pesan', 'Pasien dipanggil');

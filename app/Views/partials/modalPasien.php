@@ -1,4 +1,5 @@
-<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="exampleModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1"
+    aria-labelledby="staticBackdropLabel" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
@@ -13,13 +14,15 @@
                     <input type="text" class="form-control form-control-sm" id="no_rekam_medis" name="no_rekam_medis"
                         hidden>
                     <div class="d-flex gap-3 mb-3">
-                        <div class="w-50">
+                        <div class="w-50  min-lenght" data-lenght="16">
                             <label for="nik" class="form-label">No. Identitas Pasien</label>
                             <input type="number" class="form-control form-control-sm" id="nik" name="nik" required>
+                            <p class="note min-lenght-16 text-danger"></p>
                         </div>
-                        <div class="w-50">
+                        <div class="w-50 min-lenght" data-lenght="13">
                             <label for="bpjs" class="form-label">No. BPJS</label>
                             <input type="number" class="form-control form-control-sm" id="bpjs" name="no_bpjs">
+                            <p class="note min-lenght-13 text-danger"></p>
                         </div>
                     </div>
                     <div class="d-flex gap-3 mb-3">
@@ -53,7 +56,7 @@
                         <div class="w-50">
                             <label class="form-label">Golongan Darah</label>
                             <select class="form-select form-select-sm" aria-label="Small select example" id="gol_darah"
-                                name="gol_darah">
+                                name="gol_darah" required>
                                 <option value="tidak tahu" selected>Tidak Tahu</option>
                                 <option value="a">A</option>
                                 <option value="b">B</option>
@@ -162,12 +165,12 @@
                     <div class="d-flex gap-3 mb-3">
                         <div class="w-50">
                             <label for="telepon" class="form-label">Telepon</label>
-                            <input type="text" class="form-control form-control-sm" id="telepon" name="telepon"
+                            <input type="number" class="form-control form-control-sm" id="telepon" name="telepon"
                                 required>
                         </div>
                         <div class="w-50">
                             <label for="telepon2" class="form-label">Telepon 2</label>
-                            <input type="text" class="form-control form-control-sm" id="telepon2" name="telepon2">
+                            <input type="number" class="form-control form-control-sm" id="telepon2" name="telepon2">
                         </div>
                     </div>
                     <div class="d-flex align-items-start gap-3 mb-3">
@@ -252,6 +255,22 @@
 <?= $this->section('script') ?>
 <script type="module">
 $(document).ready(function() {
+    function setNote() {
+        $('.min-lenght').each(function() {
+            let minLenght = $(this).data('lenght')
+            $(this, '.form-control').on('input', function() {
+                if ($(this).val().length < minLenght) {
+                    $(`.min-lenght-${minLenght}`).html(
+                        `<span class="fw-semibold">*</span> Minimal ${minLenght} karakter`
+                    )
+                } else {
+                    $(`.min-lenght-${minLenght}`).text('')
+                }
+            })
+        })
+    }
+    setNote();
+
     setInterval(function() {
         $('#tgl_antrian').val(moment().format('DD-MM-YYYY'));
         $('#wkt_antrian').val(moment().format('HH:mm:ss'));
