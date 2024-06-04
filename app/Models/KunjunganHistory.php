@@ -55,7 +55,7 @@ class KunjunganHistory extends Model
     }
 
     public function getKunjunganHstoryByPoli($id, $status) {
-        $kunjungans = $this->select('kunjungan_history.*, polis.*')->where('id_poli', $id)->where('status', $status)->where('DATE(created_at)', date('Y-m-d'))->join('polis', 'kunjungan_history.id_poli = polis.id')->first();
+        $kunjungans = $this->select('kunjungan_history.*, polis.*')->where('id_poli', $id)->where('status', $status)->where('DATE(created_at)', date('Y-m-d'))->join('polis', 'kunjungan_history.id_poli = polis.id')->orderBy('created_at', 'DESC')->first();
         if ($kunjungans) {
             return $kunjungans;
         }

@@ -59,10 +59,11 @@
         </div>
         <?php endforeach ?>
 
-        <div class="w-100 h-auto mt-5 d-flex justify-content-center align-items-center">
+        <div class="w-100 h-auto mt-5 d-flex flex-column justify-content-center align-items-center">
             <a href="/pemeriksaan/<?= $kunjunganId ?>/new" class="btn btn-primary rounded-circle">
                 <i class="bi bi-plus fs-2 text-white mb-0"></i>
             </a>
+            <p class="fs-5 ms-3 mb-0 fw-medium">Rekam Medis</p>
         </div>
     </div>
 </div>

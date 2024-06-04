@@ -27,7 +27,7 @@
         <div class="d-flex justify-content-center gap-3">
             <?php foreach ($polis as $poli) : ?>
             <?php if (isset($kunjungans[$poli['id']])) : ?>
-            <div class="text-center btn btn-success poli-card">
+            <div class="text-center btn btn-success poli-card" data-id="<?= $poli['id'] ?>">
                 <p class="mb-0 fw-medium fs-6 text-capitalize">poli <?= esc($kunjungans[$poli['id']]['nama']) ?></p>
                 <div>
                     <h1 class="mb-0 fw-bold"><?= esc($kunjungans[$poli['id']]['no_antrian']) ?></h1>
@@ -44,6 +44,22 @@
 <?= $this->section('script') ?>
 <script type="module">
 $(document).ready(function() {
+    function kunjunganColor() {
+        $('.kunjungan').each(function() {
+            let bg = [
+                'btn-success',
+                'btn-warning',
+                'btn-info',
+                'btn-danger',
+                'btn-primary',
+                'btn-secondary',
+            ];
+            let id = $(this).data('id')
+            $(this).addClass(bg[id - 1])
+        })
+    }
+    kunjunganColor()
+
     function initializeDataTable(url) {
         // Hancurkan DataTable jika sudah ada
         if ($.fn.DataTable.isDataTable('#antrian')) {
