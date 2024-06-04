@@ -32,21 +32,35 @@
         </div>
     </div>
 
-    <div class=" mt-5 fs-6 p-4 bg-white rounded-3">
-        <div class="d-flex justify-content-between mb-4">
-            <h5 class="fw-semibold fs-4">Grafik Pengunjung</h5>
+    <div class=" mt-5 fs-6 p-4 bg-white rounded-3 d-flex gap-5">
+        <div class="w-50">
+            <div class="d-flex justify-content-between mb-4">
+                <h5 class="fw-semibold fs-4">Grafik Pengunjung</h5>
 
-            <div class="w-25 d-flex gap-2">
-                <select name="year" id="year" class="form-select form-select-sm w-50 text-capitalize">
-                    <option>Pilih Tahun</option>
-                </select>
-                <select name="month" id="month" class="form-select form-select-sm w-50 text-capitalize">
-                    <option>Pilih Bulan</option>
-                </select>
+                <div class="w-50 d-flex gap-2">
+                    <select name="year" id="year" class="form-select form-select-sm w-50 text-capitalize">
+                        <option>Pilih Tahun</option>
+                    </select>
+                    <select name="month" id="month" class="form-select form-select-sm w-50 text-capitalize">
+                        <option>Pilih Bulan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="height: 400px; width: 100%">
+                <canvas id="chart" width="200" height="400"></canvas>
             </div>
         </div>
 
-        <canvas id="chart" width="400" height="100"></canvas>
+        <div class="w-50">
+            <div class="d-flex justify-content-between mb-4">
+                <h5 class="fw-semibold fs-4">Rata-Rata Waktu Pemeriksaan</h5>
+            </div>
+
+            <div style="height: 400px; width: 100%">
+                <canvas id="pie" height="400"></canvas>
+            </div>
+        </div>
     </div>
     <div class=" mt-5 fs-6">
         <div class="d-flex gap-3 mb-4">
@@ -190,6 +204,34 @@ $(document).ready(function() {
     }
 
     loadData(getYear, getMonth);
+
+    function pieChart() {
+        const ctx = $('#pie')[0].getContext('2d');
+
+        const pieChartLabels = ['Dibawah 1 jam', 'Lebih dari 1 jam'];
+        const pieChartData = [20, 10];
+
+        new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: pieChartLabels,
+                datasets: [{
+                    label: 'Diagnosa Terbanyak',
+                    data: pieChartData,
+                    backgroundColor: [
+                        'rgb(54, 162, 235)',
+                        'rgb(255, 99, 132)',
+                    ],
+                    hoverOffset: 4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+            }
+        });
+    }
+    pieChart()
 })
 </script>
 <?= $this->endSection() ?>

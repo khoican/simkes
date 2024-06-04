@@ -17,14 +17,14 @@ class PasienSeeder extends Seeder
         $alamatIds = array_column($alamatIds, 'id');
 
         $data = [];
-        for ($i = 0; $i < 10; $i++) {
+        for ($i = 0; $i < 10000; $i++) {
              $pss_dlm_keluarga = $faker->randomElement(['kepala keluarga', 'ibu', 'anak']);
             $pss_anak = null;
             if ($pss_dlm_keluarga == 'anak') {
                 $pss_anak = $faker->numberBetween(1, 15);
             }
             $data[] = [
-                'no_rekam_medis' => $faker->numerify('00000000-000000##'),
+                'no_rekam_medis' => $faker->numerify('00000000-000#####'),
                 'nik' => $faker->numerify('################'),
                 'no_bpjs' => $faker->optional()->numerify('################'),
                 'nama' => $faker->name,
