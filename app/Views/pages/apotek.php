@@ -93,7 +93,20 @@ $(document).ready(function() {
                     },
                 },
                 {
-                    data: 'nama',
+                    data: '',
+                    render: function(data, type, row) {
+                        let bg = [
+                            'btn-success',
+                            'btn-warning',
+                            'btn-info',
+                            'btn-danger',
+                            'btn-primary',
+                            'btn-secondary',
+                        ];
+                        return `
+                            <div class="text-capitalize btn btn-sm ${bg[row.id_poli - 1]}" data-id="${row.id_poli}">poli ${row.nama}</div>
+                        `;
+                    }
                 },
                 {
                     data: '',

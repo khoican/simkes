@@ -45,22 +45,6 @@
 <?= $this->section('script') ?>
 <script type="module">
 $(document).ready(function() {
-    function kunjunganColor() {
-        $('.kunjungan').each(function() {
-            let bg = [
-                'btn-success',
-                'btn-warning',
-                'btn-info',
-                'btn-danger',
-                'btn-primary',
-                'btn-secondary',
-            ];
-            let id = $(this).data('id')
-            $(this).addClass(bg[id - 1])
-        })
-    }
-    kunjunganColor()
-
     function initializeDataTable(url) {
         $('#antrian').DataTable({
             destroy: true,
@@ -91,7 +75,17 @@ $(document).ready(function() {
                 {
                     data: '',
                     render: function(data, type, row) {
-                        return 'poli ' + row.nama;
+                        let bg = [
+                            'btn-success',
+                            'btn-warning',
+                            'btn-info',
+                            'btn-danger',
+                            'btn-primary',
+                            'btn-secondary',
+                        ];
+                        return `
+                            <div class="text-capitalize btn btn-sm ${bg[row.id_poli - 1]}" data-id="${row.id_poli}">poli ${row.nama}</div>
+                        `;
                     }
                 },
                 {
@@ -150,6 +144,22 @@ $(document).ready(function() {
         let status = $(this).data('status');
         initializeDataTable(`/kunjungan/${status}`);
     });
+
+    function kunjunganColor() {
+        $('.kunjungan').each(function() {
+            let bg = [
+                'btn-success',
+                'btn-warning',
+                'btn-info',
+                'btn-danger',
+                'btn-primary',
+                'btn-secondary',
+            ];
+            let id = $(this).data('id')
+            $(this).addClass(bg[id - 1])
+        })
+    }
+    kunjunganColor()
 });
 </script>
 
