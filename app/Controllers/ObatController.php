@@ -39,7 +39,7 @@ class ObatController extends BaseController
         $newKode = $this->obatModel->generateKodeObat();
 
         $data = [
-            'kode' => $newKode,
+            'kode' => $this->request->getPost('kode'),
             'obat' => $this->request->getPost('obat'),
             'jenis' => $this->request->getPost('jenis'),
             'bentuk' => $this->request->getPost('bentuk'),
@@ -66,6 +66,7 @@ class ObatController extends BaseController
 
     public function editObat($id) {
         $data = [
+            'kode' => $this->request->getPost('kode'),
             'obat' => $this->request->getPost('obat'),
             'jenis' => $this->request->getPost('jenis'),
             'bentuk' => $this->request->getPost('bentuk'),

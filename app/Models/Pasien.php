@@ -30,9 +30,9 @@ class Pasien extends Model
 
     // Validation
     protected $validationRules = [
-        'nik' => 'required',
-        'no_bpjs' => 'permit_empty',
-        'nama' => 'required',
+        'nik' => 'required|is_unique[pasiens.nik]|min_length[16]|max_length[16]',
+        'no_bpjs' => 'permit_empty|is_unique[pasiens.no_bpjs]|min_length[13]|max_length[13]',
+        'nama' => 'required|is_unique[pasiens.nama]',
         'jk' => 'required',
         'tmp_lahir' => 'required',
         'tgl_lahir' => 'required',
@@ -51,7 +51,16 @@ class Pasien extends Model
     ];
     protected $validationMessages   = [
         'nik' => [
-            'required' => 'NIK harus diisi'
+            'required' => 'NIK harus diisi',
+            'is_unique' => 'NIK sudah terdaftar',
+            'min_length' => 'NIK minimal 16 karakter',
+        ],
+        'no_bpjs' => [
+            'is_unique' => 'No. BPJS sudah terdaftar',
+            'min_length' => 'No. BPJS minimal 13 karakter',
+        ],
+        'nama' => [
+            'is_unique' => 'Nama sudah terdaftar',
         ],
         'tkp' => [
             'required' => 'Tanda Kependudukan harus diisi'

@@ -33,6 +33,10 @@
             <form action="/tindakan/store" method="POST" class="fs-6" id="diagnosaForm">
                 <div class="modal-body">
                     <?php csrf_field() ?>
+                    <div class="w-100 mb-0">
+                        <label for="kode" class="form-label">Kode Tindakan</label>
+                        <input type="text" class="form-control form-control-sm" id="kode" name="kode" required>
+                    </div>
                     <div class="w-100">
                         <label for="tindakan" class="form-label">Tindakan</label>
                         <input type="text" class="form-control form-control-sm" id="tindakan" name="tindakan" required>
@@ -61,6 +65,7 @@ $(document).ready(function() {
             url: '/tindakan/' + id,
             method: 'GET',
             success: function(data) {
+                $('#kode').val(data.kode)
                 $('#tindakan').val(data.tindakan)
             }
         })

@@ -35,7 +35,7 @@ class DiagnosaController extends BaseController
     public function postDiagnosa() {
         $newKode = $this->diagnosaModel->generateKodeDiagnosa();
         $data = [
-            'kode' => $newKode,
+            'kode' => $this->request->getPost('kode'),
             'diagnosa' => $this->request->getPost('diagnosa')
         ];
 
@@ -50,6 +50,7 @@ class DiagnosaController extends BaseController
 
     public function editDiagnosa($id) {
         $data = [
+            'kode' => $this->request->getPost('kode'),
             'diagnosa' => $this->request->getPost('diagnosa')
         ];
 

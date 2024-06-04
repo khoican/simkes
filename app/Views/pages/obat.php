@@ -38,6 +38,10 @@
                 <div class="modal-body">
                     <?php csrf_field() ?>
                     <div class="w-100 mb-3">
+                        <label for="kode" class="form-label mb-1">Kode Obat</label>
+                        <input type="text" class="form-control form-control-sm" id="kode" name="kode" required>
+                    </div>
+                    <div class="w-100 mb-3">
                         <label for="obat" class="form-label mb-1">Nama Obat</label>
                         <input type="text" class="form-control form-control-sm" id="obat" name="obat" required>
                     </div>
@@ -115,6 +119,7 @@ $(document).ready(function() {
             url: '/obat/' + id,
             method: 'GET',
             success: function(data) {
+                $('#kode').val(data.kode)
                 $('#obat').val(data.obat)
                 $('#jenis').val(data.jenis)
                 $('#bentuk').val(data.bentuk)

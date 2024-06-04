@@ -35,7 +35,7 @@ class TindakanController extends BaseController
     public function postTindakan() {
         $newKode = $this->tindakanModel->generateKodeTindakan();
         $data = [
-            'kode' => $newKode,
+            'kode' => $this->request->getPost('kode'),
             'tindakan' => $this->request->getPost('tindakan')
         ];
 
@@ -50,6 +50,7 @@ class TindakanController extends BaseController
 
     public function editTindakan($id) {
         $data = [
+            'kode' => $this->request->getPost('kode'),
             'tindakan' => $this->request->getPost('tindakan')
         ];
 
