@@ -17,9 +17,24 @@
             <?php elseif(session()->get('role') == 'rekmed'): ?>
             <a href="/pendaftaran" class="nav-link fw-medium text-secondary"><i class="bi bi-file-text-fill"></i>
                 Pendaftaran</a>
-            <a href="/pemeriksaan" class="nav-link fw-medium text-secondary"><i class="bi bi-heart-pulse-fill"></i>
-                Pemeriksaan</a>
-            <a href="/apotek" class="nav-link fw-medium text-secondary"><i class="bi bi-capsule"></i> Apotek</a>
+            <div class="btn-group">
+                <button type="button" class="nav-link fw-medium text-secondary" href='/pemeriksaan'
+                    data-bs-toggle="dropdown"><i class="bi bi-heart-pulse-fill"></i> Pemeriksaan</button>
+
+                <ul class="dropdown-menu dropdown-menu-sm-end fs-6">
+                    <li><a class="dropdown-item" href="/pemeriksaan"><i class="bi bi-person-fill"></i> Antrian</a></li>
+                    <li><a class="dropdown-item" href="/poli"><i class="bi bi-file-text-fill"></i> Rekam Medis</a>
+                </ul>
+            </div>
+            <div class="btn-group">
+                <button type="button" href="/apotek" class="nav-link fw-medium text-secondary"
+                    data-bs-toggle="dropdown"><i class="bi bi-capsule"></i> Apotek</button>
+
+                <ul class="dropdown-menu dropdown-menu-sm-end fs-6">
+                    <li><a class="dropdown-item" href="/apotek"><i class="bi bi-person-fill"></i> Antrian</a></li>
+                    <li><a class="dropdown-item" href="/poli"><i class="bi bi-file-text-fill"></i> Rekam Medis</a>
+                </ul>
+            </div>
 
             <?php endif; ?>
         </div>

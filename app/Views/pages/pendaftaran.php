@@ -5,6 +5,18 @@
 <div class="bg-white p-4 border rounded-3 mt-5">
     <div class="w-100 d-flex justify-content-between">
         <div class="col-9 fs-6">
+            <div class="mb-4 d-flex flex-column align-items-end">
+                <div class="w-25">
+                    <p class="mb-1 fs-6 fw-medium">Cari Data Pasien</p>
+                    <div class="d-flex flex-column gap-3">
+                        <input type="text" id="primarySearch" class="form-control form-control-sm"
+                            placeholder="Cari data">
+                        <input type="text" id="secondarySearch" class="form-control form-control-sm"
+                            placeholder="Cari data lebih spesifik" style="display:none">
+                    </div>
+                </div>
+            </div>
+
             <table class="table table-hover fs-6 border" id="dataTable">
                 <thead class="table-primary text-center">
                     <tr>
@@ -37,36 +49,50 @@
 <?= $this->section('script') ?>
 <script type="module">
 $(document).ready(function() {
-    $('#dataTable').DataTable({
+    var table = $('#dataTable').DataTable({
         processing: true,
+        serverSide: true,
         order: [0, 'desc'],
-        ordering: true,
+        searching: false,
         ajax: {
             url: 'pendaftaran/get-pasien',
-            dataSrc: '',
+            data: function(d) {
+                d.primarySearch = $('#primarySearch').val();
+                d.secondarySearch = $('#secondarySearch')
+                    .val();
+            },
+            dataSrc: function(json) {
+                if ($('#primarySearch').val() === '') {
+                    $('#secondarySearch').hide();
+                    $('#secondarySearch').val('');
+                } else {
+                    $('#secondarySearch').show();
+                }
+                return json.data;
+            },
         },
         columns: [{
-                data: 'no_rekam_medis',
+                data: 'no_rekam_medis'
             },
             {
-                data: 'nik',
+                data: 'nik'
             },
             {
-                data: 'nama',
+                data: 'nama'
             },
             {
-                data: 'null',
+                data: null,
                 render: function(data, type, row) {
                     return row.kelurahan + ', ' + row.kecamatan;
                 },
             },
             {
-                data: '',
+                data: null,
                 render: function(data, type, row) {
                     return `
-                            <button type="button" class="edit-pasien btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${row.pasien_id}"><i class="bi bi-pencil-square"></i></button>
-                            <button type="button" class="add-antrian btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAntrian" data-id="${row.pasien_id}"><i class="bi bi-plus text-white"></i></button>
-                            `;
+                        <button type="button" class="edit-pasien btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${row.pasien_id}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="add-antrian btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAntrian" data-id="${row.pasien_id}"><i class="bi bi-plus text-white"></i></button>
+                    `;
                 },
             },
         ],
@@ -78,7 +104,15 @@ $(document).ready(function() {
         },
         paging: true,
     });
-})
+
+    $('#primarySearch').on('keyup', function() {
+        table.draw(); // Redraw table with new primary search value
+    });
+
+    $('#secondarySearch').on('keyup', function() {
+        table.draw(); // Redraw table with new secondary search value
+    });
+});
 </script>
 
 <?= $this->endSection() ?>

@@ -33,12 +33,32 @@ class PasienController extends BaseController
         return view('pages/pendaftaran', ['pasiens' => $pasiens, 'polis' => $polis]);
     }
 
-    public function fetchPasien() 
+    public function fetchPasien()
     {
-        $data = $this->pasienModel->getAllPasien();
+        // Ambil parameter dari permintaan (request)
+        $primarySearch = $this->request->getVar('primarySearch');
+        $secondarySearch = $this->request->getVar('secondarySearch');
+        $start = $this->request->getVar('start', FILTER_VALIDATE_INT) ?? 0;
+        $length = $this->request->getVar('length', FILTER_VALIDATE_INT) ?? 10;
+        $order = $this->request->getVar('order') ?? [];
+        $columns = $this->request->getVar('columns') ?? [];
 
-        return $this->response->setJSON($data);
+        // Tentukan kolom untuk diurutkan dan arah urutan
+        $orderColumnIndex = $order[0]['column'] ?? 0;
+        $orderColumn = $columns[$orderColumnIndex]['data'] ?? 'no_rekam_medis';
+        $orderDir = $order[0]['dir'] ?? 'asc';
+
+        // Panggil metode search di model
+        $result = $this->pasienModel->searchPasien($primarySearch, $secondarySearch, $start, $length, $orderColumn, $orderDir);
+
+        return $this->response->setJSON([
+            'draw' => $this->request->getVar('draw') ?? 1,
+            'recordsTotal' => $result['recordsTotal'],
+            'recordsFiltered' => $result['recordsFiltered'],
+            'data' => $result['data'],
+        ]);
     }
+
 
     public function getPasien($id) 
     {

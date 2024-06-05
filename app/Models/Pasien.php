@@ -164,6 +164,70 @@ class Pasien extends Model
         return $newrm;
     } 
 
+    public function search($builder, $search) {
+
+        $builder->groupStart()
+                ->like('pasiens.no_rekam_medis', $search)
+                ->orLike('pasiens.nik', $search)
+                ->orLike('pasiens.nama', $search)
+                ->orLike('alamats.kelurahan', $search)
+                ->orLike('alamats.kecamatan', $search)
+                ->groupEnd();
+
+    }
+
+    public function searchPasien($primarySearch, $secondarySearch = null, $start, $length, $orderColumn, $orderDir)
+    {
+        $builder = $this->builder();
+
+        // Apply primary search
+        if ($primarySearch) {
+            $builder->select('pasiens.*, alamats.*')->groupStart()
+                    ->like('pasiens.no_rekam_medis', $primarySearch)
+                    ->orLike('pasiens.nik', $primarySearch)
+                    ->orLike('pasiens.nama', $primarySearch)
+                    ->orLike('alamats.kelurahan', $primarySearch)
+                    ->orLike('alamats.kecamatan', $primarySearch)
+                    ->groupEnd();
+        }
+
+        // Apply secondary search
+        if ($secondarySearch) {
+            $builder->select('pasiens.*, alamats.*')->groupStart()
+                    ->like('pasiens.no_rekam_medis', $secondarySearch)
+                    ->orLike('pasiens.nik', $secondarySearch)
+                    ->orLike('pasiens.nama', $secondarySearch)
+                    ->orLike('alamats.kelurahan', $secondarySearch)
+                    ->orLike('alamats.kecamatan', $secondarySearch)
+                    ->groupEnd();
+        }
+
+        // Apply sorting
+        if ($orderColumn && $orderDir) {
+            $builder->orderBy($orderColumn, $orderDir);
+        }
+
+        $builder->join('alamats', 'pasiens.id_alamat = alamats.id');
+
+        $recordsTotal = $builder->countAllResults(false);
+
+        // Apply pagination
+        $builder->limit($length, $start);
+
+        // Get filtered data
+        $data = $builder->get()->getResult();
+
+        // Count filtered records
+        $recordsFiltered = count($data);
+
+        return [
+            'recordsTotal' => $recordsTotal,
+            'recordsFiltered' => $recordsFiltered,
+            'data' => $data
+        ];
+    }
+
+
     public function postPasien($data) {
         if ($this->insert($data)) {
             $response = $this->db->insertID();
