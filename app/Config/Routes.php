@@ -18,7 +18,7 @@ $routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::ge
 // Pendaftaran (Pasien)
 $routes->group('pendaftaran', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'PasienController::index');
-    $routes->get('get-pasien', 'PasienController::fetchPasien');
+    $routes->post('get-pasien', 'PasienController::fetchPasien');
     $routes->get('get-pasien/(:num)', 'PasienController::getPasien/$1');
     $routes->post('pasien/store', 'PasienController::store');
     $routes->post('pasien/update/(:num)', 'PasienController::update/$1');

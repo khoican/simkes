@@ -180,7 +180,6 @@ class Pasien extends Model
     {
         $builder = $this->builder();
 
-        // Apply primary search
         if ($primarySearch) {
             $builder->select('pasiens.*, alamats.*')->groupStart()
                     ->like('pasiens.no_rekam_medis', $primarySearch)
@@ -191,7 +190,6 @@ class Pasien extends Model
                     ->groupEnd();
         }
 
-        // Apply secondary search
         if ($secondarySearch) {
             $builder->select('pasiens.*, alamats.*')->groupStart()
                     ->like('pasiens.no_rekam_medis', $secondarySearch)
@@ -202,7 +200,6 @@ class Pasien extends Model
                     ->groupEnd();
         }
 
-        // Apply sorting
         if ($orderColumn && $orderDir) {
             $builder->orderBy($orderColumn, $orderDir);
         }
@@ -211,13 +208,10 @@ class Pasien extends Model
 
         $recordsTotal = $builder->countAllResults(false);
 
-        // Apply pagination
         $builder->limit($length, $start);
 
-        // Get filtered data
         $data = $builder->get()->getResult();
 
-        // Count filtered records
         $recordsFiltered = count($data);
 
         return [

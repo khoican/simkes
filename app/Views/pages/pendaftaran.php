@@ -56,10 +56,10 @@ $(document).ready(function() {
         searching: false,
         ajax: {
             url: 'pendaftaran/get-pasien',
+            type: 'POST',
             data: function(d) {
                 d.primarySearch = $('#primarySearch').val();
-                d.secondarySearch = $('#secondarySearch')
-                    .val();
+                d.secondarySearch = $('#secondarySearch').val();
             },
             dataSrc: function(json) {
                 if ($('#primarySearch').val() === '') {
@@ -90,8 +90,8 @@ $(document).ready(function() {
                 data: null,
                 render: function(data, type, row) {
                     return `
-                        <button type="button" class="edit-pasien btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${row.pasien_id}"><i class="bi bi-pencil-square"></i></button>
-                        <button type="button" class="add-antrian btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAntrian" data-id="${row.pasien_id}"><i class="bi bi-plus text-white"></i></button>
+                        <button type="button" class="edit-pasien btn btn-warning" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="${row.id}"><i class="bi bi-pencil-square"></i></button>
+                        <button type="button" class="add-antrian btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAntrian" data-id="${row.id}"><i class="bi bi-plus text-white"></i></button>
                     `;
                 },
             },
@@ -103,14 +103,15 @@ $(document).ready(function() {
             $('td', row).eq(3).addClass('text-uppercase');
         },
         paging: true,
+        pageLength: 10
     });
 
     $('#primarySearch').on('keyup', function() {
-        table.draw(); // Redraw table with new primary search value
+        table.draw();
     });
 
     $('#secondarySearch').on('keyup', function() {
-        table.draw(); // Redraw table with new secondary search value
+        table.draw();
     });
 });
 </script>
