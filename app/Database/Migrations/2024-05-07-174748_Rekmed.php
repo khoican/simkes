@@ -64,6 +64,86 @@ class Rekmed extends Migration
                 'constraint' => ['compos mentis', 'samnolen', 'stupor', 'coma'],
                 'default' => 'compos mentis',
             ],
+            'bb' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'tb' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'imt' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'sistole' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'distole' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'nadi' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'rr' => [
+                'type' => 'VARCHAR',
+                'constraint' => 225,
+                'null' => true
+            ],
+            'suhu' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'skala_nyeri' => [
+                'type' => 'INT',
+                'constraint' => 11,
+                'null' => true
+            ],
+            'frek_nyeri' => [
+                'type' => 'ENUM',
+                'constraint' => ['jarang', 'hilang timbul', 'terus menerus'],
+                'null' => true
+            ],
+            'lama_nyeri' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
+            'menjalar' => [
+                'type' => 'ENUM',
+                'constraint' => ['ya', 'tidak'],
+                'null' => true
+            ],
+            'kualitas_nyeri' => [
+                'type' => 'ENUM',
+                'constraint' => ['tumpul', 'tajam', 'panas'],
+                'null' => true
+            ],
+            'fakt_pemicu' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
+            'fakt_pengurang' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
+            'lokasi_nyeri' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
             'status' => [
                 'type' => 'ENUM',
                 'constraint' => ['proses', 'selesai', 'tanpa obat'],
