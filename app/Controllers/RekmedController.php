@@ -5,6 +5,7 @@ namespace App\Controllers;
 use App\Controllers\BaseController;
 use App\Models\Diagnosa;
 use App\Models\DiagnosaPasien;
+use App\Models\GeneralConcent;
 use App\Models\Kunjungan;
 use App\Models\Obat;
 use App\Models\ObatPasien;
@@ -23,6 +24,7 @@ class RekmedController extends BaseController
     protected $diagnosaPasienModel;
     protected $tindakanPasienModel;
     protected $obatPasienModel;
+    protected $generalConsentModel;
     protected $db;
 
     public function __construct() 
@@ -35,6 +37,7 @@ class RekmedController extends BaseController
         $this->diagnosaPasienModel = new DiagnosaPasien();
         $this->tindakanPasienModel = new TindakanPasien();
         $this->obatPasienModel = new ObatPasien();
+        $this->generalConsentModel = new GeneralConcent();
         $this->db = db_connect();
     }
 
@@ -52,13 +55,14 @@ class RekmedController extends BaseController
     {   
         $pasienId = $this->kunjunganModel->getPasienId($kunjunganId);
         $rekmedPasiens = $this->rekmedModel->getRekmedByPasienId($pasienId);
+        $generalConsent = $this->generalConsentModel->getGeneralConsentByPasienId($pasienId);
 
         $diagnosaPasiens = [];
         foreach ($rekmedPasiens as $rekmedPasien) {
             $diagnosaPasiens[$rekmedPasien['id']] = $this->diagnosaPasienModel->getDiagnosaByRekmedId($rekmedPasien['id']);
         }
 
-        return view('pages/rekmed', ['pasienId' => $pasienId, 'kunjunganId' => $kunjunganId, 'rekmedPasiens' => $rekmedPasiens, 'diagnosaPasiens' => $diagnosaPasiens]);
+        return view('pages/rekmed', ['pasienId' => $pasienId, 'kunjunganId' => $kunjunganId, 'rekmedPasiens' => $rekmedPasiens, 'diagnosaPasiens' => $diagnosaPasiens, 'generalConsent' => $generalConsent]);
     }
 
     public function show($id) {

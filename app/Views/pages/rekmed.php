@@ -59,11 +59,77 @@
         </div>
         <?php endforeach ?>
 
+        <?php if (empty($generalConsent)) : ?>
+        <div class="w-100 h-auto mt-5 d-flex flex-column justify-content-center align-items-center">
+            <button type="button" class="btn btn-sm btn-primary mb-3" data-bs-toggle="modal"
+                data-bs-target="#exampleModal">
+                <i class="bi bi-plus"></i> General Consent
+            </button>
+            <p class="fs-6 fw-light">Tambahkan General Consent terlebih dahulu sebelum menambahkan data rekam
+                medis!</p>
+        </div>
+
+        <?php else : ?>
         <div class="w-100 h-auto mt-5 d-flex flex-column justify-content-center align-items-center">
             <a href="/pemeriksaan/<?= $kunjunganId ?>/new" class="btn btn-primary rounded-circle">
                 <i class="bi bi-plus fs-2 text-white mb-0"></i>
             </a>
             <p class="fs-5 ms-3 mb-0 fw-medium">Rekam Medis</p>
+        </div>
+        <?php endif ?>
+    </div>
+</div>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content fs-6">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">General Consent</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form action="/pemeriksaan/general-consent" method="post">
+                <?= csrf_field() ?>
+                <input type="hidden" name="id_pasien" value="<?= $pasienId['id_pasien'] ?>">
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label for="nama" class="col-form-label">Nama Wali</label>
+                        <input type="text" class="form-control form-control-sm" id="nama" name="nama">
+                    </div>
+                    <div class="mb-3">
+                        <label for="umur" class="col-form-label">Umur Wali</label>
+                        <input type="number" class="form-control form-control-sm" id="umur" name="umur">
+                    </div>
+                    <div class="mb-3">
+                        <label for="alamat" class="col-form-label">Alamat Wali</label>
+                        <input type="text" class="form-control form-control-sm" id="alamat" name="alamat">
+                    </div>
+                    <div class="mb-3">
+                        <label for="no_telp" class="col-form-label">No Telepon Wali</label>
+                        <input type="number" class="form-control form-control-sm" id="no_telp" name="no_telp">
+                    </div>
+                    <div class="mb-3">
+                        <label for="status" class="col-form-label">Status Hubungan</label>
+                        <select class="form-select form-select-sm" aria-label="Small select example" id="status"
+                            name="status">
+                            <option selected>Pilih hubungan wali dengan pasien</option>
+                            <option value="ayah">Ayah</option>
+                            <option value="ibu">Ibu</option>
+                            <option value="paman">Paman</option>
+                            <option value="tante">Tante</option>
+                            <option value="kakak">Kakak</option>
+                            <option value="adik">Adik</option>
+                            <option value="kaket">Kakek</option>
+                            <option value="nenek">Nenek</option>
+                            <option value="saudara">Saudara</option>
+                            <option value="lainnya">lainnya</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Batal</button>
+                    <button type="submit" class="btn btn-primary">Tambah Data</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

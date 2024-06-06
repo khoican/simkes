@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Controllers\BaseController;
 use App\Models\Alamat;
+use App\Models\GeneralConcent;
 use App\Models\Kunjungan;
 use App\Models\Pasien;
 use App\Models\Poli;
@@ -15,6 +16,7 @@ class PasienController extends BaseController
     protected $kunjunganModel;
     protected $alamatModel;
     protected $poliModel;
+    protected $generalConsentModel;
     protected $db;
 
     public function __construct()
@@ -23,6 +25,7 @@ class PasienController extends BaseController
         $this->kunjunganModel = new Kunjungan();
         $this->alamatModel = new Alamat();
         $this->poliModel = new Poli();
+        $this->generalConsentModel = new GeneralConcent();
         $this->db = db_connect();
     }
     
@@ -134,6 +137,25 @@ class PasienController extends BaseController
         }
         
         return redirect()->to('/pendaftaran'); 
+    }
+
+    public function postGeneralConsent() {
+        $data = [
+            'nama'  => $this->request->getPost('nama'),
+            'umur'  => $this->request->getPost('umur'),
+            'alamat'  => $this->request->getPost('alamat'),
+            'no_telp' => $this->request->getPost('no_telp'),
+            'status'    => $this->request->getPost('status'),
+            'id_pasien' => $this->request->getPost('id_pasien'),
+        ];
+
+        if ($this->generalConsentModel->postGeneralConsent($data)) {
+            session()->setFlashdata('pesan', 'Data general consent berhasil ditambahkan');
+        } else {
+            session()->setFlashdata('error', 'Data general consent gagal ditambahkan');
+        }
+
+        return redirect()->back();
     }
 
     public function update($id)

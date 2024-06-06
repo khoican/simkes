@@ -32,6 +32,7 @@ $routes->group('pemeriksaan', ['filter' => 'auth'], function($routes) {
     $routes->get('(:num)/show/(:num)', 'RekmedController::show/$2');
     $routes->get('(:num)/edit/(:num)', 'RekmedController::edit/$2');
     $routes->post('(:num)', 'RekmedController::periksaPasien/$1');
+    $routes->post('general-consent', 'PasienController::postGeneralConsent');
 });
 
 // Apotek

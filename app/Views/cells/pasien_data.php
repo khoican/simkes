@@ -66,3 +66,48 @@
         </table>
     </div>
 </div>
+
+<button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#consent">
+    General Consent
+</button>
+
+<div class="modal fade" id="consent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content fs-6">
+            <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel">General Consent</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nama" class="col-form-label">Nama Wali</label>
+                    <input type="text" class="form-control form-control-sm" readonly id="nama" name="nama"
+                        value="<?= esc($generalConsent['nama']) ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="umur" class="col-form-label">Umur Wali</label>
+                    <input type="number" class="form-control form-control-sm" readonly id="umur" name="umur"
+                        value="<?= esc($generalConsent['umur']) ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="alamat" class="col-form-label">Alamat Wali</label>
+                    <input type="text" class="form-control form-control-sm" readonly id="alamat" name="alamat"
+                        value="<?= esc($generalConsent['alamat']) ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="no_telp" class="col-form-label">No Telepon Wali</label>
+                    <input type="number" class="form-control form-control-sm" readonly id="no_telp" name="no_telp"
+                        value="<?= esc($generalConsent['no_telp']) ?>">
+                </div>
+                <div class="mb-3">
+                    <label for="status" class="col-form-label">Status Hubungan</label>
+                    <select class="form-select form-select-sm" aria-label="Small select example" id="status"
+                        name="status" disabled>
+                        <option value="<?= esc($generalConsent['status']) ?>"><?= esc($generalConsent['status']) ?>
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

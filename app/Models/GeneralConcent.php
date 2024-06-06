@@ -6,7 +6,7 @@ use CodeIgniter\Model;
 
 class GeneralConcent extends Model
 {
-    protected $table            = 'generalconcents';
+    protected $table            = 'general_consent';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
