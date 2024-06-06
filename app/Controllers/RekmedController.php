@@ -105,6 +105,23 @@ class RekmedController extends BaseController
             'sts_psikologi'         => $this->request->getPost('sts_psikologi'),
             'keadaan'               => $this->request->getPost('keadaan'),
             'kesadaran'             => $this->request->getPost('kesadaran'),
+            'bb'                    => $this->request->getPost('bb'),
+            'tb'                    => $this->request->getPost('tb'),
+            'imt'                   => $this->request->getPost('imt'),
+            'sistole'               => $this->request->getPost('sistole'),
+            'diastole'              => $this->request->getPost('diastole'),
+            'nadi'                  => $this->request->getPost('nadi'),
+            'rr'                    => $this->request->getPost('rr'),
+            'suhu'                  => $this->request->getPost('suhu'),
+            'skala_nyeri'           => $this->request->getPost('skala_nyeri'),
+            'frek_nyeri'            => $this->request->getPost('frek_nyeri'),
+            'lama_nyeri'            => $this->request->getPost('lama_nyeri'),
+            'menjalar'              => $this->request->getPost('menjalar'),
+            'menjalar_ket'          => $this->request->getPost('menjalar_ket'),
+            'kualitas_nyeri'        => $this->request->getPost('kualitas_nyeri'),
+            'fakt_pemicu'           => $this->request->getPost('fakt_pemicu'),
+            'fakt_pengurang'        => $this->request->getPost('fakt_pengurang'),
+            'lokasi_nyeri'          => $this->request->getPost('lokasi_nyeri'),
             'id_pasien'             => intval($id),
             'id_poli'               => intval($this->request->getPost('id_poli')),
         ];
@@ -220,6 +237,23 @@ class RekmedController extends BaseController
             'sts_psikologi'         => $this->request->getPost('sts_psikologi'),
             'keadaan'               => $this->request->getPost('keadaan'),
             'kesadaran'             => $this->request->getPost('kesadaran'),
+            'bb'                    => $this->request->getPost('bb'),
+            'tb'                    => $this->request->getPost('tb'),
+            'imt'                   => $this->request->getPost('imt'),
+            'sistole'               => $this->request->getPost('sistole'),
+            'diastole'              => $this->request->getPost('diastole'),
+            'nadi'                  => $this->request->getPost('nadi'),
+            'rr'                    => $this->request->getPost('rr'),
+            'suhu'                  => $this->request->getPost('suhu'),
+            'skala_nyeri'           => $this->request->getPost('skala_nyeri'),
+            'frek_nyeri'            => $this->request->getPost('frek_nyeri'),
+            'lama_nyeri'            => $this->request->getPost('lama_nyeri'),
+            'menjalar'              => $this->request->getPost('menjalar'),
+            'menjalar_ket'          => $this->request->getPost('menjalar_ket'),
+            'kualitas_nyeri'        => $this->request->getPost('kualitas_nyeri'),
+            'fakt_pemicu'           => $this->request->getPost('fakt_pemicu'),
+            'fakt_pengurang'        => $this->request->getPost('fakt_pengurang'),
+            'lokasi_nyeri'          => $this->request->getPost('lokasi_nyeri'),
             'id_pasien'             => intval($this->request->getPost('id_pasien')),
             'id_poli'               => intval($this->request->getPost('id_poli')),
         ];
@@ -263,16 +297,18 @@ class RekmedController extends BaseController
         $idObats = $this->request->getPost('obat');
         $resep = $this->request->getPost('resep');
         $resep2 = $this->request->getPost('resep2');
-        $this->obatPasienModel->deleteObatPasienByRekmedId($id);
-        foreach ($idObats as $index => $idObat) {
-            $dataResep = [
-                'id_rekmed'            => $id,
-                'id_pasien'            => intval($this->request->getPost('id_pasien')),
-                'id_obat'              => intval($idObat),
-                'note'                  => $resep[$index]. ' x '.$resep2[$index],
-            ];
-
-            $this->obatPasienModel->postObatPasien($dataResep);
+        if ($idObats[0] != null && $resep[0] != null && $resep2[0] != null) {
+            $this->obatPasienModel->deleteObatPasienByRekmedId($id);
+            foreach ($idObats as $index => $idObat) {
+                $dataResep = [
+                    'id_rekmed'            => $id,
+                    'id_pasien'            => intval($this->request->getPost('id_pasien')),
+                    'id_obat'              => intval($idObat),
+                    'note'                  => $resep[$index]. ' x '.$resep2[$index],
+                ];
+    
+                $this->obatPasienModel->postObatPasien($dataResep);
+            }
         }
 
         $this->db->transComplete();

@@ -71,6 +71,7 @@
     General Consent
 </button>
 
+<?php if(isset($generalConsent)) : ?>
 <div class="modal fade" id="consent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content fs-6">
@@ -111,3 +112,4 @@
         </div>
     </div>
 </div>
+<?php endif; ?>

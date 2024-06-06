@@ -13,7 +13,7 @@ class Rekmed extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['alergi_makanan', 'alergi_obat', 'rwt_pykt_terdahulu', 'rwt_pengobatan', 'rwt_pykt_keluarga', 'keluhan', 'hgb_dgn_keluarga', 'sts_psikologi', 'keadaan', 'kesadaran', 'bb', 'tb', 'imt', 'sistole', 'diastole', 'nadi', 'rr', 'suhu', 'skala_nyeri', 'frek_nyeri', 'lama_nyeri', 'menjalar', 'kualitas_nyeri', 'fakt_pemicu', 'fakt_pengurang',  'lokasi_nyeri', 'status', 'id_pasien', 'id_poli'];
+    protected $allowedFields    = ['alergi_makanan', 'alergi_obat', 'rwt_pykt_terdahulu', 'rwt_pengobatan', 'rwt_pykt_keluarga', 'keluhan', 'hgb_dgn_keluarga', 'sts_psikologi', 'keadaan', 'kesadaran', 'bb', 'tb', 'imt', 'sistole', 'diastole', 'nadi', 'rr', 'suhu', 'skala_nyeri', 'frek_nyeri', 'lama_nyeri', 'menjalar', 'menjalar_ket', 'kualitas_nyeri', 'fakt_pemicu', 'fakt_pengurang',  'lokasi_nyeri', 'status', 'id_pasien', 'id_poli'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -52,6 +52,7 @@ class Rekmed extends Model
         'frek_nyeri'      => "permit_empty",
         'lama_nyeri'      => "permit_empty",
         'menjalar'        => "permit_empty",
+        'menjalar_ket'    => "permit_empty",
         'kualitas_nyeri'  => "permit_empty",
         'fakt_pemicu'     => "permit_empty",
         'fakt_pengurang'  => "permit_empty",

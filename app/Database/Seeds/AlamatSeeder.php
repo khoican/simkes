@@ -12,7 +12,7 @@ class AlamatSeeder extends Seeder
         $faker = Factory::create('id_ID');
 
         $data = [];
-        for ($i = 1; $i <= 10000; $i++) {
+        for ($i = 1; $i <= 1000; $i++) {
             $data[] = [
                 'alamat' => $faker->address,
                 'rt' => $faker->numerify('#'),

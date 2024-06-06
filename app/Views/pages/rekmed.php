@@ -114,6 +114,8 @@
                             <option selected>Pilih hubungan wali dengan pasien</option>
                             <option value="ayah">Ayah</option>
                             <option value="ibu">Ibu</option>
+                            <option value="suami">Suami</option>
+                            <option value="istri">Istri</option>
                             <option value="paman">Paman</option>
                             <option value="tante">Tante</option>
                             <option value="kakak">Kakak</option>

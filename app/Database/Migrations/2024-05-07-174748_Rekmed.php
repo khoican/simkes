@@ -84,7 +84,7 @@ class Rekmed extends Migration
                 'constraint' => 11,
                 'null' => true
             ],
-            'distole' => [
+            'diastole' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'null' => true
@@ -122,6 +122,11 @@ class Rekmed extends Migration
             'menjalar' => [
                 'type' => 'ENUM',
                 'constraint' => ['ya', 'tidak'],
+                'null' => true
+            ],
+            'menjalar_ket' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
                 'null' => true
             ],
             'kualitas_nyeri' => [

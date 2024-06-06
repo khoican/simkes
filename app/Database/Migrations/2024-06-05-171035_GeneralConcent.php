@@ -33,7 +33,7 @@ class GeneralConcent extends Migration
             ],
             'status' => [
                 'type' => 'ENUM',
-                'constraint' => ['ayah', 'ibu', 'paman', 'tante', 'kakak', 'adik', 'kakek', 'nenek', 'saudara', 'lainnya']
+                'constraint' => ['ayah', 'ibu', 'paman', 'tante', 'kakak', 'adik', 'kakek', 'suami', 'istri', 'nenek', 'saudara', 'lainnya']
             ],
             'id_pasien' => [
                 'type' => 'INT',

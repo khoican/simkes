@@ -196,10 +196,217 @@
                         </fieldset>
                     </div>
                 </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="bb">Berat Badan</label>
+                        <input type="number" class="form-control form-control-sm" id="bb" name="bb"
+                            value="<?php if($method != 'post') echo $kunjungan['bb'] ?>">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="tb">Tinggi Badan</label>
+                        <input type="number" class="form-control form-control-sm" id="tb" name="tb"
+                            value="<?php if($method != 'post') echo $kunjungan['tb'] ?>">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="imt">IMT</label>
+                        <input type="number" class="form-control form-control-sm" id="imt" name="imt"
+                            value="<?php if($method != 'post') echo $kunjungan['imt'] ?>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="sistole">Sistole</label>
+                        <input type="number" class="form-control form-control-sm" id="sistole" name="sistole"
+                            value="<?php if($method != 'post') echo $kunjungan['sistole'] ?>">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="diastole">Diastole</label>
+                        <input type="number" class="form-control form-control-sm" id="diastole" name="diastole"
+                            value="<?php if($method != 'post') echo $kunjungan['diastole'] ?>">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="nadi">Nadi</label>
+                        <input type="number" class="form-control form-control-sm" id="nadi" name="nadi"
+                            value="<?php if($method != 'post') echo $kunjungan['nadi'] ?>">
+                    </div>
+                </div>
+                <div class="mb-3 row">
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="rr">RR</label>
+                        <input type="number" class="form-control form-control-sm" id="rr" name="rr"
+                            value="<?php if($method != 'post') echo $kunjungan['rr'] ?>">
+                    </div>
+                    <div class="col-sm-4">
+                        <label class="mb-1" for="suhu">Suhu (Celcius)</label>
+                        <input type="number" class="form-control form-control-sm" id="suhu" name="suhu"
+                            value="<?php if($method != 'post') echo $kunjungan['suhu'] ?>">
+                    </div>
+                </div>
             </div>
 
             <div class="mb-5">
-                <p class="mb-2 fs-5 fw-medium">Pemeriksaan Assessment</p>
+                <p class="mb-3 fs-5 fw-medium">Assesment Awal Nyeri (diisi bila ada keluhan nyeri)</p>
+
+                <div class="row">
+                    <div class="col-sm-4">
+                        <img src="<?= base_url('images/nyeri.png') ?>" alt="" class="img-fluid">
+                        <input type="range" class="form-range" min="0" max="10" id="nyeri"
+                            value="<?php if($method != 'post') echo $kunjungan['skala_nyeri'] ?>">
+                    </div>
+                    <div class="col-sm-8">
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="skala_nyeri" class="col-sm-3 col-form-label">Skala Nyeri</label>
+                            <div class="col-sm-9">
+                                <input type="number" class="form-control form-control-sm" id="skala_nyeri"
+                                    name="skala_nyeri"
+                                    value="<?php if($method != 'post') echo $kunjungan['skala_nyeri'] ?>">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="skala_nyeri" class="col-sm-3 col-form-label">Frekuensi Nyeri</label>
+                            <div class="col-sm-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="frek_nyeri" id="frek_jarang"
+                                        value="jarang"
+                                        <?php if($method != 'post') if($kunjungan['frek_nyeri'] == 'jarang') echo 'checked' ?> />
+                                    <label class="form-check-label" for="frek_jarang">Jarang</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="frek_nyeri"
+                                        id="frek_hilang_timbul" value="hilang timbul"
+                                        <?php if($method != 'post') if($kunjungan['frek_nyeri'] == 'hilang timbul') echo 'checked' ?> />
+                                    <label class="form-check-label" for="frek_hilang_timbul">Hilang Timbul</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="frek_nyeri"
+                                        id="frek_terus_menerus" value="terus menerus"
+                                        <?php if($method != 'post') if($kunjungan['frek_nyeri'] == 'terus menerus') echo 'checked' ?> />
+                                    <label class="form-check-label" for="frek_terus_menerus">Terus Menerus</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="lama_nyeri" class="col-sm-3 col-form-label">Lama Nyeri</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control form-control-sm" id="lama_nyeri"
+                                    name="lama_nyeri"
+                                    value="<?php if($method != 'post') echo $kunjungan['lama_nyeri'] ?>">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="menjalar" class="col-sm-3 col-form-label">Menjalar</label>
+                            <div class="col-sm-9">
+                                <div class="d-flex gap-2 w-100 align-items-center">
+                                    <div class="" style="width: 50%;">
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="menjalar"
+                                                id="menjalar_tidak" value="tidak"
+                                                <?php if($method != 'post') if($kunjungan['menjalar'] == 'tidak') echo 'checked' ?> />
+                                            <label class="form-check-label" for="menjalar_tidak">Tidak</label>
+                                        </div>
+                                        <div class="form-check form-check-inline">
+                                            <input class="form-check-input" type="radio" name="menjalar"
+                                                id="menjalar_iya" value="ya"
+                                                <?php if($method != 'post') if($kunjungan['menjalar'] == 'ya') echo 'checked' ?> />
+                                            <label class="form-check-label" for="menjalar_iya">Iya, ke</label>
+                                        </div>
+                                    </div>
+                                    <input type="text" class="form-control form-control-sm" style="width: 50%;"
+                                        id="menjalar_ket" name="menjalar_ket" placeholder="..."
+                                        value="<?php if($method != 'post') echo $kunjungan['menjalar_ket'] ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="kualitas_nyeri" class="col-sm-3 col-form-label">Kualitas Nyeri</label>
+                            <div class="col-sm-9">
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="kualitas_nyeri"
+                                        id="kualitas_tumpul" value="tumpul"
+                                        <?php if($method != 'post') if($kunjungan['kualitas_nyeri'] == 'tumpul') echo 'checked' ?> />
+                                    <label class="form-check-label" for="kualitas_tumpul">Nyeri Tumpul</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="kualitas_nyeri" id="kualitas"
+                                        value="tajam"
+                                        <?php if($method != 'post') if($kunjungan['kualitas_nyeri'] == 'tajam') echo 'checked' ?> />
+                                    <label class="form-check-label" for="kualitas">kualitas Tajam</label>
+                                </div>
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="kualitas_nyeri"
+                                        id="kualitas_panas" value="panas"
+                                        <?php if($method != 'post') if($kunjungan['kualitas_nyeri'] == 'panas') echo 'checked' ?> />
+                                    <label class="form-check-label" for="kualitas_panas">Panas Terbakar</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="fakt_pemicu" class="col-sm-3 col-form-label">Faktor Pemicu</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control form-control-sm" id="fakt_pemicu"
+                                    name="fakt_pemicu"
+                                    value="<?php if($method != 'post') echo $kunjungan['fakt_pemicu'] ?>">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="fakt_pengurang" class="col-sm-3 col-form-label">Faktor Pereda</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control form-control-sm" id="fakt_pengurang"
+                                    name="fakt_pengurang"
+                                    value="<?php if($method != 'post') echo $kunjungan['fakt_pengurang'] ?>">
+                            </div>
+                        </div>
+                        <div class="row g-3 mb-3 align-items-center">
+                            <label for="lokasi_nyeri" class="col-sm-3 col-form-label">Lokasi Nyeri</label>
+                            <div class="col-sm-9">
+                                <select class="form-select form-select-sm" aria-label="Small select example"
+                                    name="lokasi_nyeri" id="lokasi_nyeri">
+                                    <option value="">Pilih lokasi nyeri</option>
+                                    <option value="kepala"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'kepala') echo 'selected'; ?>>
+                                        Kepala</option>
+                                    <option value="dada"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'dada') echo 'selected'; ?>>
+                                        Dada</option>
+                                    <option value="perut"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'perut') echo 'selected'; ?>>
+                                        Perut</option>
+                                    <option value="genetalia"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'genetalia') echo 'selected'; ?>>
+                                        Genetalia</option>
+                                    <option value="anus"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'anus') echo 'selected'; ?>>
+                                        Anus</option>
+                                    <option value="ekstremitas"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'ekstremitas') echo 'selected'; ?>>
+                                        Ekstremitas</option>
+                                    <option value="sistem pernapasan"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'sistem pernapasan') echo 'selected'; ?>>
+                                        Sistem Pernapasan</option>
+                                    <option value="sistem kardiovaskuler"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'sistem kardiovaskuler') echo 'selected'; ?>>
+                                        Sistem Kardiovaskuler</option>
+                                    <option value="sistem neurologis"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'sistem neurologis') echo 'selected'; ?>>
+                                        Sistem Neurologis</option>
+                                    <option value="sistem gastrointestinal"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'sistem gastrointestinal') echo 'selected'; ?>>
+                                        Sistem Gastrointestinal</option>
+                                    <option value="sistem perkemihan"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'sistem perkemihan') echo 'selected'; ?>>
+                                        Sistem Perkemihan</option>
+                                    <option value="sistem integumen"
+                                        <?php if (isset($kunjungan['lokasi_nyeri']) && $kunjungan['lokasi_nyeri'] == 'sistem integumen') echo 'selected'; ?>>
+                                        Sistem Integumen</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-5">
+                <p class="mb-2 fs-5 fw-medium">Diagnosa</p>
 
                 <div class="d-flex gap-3 mb-3">
                     <div class="w-50">
@@ -283,7 +490,7 @@
                 </div>
                 <div id="resep">
                     <?php
-                    if ($method != 'post') :
+                    if ($method != 'post' && count($obatPasiens) > 0) :
                         foreach ($obatPasiens as $index => $obatPasien) : ?>
                     <div class="d-flex gap-3 mb-2" id="resep-<?= $index ?>">
                         <select name="obat[]" data-width="75%" data-placeholder="Pilih Obat"
@@ -350,6 +557,10 @@
 <?= $this->section('script') ?>
 <script type="module">
 $(document).ready(function() {
+    $('#nyeri').on('input', function() {
+        $('#skala_nyeri').val($(this).val());
+    })
+
     function method() {
         if ($('#method').val() == 'post') {
             console.log('POST');
