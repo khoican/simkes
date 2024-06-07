@@ -165,15 +165,34 @@ class Pasien extends Model
     } 
 
     public function search($builder, $search) {
+        $builder->select('pasiens.*, alamats.*')->groupStart()
+                    ->like('pasiens.no_rekam_medis', $search)
+                    ->orLike('pasiens.nik', $search)
+                    ->orLike('pasiens.nama', $search)
+                    ->orLike('alamats.kelurahan', $search)
+                    ->orLike('alamats.kecamatan', $search)
+                    ->groupEnd();
 
-        $builder->groupStart()
-                ->like('pasiens.no_rekam_medis', $search)
-                ->orLike('pasiens.nik', $search)
-                ->orLike('pasiens.nama', $search)
-                ->orLike('alamats.kelurahan', $search)
-                ->orLike('alamats.kecamatan', $search)
-                ->groupEnd();
+    }
 
+    public function searchEngine($search)
+    {
+        $builder = $this->builder();
+
+        $builder->select('pasiens.*')->groupStart()
+                    ->like('pasiens.no_rekam_medis', $search)
+                    ->orLike('pasiens.nik', $search)
+                    ->orLike('pasiens.nama', $search)
+                    ->groupEnd();
+
+        $builder->join('alamats', 'pasiens.id_alamat = alamats.id');
+
+        $result = $builder->get()->getResult();
+        if (count($result) > 0) {
+            return $result;
+        } else {
+            return null;
+        }
     }
 
     public function searchPasien($primarySearch, $secondarySearch = null, $start, $length, $orderColumn, $orderDir)
@@ -181,23 +200,11 @@ class Pasien extends Model
         $builder = $this->builder();
 
         if ($primarySearch) {
-            $builder->select('pasiens.*, alamats.*')->groupStart()
-                    ->like('pasiens.no_rekam_medis', $primarySearch)
-                    ->orLike('pasiens.nik', $primarySearch)
-                    ->orLike('pasiens.nama', $primarySearch)
-                    ->orLike('alamats.kelurahan', $primarySearch)
-                    ->orLike('alamats.kecamatan', $primarySearch)
-                    ->groupEnd();
+            $this->search($builder, $primarySearch);
         }
 
         if ($secondarySearch) {
-            $builder->select('pasiens.*, alamats.*')->groupStart()
-                    ->like('pasiens.no_rekam_medis', $secondarySearch)
-                    ->orLike('pasiens.nik', $secondarySearch)
-                    ->orLike('pasiens.nama', $secondarySearch)
-                    ->orLike('alamats.kelurahan', $secondarySearch)
-                    ->orLike('alamats.kecamatan', $secondarySearch)
-                    ->groupEnd();
+            $this->search($builder, $secondarySearch);
         }
 
         if ($orderColumn && $orderDir) {

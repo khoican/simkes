@@ -4,7 +4,7 @@
 
 <div class='d-flex gap-3 mt-5 border rounded-3 bg-white p-3'>
     <div class="col-3">
-        <?= view_cell('PasienDataCell', ['id' => $kunjungan['id_pasien']]) ?>
+        <?= view_cell('PasienDataCell', ['id' => $id]) ?>
     </div>
 
     <div class="w-100 p-3 border rounded-3">
@@ -12,7 +12,7 @@
             <?= csrf_field() ?>
             <input type="hidden" name="id_pasien" value="<?= $kunjungan['id_pasien'] ?>">
             <input type="hidden" name="id_poli" value="<?= $kunjungan['id_poli'] ?>">
-            <input type="hidden" name="id_kunjungan" value="<?= $kunjungan['id'] ?>">
+            <input type="hidden" name="id_kunjungan" value="<?= $kunjungan['id_kunjungan'] ?>">
             <input type="hidden" name="method" id="method" value="<?= $method ?>">
 
             <div class="mb-5">
@@ -545,8 +545,7 @@
 
             <div id="onsubmit">
                 <button type="submit" class="btn btn-primary rounded-pill" id='submit'>Simpan</button>
-                <a href="/pemeriksaan/<?= $kunjunganId['id'] ?>"
-                    class="btn btn-outline-secondary rounded-pill">Batal</a>
+                <a href="/pemeriksaan/<?= $id ?>" class="btn btn-outline-secondary rounded-pill">Batal</a>
             </div>
         </form>
     </div>
@@ -564,10 +563,10 @@ $(document).ready(function() {
     function method() {
         if ($('#method').val() == 'post') {
             console.log('POST');
-            $('#rekmedForm').attr('action', '/rekmed/store/<?= $kunjungan['id_pasien'] ?>');
+            $('#rekmedForm').attr('action', '/rekmed/store/<?= $id ?>');
         } else if ($('#method').val() == 'edit') {
             console.log('PUT');
-            $('#rekmedForm').attr('action', '/rekmed/update/<?= $kunjungan['id'] ?>');
+            $('#rekmedForm').attr('action', '/rekmed/update/<?= $kunjungan['id_kunjungan'] ?>');
         } else {
             $('.form-control').attr('readonly', true);
             $('.form-check-input, .form-select-sm').attr('disabled', true);

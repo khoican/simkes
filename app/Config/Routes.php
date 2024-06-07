@@ -15,6 +15,11 @@ $routes->post('user/login', 'UserController::auth');
 $routes->get('/', 'DashboardController::index', ['filters' => 'auth']);
 $routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2', ['filter' => 'auth']);
 
+// Pasien
+$routes->group('pasien', ['filter' => 'auth'], function($routes) {
+    $routes->post('search', 'PasienController::searchPasien');
+});
+
 // Pendaftaran (Pasien)
 $routes->group('pendaftaran', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'PasienController::index');
@@ -29,7 +34,6 @@ $routes->group('pemeriksaan', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::pemeriksaan');
     $routes->get('(:num)', 'RekmedController::getByUser/$1');
     $routes->get('(:num)/new', 'RekmedController::create/$1');
-    $routes->get('(:num)/show/(:num)', 'RekmedController::show/$2');
     $routes->get('(:num)/edit/(:num)', 'RekmedController::edit/$2');
     $routes->post('(:num)', 'RekmedController::periksaPasien/$1');
     $routes->post('general-consent', 'PasienController::postGeneralConsent');
@@ -56,6 +60,8 @@ $routes->group('kunjungan', ['filter' => 'auth'], function($routes) {
 
 // Rekam Medis
 $routes->group('rekmed', ['filter' => 'auth'], function($routes) {
+    $routes->get('/', 'RekmedController::index');
+    $routes->get('(:num)', 'RekmedController::show/$1');
     $routes->post('store/(:num)', 'RekmedController::store/$1');
     $routes->post('update/(:num)', 'RekmedController::update/$1');
     $routes->post('delete/(:num)/(:num)', 'RekmedController::delete/$1/$2');

@@ -111,7 +111,7 @@ class Kunjungan extends Model
     }
 
     public function getKunjunganByPasienId($id) {
-        return $this->where('id_pasien', $id)->select('kunjungans.id as id_kunjungan, kunjungans.no_antrian as no_antrian, kunjungans.created_at as created_at, kunjungans.status as status, pasiens.nama as nama_pasien, pasiens.no_rekam_medis as no_rekam_medis, pasiens.nik as nik, pasiens.no_bpjs as no_bpjs, pasiens.tgl_lahir as tgl_lahir, pasiens.agama as agama, pasiens.gol_darah as gol_darah, polis.nama as nama_poli')->join('pasiens', 'pasiens.id = kunjungans.id_pasien')->select('TIMESTAMPDIFF(YEAR, pasiens.tgl_lahir, CURDATE()) AS usia')->join('polis', 'polis.id = kunjungans.id_poli')->first();
+        return $this->where('id_pasien', $id)->select('kunjungans.id as id_kunjungan, kunjungans.id_pasien as id_pasien, kunjungans.id_poli as id_poli, kunjungans.no_antrian as no_antrian, kunjungans.created_at as created_at, kunjungans.status as status, pasiens.nama as nama_pasien, pasiens.no_rekam_medis as no_rekam_medis, pasiens.nik as nik, pasiens.no_bpjs as no_bpjs, pasiens.tgl_lahir as tgl_lahir, pasiens.agama as agama, pasiens.gol_darah as gol_darah, pasiens.pekerjaan as pekerjaan_pasien, polis.nama as nama_poli')->join('pasiens', 'pasiens.id = kunjungans.id_pasien')->select('TIMESTAMPDIFF(YEAR, pasiens.tgl_lahir, CURDATE()) AS usia')->join('polis', 'polis.id = kunjungans.id_poli')->orderBy('kunjungans.created_at', 'desc')->first();
     }
 
     public function getKunjunganById($id) {

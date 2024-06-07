@@ -59,6 +59,18 @@ class PasienController extends BaseController
         ]);
     }
 
+    public function searchPasien()
+    {
+        $search = $this->request->getVar('search');
+        $result = $this->pasienModel->searchEngine($search);
+
+        if (isset($result)) {
+            return redirect()->to('/pemeriksaan/'.$result[0]->id);
+        } else {
+            session()->setFlashdata('error', 'Pasien tidak ditemukan');
+            return redirect()->back()->withInput();
+        }
+    }
 
     public function getPasien($id) 
     {

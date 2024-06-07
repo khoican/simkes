@@ -42,51 +42,80 @@ class RekmedController extends BaseController
     }
 
     public function periksaPasien($kunjunganId) {
+        $kunjungan = $this->kunjunganModel->getKunjunganById($kunjunganId);
         $data = [
             'panggil'         => 0,
             'status'          => 'pemeriksaan',
         ];
         if ($this->kunjunganModel->updateKunjungan($kunjunganId, $data)) {
-            return redirect()->to('/pemeriksaan/'. $kunjunganId);
+            return redirect()->to('/pemeriksaan/'. $kunjungan['id_pasien']);
         }
     }
 
-    public function getByUser ($kunjunganId)
-    {   
-        $pasienId = $this->kunjunganModel->getPasienId($kunjunganId);
+    public function getByUser($pasienId)
+    {
+        $kunjunganId = $this->kunjunganModel->getKunjunganByPasienId($pasienId);
         $rekmedPasiens = $this->rekmedModel->getRekmedByPasienId($pasienId);
         $generalConsent = $this->generalConsentModel->getGeneralConsentByPasienId($pasienId);
+        $diagnosas = $this->diagnosaModel->getAllDiagnosa();
+        $tindakans = $this->tindakanModel->getAllTindakan();
+        $obats = $this->obatModel->getAllObat();
 
-        $diagnosaPasiens = [];
+        $diagnosaPasiens = [];  
         foreach ($rekmedPasiens as $rekmedPasien) {
             $diagnosaPasiens[$rekmedPasien['id']] = $this->diagnosaPasienModel->getDiagnosaByRekmedId($rekmedPasien['id']);
         }
 
-        return view('pages/rekmed', ['pasienId' => $pasienId, 'kunjunganId' => $kunjunganId, 'rekmedPasiens' => $rekmedPasiens, 'diagnosaPasiens' => $diagnosaPasiens, 'generalConsent' => $generalConsent]);
+        return view('pages/rekmed', [
+            'id' => $pasienId,
+            'kunjunganId' => $kunjunganId,
+            'rekmedPasiens' => $rekmedPasiens,
+            'diagnosaPasiens' => $diagnosaPasiens,
+            'generalConsent' => $generalConsent,
+            'diagnosas' => $diagnosas,
+            'tindakans' => $tindakans,
+            'obats' => $obats
+        ]);
     }
+
 
     public function show($id) {
         $method = 'show';
         $rekmedPasien = $this->rekmedModel->getRekmedById($id);
-        $diagnosas = $this->diagnosaModel->getAllDiagnosa();
-        $tindakans = $this->tindakanModel->getAllTindakan();
-        $obats = $this->obatModel->getAllObat();
         $diagnosaPasiens = $this->diagnosaPasienModel->getDiagnosaByRekmedId($id);
         $tindakanPasiens = $this->tindakanPasienModel->getTindakanByRekmedId($id);
         $obatPasiens = $this->obatPasienModel->getObatPasienByRekmedId($id);
         $kunjunganId = $this->kunjunganModel->getKunjunganByRekmedId($id);
 
-        return view('pages/rekmedForm', ['kunjunganId' => $kunjunganId, 'method' => $method, 'kunjungan' => $rekmedPasien, 'diagnosas' => $diagnosas, 'tindakans' => $tindakans, 'obats' => $obats, 'diagnosaPasiens' => $diagnosaPasiens, 'tindakanPasiens' => $tindakanPasiens, 'obatPasiens' => $obatPasiens]);
+        $rekmedPasien['id_kunjungan'] = $kunjunganId['id'];
+
+        return $this->response->setJSON( [
+            'id' => $rekmedPasien['id_pasien'], 
+            'method' => $method, 
+            'kunjungan' => $rekmedPasien, 
+            'diagnosaPasiens' => $diagnosaPasiens, 
+            'tindakanPasiens' => $tindakanPasiens, 
+            'obatPasiens' => $obatPasiens]);
+
+        
     }
 
-    public function create($kunjunganId)
+    public function create($pasienId)
     {
         $method = 'post';
-        $kunjungan = $this->kunjunganModel->getKunjunganById($kunjunganId);
+        $kunjungan = $this->kunjunganModel->getKunjunganByPasienId($pasienId);
         $diagnosas = $this->diagnosaModel->getAllDiagnosa();
         $tindakans = $this->tindakanModel->getAllTindakan();
         $obats = $this->obatModel->getAllObat();
-        return view('pages/rekmedForm', ['kunjunganId' => ['id' => $kunjunganId], 'method' => $method, 'kunjungan' => $kunjungan, 'diagnosas' => $diagnosas, 'tindakans' => $tindakans, 'obats' => $obats]);
+
+        return view('pages/rekmedForm', [
+            'id' => $pasienId,
+            'kunjunganId' => $kunjungan, 
+            'method' => $method, 
+            'kunjungan' => $kunjungan, 
+            'diagnosas' => $diagnosas, 
+            'tindakans' => $tindakans, 
+            'obats' => $obats]);
     }
 
     public function store($id)
@@ -205,7 +234,7 @@ class RekmedController extends BaseController
         }
 
 
-        return redirect()->to('/pemeriksaan/'. $kunjunganId);
+        return redirect()->to('/pemeriksaan/'. $id);
     }
 
     public function edit ($id)
@@ -220,7 +249,18 @@ class RekmedController extends BaseController
         $obatPasiens = $this->obatPasienModel->getObatPasienByRekmedId($id);
         $kunjunganId = $this->kunjunganModel->getKunjunganByRekmedId($id);
 
-        return view('pages/rekmedForm', ['kunjunganId' => $kunjunganId, 'method' => $method, 'kunjungan' => $rekmedPasien, 'diagnosas' => $diagnosas, 'tindakans' => $tindakans, 'obats' => $obats, 'diagnosaPasiens' => $diagnosaPasiens, 'tindakanPasiens' => $tindakanPasiens, 'obatPasiens' => $obatPasiens]);
+        $rekmedPasien['id_kunjungan'] = $kunjunganId['id'];
+
+        return view('pages/rekmedForm', [
+            'id' => $rekmedPasien['id_pasien'], 
+            'method' => $method, 
+            'kunjungan' => $rekmedPasien, 
+            'diagnosas' => $diagnosas, 
+            'tindakans' => $tindakans, 
+            'obats' => $obats, 
+            'diagnosaPasiens' => $diagnosaPasiens, 
+            'tindakanPasiens' => $tindakanPasiens, 
+            'obatPasiens' => $obatPasiens]);
     }
 
     public function update($id) 
@@ -319,7 +359,7 @@ class RekmedController extends BaseController
         }
 
         $kunjunganId = $this->request->getPost('id_kunjungan');
-        return redirect()->to('/pemeriksaan/'. $kunjunganId);
+        return redirect()->to('/pemeriksaan/'. $this->request->getPost('id_pasien'));
     }
 
     public function delete($id, $kunjunganId) 
