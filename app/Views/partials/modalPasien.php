@@ -271,6 +271,17 @@ $(document).ready(function() {
     }
     setNote();
 
+    $('#nik').on('input', function() {
+        if ($(this).val().length > 16) {
+            $(this).val($(this).val().substring(0, 16));
+        }
+    })
+    $('#bpjs').on('input', function() {
+        if ($(this).val().length > 13) {
+            $(this).val($(this).val().substring(0, 13));
+        }
+    })
+
     setInterval(function() {
         $('#tgl_antrian').val(moment().format('DD-MM-YYYY'));
         $('#wkt_antrian').val(moment().format('HH:mm:ss'));

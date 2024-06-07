@@ -186,7 +186,8 @@ class Pasien extends Model
                     ->groupEnd();
 
         $builder->join('alamats', 'pasiens.id_alamat = alamats.id');
-
+        $builder->orderBy('pasiens.created_at', 'DESC');
+        
         $result = $builder->get()->getResult();
         if (count($result) > 0) {
             return $result;
@@ -210,6 +211,8 @@ class Pasien extends Model
         if ($orderColumn && $orderDir) {
             $builder->orderBy($orderColumn, $orderDir);
         }
+
+        $builder->orderBy('pasiens.created_at', 'DESC');
 
         $builder->join('alamats', 'pasiens.id_alamat = alamats.id');
 

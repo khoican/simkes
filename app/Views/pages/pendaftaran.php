@@ -20,6 +20,7 @@
             <table class="table table-hover fs-6 border" id="dataTable">
                 <thead class="table-primary text-center">
                     <tr>
+                        <th scope="col" style="width: 0%;">Created At</th>
                         <th scope="col" style="width: 15%;">No. RM</th>
                         <th scope="col" style="width: 15%;">No. KTP</th>
                         <th scope="col" style="width: 33%;">Nama Lengkap</th>
@@ -52,7 +53,9 @@ $(document).ready(function() {
     var table = $('#dataTable').DataTable({
         processing: true,
         serverSide: true,
-        order: [0, 'desc'],
+        order: [
+            [0, 'desc']
+        ],
         searching: false,
         ajax: {
             url: 'pendaftaran/get-pasien',
@@ -68,10 +71,15 @@ $(document).ready(function() {
                 } else {
                     $('#secondarySearch').show();
                 }
+                console.log(json);
                 return json.data;
             },
         },
         columns: [{
+                data: 'created_at',
+                visible: false
+            },
+            {
                 data: 'no_rekam_medis'
             },
             {
