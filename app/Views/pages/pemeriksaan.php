@@ -91,6 +91,7 @@ $(document).ready(function() {
                 {
                     data: '',
                     render: function(data, type, row) {
+                        console.log(data);
                         if (url == '/kunjungan/antrian') {
                             return `
                                 <div class="d-flex gap-1 w-100">
@@ -107,9 +108,7 @@ $(document).ready(function() {
                                 `;
                         } else {
                             return `
-                                <form action="/pemeriksaan/${row.id_kunjungan}" method="POST">
-                                    <button type="submit" class="btn rounded-pill btn-primary btn-sm">Lihat</button>
-                                </form>
+                                <a href="/rekmed/${row.id_pasien}" class="btn rounded-pill btn-primary btn-sm">Lihat</a>
                             `
                         }
                     }

@@ -24,6 +24,10 @@ class Kunjungan extends Migration
             'id_poli' => [
                 'type' => 'INT',
             ],
+            'id_rekmed' => [
+                'type' => 'INT',
+                'null' => true
+            ],
             'status' => [
                 'type' => 'ENUM',
                 'constraint' => ['antrian', 'pemeriksaan', 'antrian-obat', 'pengambilan-obat', 'selesai'],
@@ -44,6 +48,7 @@ class Kunjungan extends Migration
         $this->forge->addKey('id', true);
         $this->forge->addForeignKey('id_pasien', 'pasiens', 'id', 'cascade', 'cascade', 'kunjungan_pasien');
         $this->forge->addForeignKey('id_poli', 'polis', 'id', 'cascade', 'cascade', 'kunjungan_poli');
+        $this->forge->addForeignKey('id_rekmed', 'rekmeds', 'id', 'cascade', 'cascade', 'kunjungan_rekmed');
         $this->forge->createTable('kunjungans');
 
     }

@@ -1,4 +1,4 @@
-<form action="/pasien/search" method="POST">
+<form action="/pasien/search" method="POST" id="search-form">
     <div class="w-100 d-flex align-items-center justify-content-between mb-3 position-relative">
         <?= csrf_field() ?>
         <input type="text" class="form-control form-control-sm w-100 text-capitalize" id="search" name="search"
@@ -7,6 +7,7 @@
                 class="bi bi-search"></i></button>
     </div>
 </form>
+
 <div class="w-100 bg-primary rounded-3 shadow p-3">
     <div class="d-flex flex-column justify-content-center align-items-center mt-2">
 
@@ -144,3 +145,16 @@
     </div>
 </div>
 <?php endif; ?>
+
+<?= $this->section('script') ?>
+
+<script type="module">
+$(document).ready(function() {
+    let path = window.location.pathname;
+    if (path.includes('apotek')) {
+        $('#search-form').remove();
+    }
+})
+</script>
+
+<?php $this->endSection() ?>

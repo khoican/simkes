@@ -103,7 +103,7 @@ class Rekmed extends Model
     }
 
     public function getRekmedByPasienId($id) {
-        return $this->where('id_pasien', $id)->select('polis.nama as poli, rekmeds.*')->join('polis', 'polis.id = rekmeds.id_poli')->orderBy('rekmeds.id', 'DESC')->findAll();
+        return $this->where('rekmeds.id_pasien', $id)->select('polis.nama as poli, rekmeds.*, kunjungans.created_at as created_at, kunjungans.updated_at as updated_at, kunjungans.status as status_kunjungan')->join('polis', 'polis.id = rekmeds.id_poli')->join('kunjungans', 'kunjungans.id_rekmed = rekmeds.id')->orderBy('rekmeds.id', 'DESC')->findAll();
     }
 
     public function getRekmedStatus($id) {

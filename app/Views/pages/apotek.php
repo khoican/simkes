@@ -139,10 +139,7 @@ $(document).ready(function() {
                                         `;
                         } else {
                             return `
-                                        <form action="/apotek/${row.id_kunjungan}" method="POST">
-                                            <button type="submit" class="btn rounded-pill btn-primary btn-sm">Lihat Obat</button>
-                                        </form>
-    
+                                    <a href="/apotek/${row.id_kunjungan}" class="btn rounded-pill btn-primary btn-sm">Lihat</a>
                                 `;
                         }
                     },

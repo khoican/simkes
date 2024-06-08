@@ -4,7 +4,7 @@
 
 <div class='d-flex gap-3 mt-5 border rounded-3 bg-white p-3'>
     <div class="col-3">
-        <?= view_cell('PasienDataCell', ['id' => $id]) ?>
+        <?= view_cell('PasienDataCell', ['id' => $id, 'search' => true]) ?>
     </div>
 
     <div class="w-100 p-3 border rounded-3">

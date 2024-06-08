@@ -227,6 +227,7 @@ class RekmedController extends BaseController
         }
         
         $dataKunjungan = [
+            'id_rekmed'       => $idRekmed,
             'panggil'         => boolval(0),
             'status'          => $status,
         ];

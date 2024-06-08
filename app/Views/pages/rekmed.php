@@ -2,25 +2,37 @@
 
 <?= $this->section('content') ?>
 
-<div class='d-flex gap-3 mt-5 border rounded-3 bg-white p-3'>
+<div class='d-flex gap-4 mt-5 border rounded-3 bg-white p-3'>
     <div class="col-3">
-        <?= view_cell('PasienDataCell',['id' => $id]) ?>
+        <?= view_cell('PasienDataCell',['searchEvent' => true, 'id' => $id]) ?>
     </div>
 
     <div class="w-100">
 
         <?php if(isset($rekmedPasiens)) : foreach ($rekmedPasiens as $rekmedPasien) : ?>
         <div
-            class="w-100 fs-6 border border-primary d-flex align-items-center py-2 px-3 rounded-3 border border-primary mb-1">
-            <div class="col-2">
+            class="w-100 fs-6 border border-primary d-flex align-items-center gap-3 py-2 px-3 rounded-3 border border-primary mb-1">
+            <div style="width: 10%;" class="center">
                 <p class="mb-0"><?= format_date($rekmedPasien['created_at']) ?></p>
             </div>
-            <div class="col-3">
+            <div class="text-center" style="width: 15%;">
+                <?php if($rekmedPasien['status_kunjungan'] == 'selesai') : 
+                    $end = format_time($rekmedPasien['updated_at']); ?>
+                <p class="mb-0 bg-success p-1 rounded-3 fw-medium text-white">
+                    <?= format_time($rekmedPasien['created_at']) ?> -
+                    <?= $end ?></p>
+                <?php else : ?>
+                <p class=" mb-0 bg-info-subtle p-1 rounded-3 fw-medium"><?= format_time($rekmedPasien['created_at']) ?>
+                    - PROSES
+                </p>
+                <?php endif; ?>
+            </div>
+            <div style="width: 25%;">
                 <p class="mb-0 fw-medium">Keluhan : <span
                         class="text-capitalize fw-normal"><?= $rekmedPasien['keluhan'] ?></span>
                 </p>
             </div>
-            <div class="col-3">
+            <div style="width: 20%;">
                 <p class="mb-0 fw-medium">Diagnosa :
                     <?php if(isset($diagnosaPasiens[$rekmedPasien['id']])) :
                     $counter = 0;
@@ -35,12 +47,12 @@
                     endif ?>
                 </p>
             </div>
-            <div class="col-2 d-flex justify-content-center">
+            <div class="d-flex justify-content-center" style="width: 15%;">
                 <div class="btn btn-sm btn-success">
                     <p class="mb-0 text-uppercase"><?= $rekmedPasien['poli'] ?></p>
                 </div>
             </div>
-            <div class="col-2 d-flex gap-1 justify-content-center">
+            <div class="d-flex gap-1 justify-content-center" style="width: 15%;">
                 <button type="button" class="btn btn-sm h-100 btn-primary show-modal" data-bs-toggle="modal"
                     data-bs-target="#rekmedModal" data-id="<?= $rekmedPasien['id'] ?>">
                     <i class="bi bi-eye-fill fs-4"></i>
@@ -57,8 +69,6 @@
             </div>
         </div>
         <?php endforeach; endif ?>
-
-
 
         <?php 
         if (empty($id)) : ?>
