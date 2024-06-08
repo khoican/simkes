@@ -16,9 +16,12 @@
         </div>
 
         <div class="mt-3 text-center w-100 bg-white rounded-pill p-2">
-            <h1 class="fw-semibold fs-5 mb-0 text-capitalize"><?= esc($pasienData['nama']) ?></h1>
+            <h1 class="fw-semibold fs-5 mb-0 text-capitalize">
+                <?php if($pasienData != null) : ?><?= esc($pasienData['nama']) ?><?php else : ?> - <?php endif; ?></h1>
             </h1>
-            <p class="mb-0 fw-medium" style="font-size: 0.7rem">No. RM <?= esc($pasienData['no_rekam_medis']) ?></p>
+            <p class="mb-0 fw-medium" style="font-size: 0.7rem">No. RM
+                <?php if($pasienData != null) : ?><?= esc($pasienData['no_rekam_medis']) ?><?php else : ?> -
+                <?php endif; ?></p>
         </div>
     </div>
 
@@ -27,41 +30,53 @@
             <tr>
                 <td colspan="2">
                     <p class="mb-0" style="font-size: 0.6rem">No. Identitas / KTP</p>
-                    <p class="mb-0 fs-6 fw-medium"><?= esc($pasienData['nik']) ?></p>
+                    <p class="mb-0 fs-6 fw-medium">
+                        <?php if($pasienData != null) : ?><?= esc($pasienData['nik']) ?><?php else : ?> -
+                        <?php endif; ?></p>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <p class="mb-0" style="font-size: 0.6rem">No. BPJS</p>
-                    <p class="mb-0 fs-6 fw-medium"><?php if ($pasienData['no_bpjs'] == null) : ?> -
-                        <?php else : ?><?= esc($pasienData['no_bpjs']) ?><?php endif; ?></p>
+                    <p class="mb-0 fs-6 fw-medium">
+                        <?php if($pasienData != null) : ?><?php if ($pasienData['no_bpjs'] == null) : ?>
+                        -
+                        <?php else : ?><?= esc($pasienData['no_bpjs']) ?><?php endif; endif; ?></p>
                 </td>
             </tr>
             <tr>
                 <td>
                     <p class="mb-0" style="font-size: 0.6rem">Tanggal Lahir</p>
-                    <p class="mb-0 fs-6 fw-medium"><?= format_date($pasienData['tgl_lahir']) ?></p>
+                    <p class="mb-0 fs-6 fw-medium">
+                        <?php if($pasienData != null) : ?><?= format_date($pasienData['tgl_lahir']) ?><?php else : ?> -
+                        <?php endif; ?></p>
                 </td>
                 <td>
                     <p class="mb-0" style="font-size: 0.6rem">Umur</p>
-                    <p class="mb-0 fs-6 fw-medium"><?= calculate_age($pasienData['tgl_lahir']) ?></p>
+                    <p class="mb-0 fs-6 fw-medium">
+                        <?php if($pasienData != null) : ?><?= calculate_age($pasienData['tgl_lahir']) ?><?php else : ?>
+                        - <?php endif; ?></p>
                 </td>
             </tr>
             <tr>
                 <td>
                     <p class="mb-0" style="font-size: 0.6rem">Agama</p>
-                    <p class="mb-0 fs-6 fw-medium text-uppercase"><?= esc($pasienData['agama']) ?></p>
+                    <p class="mb-0 fs-6 fw-medium text-uppercase">
+                        <?php if($pasienData != null) : ?><?= esc($pasienData['agama']) ?><?php else : ?> -
+                        <?php endif; ?></p>
                 </td>
                 <td>
                     <p class="mb-0" style="font-size: 0.6rem">Golongan Darah</p>
-                    <p class="mb-0 fs-6 fw-medium text-uppercase"><?= esc($pasienData['gol_darah']) ?></p>
+                    <p class="mb-0 fs-6 fw-medium text-uppercase">
+                        <?php if($pasienData != null) : ?><?= esc($pasienData['gol_darah']) ?><?php else : ?> -
+                        <?php endif; ?></p>
                 </td>
             </tr>
             <tr>
                 <td colspan="2">
                     <p class="mb-0" style="font-size: 0.6rem">Tanggal Kunjungan</p>
                     <p class="mb-0 fs-6 fw-medium">
-                        <?php if(isset($kunjunganData)) : echo format_date($kunjunganData['created_at']); else : echo '-'; endif; ?>
+                        <?php if($kunjunganData != null) : echo format_date($kunjunganData['created_at']); else : echo '-'; endif; ?>
                     </p>
                 </td>
             </tr>
@@ -69,13 +84,13 @@
                 <td>
                     <p class="mb-0" style="font-size: 0.6rem">Status Kunjungan</p>
                     <p class="mb-0 fs-6 fw-medium text-uppercase">
-                        <?php if(isset($kunjunganData)) : echo str_replace('-', ' ',$kunjunganData['status']) ; else : echo '-'; endif; ?>
+                        <?php if($kunjunganData != null) : echo str_replace('-', ' ',$kunjunganData['status']) ; else : echo '-'; endif; ?>
                     </p>
                 </td>
                 <td>
                     <p class="mb-0" style="font-size: 0.6rem">Tujuan Poli</p>
                     <p class="mb-0 fs-6 fw-medium text-uppercase">
-                        <?php if(isset($kunjunganData)) : echo esc($kunjunganData['nama_poli']); else : echo '-'; endif; ?>
+                        <?php if($kunjunganData != null) : echo esc($kunjunganData['nama_poli']); else : echo '-'; endif; ?>
                     </p>
                 </td>
             </tr>
@@ -87,7 +102,7 @@
     General Consent
 </button>
 
-<?php if(isset($generalConsent)) : ?>
+<?php if($generalConsent != null) : ?>
 <div class="modal fade" id="consent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content fs-6">

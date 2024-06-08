@@ -65,7 +65,7 @@ class PasienController extends BaseController
         $result = $this->pasienModel->searchEngine($search);
 
         if (isset($result)) {
-            return redirect()->to('/pemeriksaan/'.$result[0]->id);
+            return redirect()->to('/rekmed/'.$result[0]->id);
         } else {
             session()->setFlashdata('error', 'Pasien tidak ditemukan');
             return redirect()->back()->withInput();

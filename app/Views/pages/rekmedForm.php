@@ -545,7 +545,7 @@
 
             <div id="onsubmit">
                 <button type="submit" class="btn btn-primary rounded-pill" id='submit'>Simpan</button>
-                <a href="/pemeriksaan/<?= $id ?>" class="btn btn-outline-secondary rounded-pill">Batal</a>
+                <a href="/rekmed/<?= $id ?>" class="btn btn-outline-secondary rounded-pill">Batal</a>
             </div>
         </form>
     </div>

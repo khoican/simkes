@@ -32,9 +32,6 @@ $routes->group('pendaftaran', ['filter' => 'auth'], function($routes) {
 // Pemeriksaan
 $routes->group('pemeriksaan', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::pemeriksaan');
-    $routes->get('(:num)', 'RekmedController::getByUser/$1');
-    $routes->get('(:num)/new', 'RekmedController::create/$1');
-    $routes->get('(:num)/edit/(:num)', 'RekmedController::edit/$2');
     $routes->post('(:num)', 'RekmedController::periksaPasien/$1');
     $routes->post('general-consent', 'PasienController::postGeneralConsent');
 });
@@ -61,7 +58,10 @@ $routes->group('kunjungan', ['filter' => 'auth'], function($routes) {
 // Rekam Medis
 $routes->group('rekmed', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'RekmedController::index');
-    $routes->get('(:num)', 'RekmedController::show/$1');
+    $routes->get('(:num)', 'RekmedController::getByUser/$1');
+    $routes->get('(:num)/new', 'RekmedController::create/$1');
+    $routes->get('(:num)/edit/(:num)', 'RekmedController::edit/$2');
+    $routes->get('user/(:num)', 'RekmedController::show/$1');
     $routes->post('store/(:num)', 'RekmedController::store/$1');
     $routes->post('update/(:num)', 'RekmedController::update/$1');
     $routes->post('delete/(:num)/(:num)', 'RekmedController::delete/$1/$2');

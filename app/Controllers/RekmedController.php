@@ -41,6 +41,13 @@ class RekmedController extends BaseController
         $this->db = db_connect();
     }
 
+    public function index() {
+        $data = [
+            'id' => null
+        ];
+        return view('pages/rekmed', $data);
+    }
+
     public function periksaPasien($kunjunganId) {
         $kunjungan = $this->kunjunganModel->getKunjunganById($kunjunganId);
         $data = [
@@ -48,7 +55,7 @@ class RekmedController extends BaseController
             'status'          => 'pemeriksaan',
         ];
         if ($this->kunjunganModel->updateKunjungan($kunjunganId, $data)) {
-            return redirect()->to('/pemeriksaan/'. $kunjungan['id_pasien']);
+            return redirect()->to('/rekmed/'. $kunjungan['id_pasien']);
         }
     }
 
@@ -234,7 +241,7 @@ class RekmedController extends BaseController
         }
 
 
-        return redirect()->to('/pemeriksaan/'. $id);
+        return redirect()->to('/rekmed/'. $id);
     }
 
     public function edit ($id)
@@ -359,7 +366,7 @@ class RekmedController extends BaseController
         }
 
         $kunjunganId = $this->request->getPost('id_kunjungan');
-        return redirect()->to('/pemeriksaan/'. $this->request->getPost('id_pasien'));
+        return redirect()->to('/rekmed/'. $this->request->getPost('id_pasien'));
     }
 
     public function delete($id, $kunjunganId) 
@@ -377,6 +384,6 @@ class RekmedController extends BaseController
         } else {
             session()->setFlashData('error', 'Rekam medis gagal di hapus');
         }
-        return redirect()->to('/pemeriksaan/'. $kunjunganId);
+        return redirect()->to('/rekmed/'. $kunjunganId);
     }
 }

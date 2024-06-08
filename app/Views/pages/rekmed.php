@@ -2,7 +2,6 @@
 
 <?= $this->section('content') ?>
 
-
 <div class='d-flex gap-3 mt-5 border rounded-3 bg-white p-3'>
     <div class="col-3">
         <?= view_cell('PasienDataCell',['id' => $id]) ?>
@@ -10,7 +9,7 @@
 
     <div class="w-100">
 
-        <?php foreach ($rekmedPasiens as $rekmedPasien) : ?>
+        <?php if(isset($rekmedPasiens)) : foreach ($rekmedPasiens as $rekmedPasien) : ?>
         <div
             class="w-100 fs-6 border border-primary d-flex align-items-center py-2 px-3 rounded-3 border border-primary mb-1">
             <div class="col-2">
@@ -46,7 +45,7 @@
                     data-bs-target="#rekmedModal" data-id="<?= $rekmedPasien['id'] ?>">
                     <i class="bi bi-eye-fill fs-4"></i>
                 </button>
-                <a href="/pemeriksaan/<?= $id ?>/edit/<?= $rekmedPasien['id'] ?>" class="btn btn-sm h-100 btn-warning">
+                <a href="/rekmed/<?= $id ?>/edit/<?= $rekmedPasien['id'] ?>" class="btn btn-sm h-100 btn-warning">
                     <i class="bi bi-pencil-square fs-4"></i>
                 </a>
                 <form action="/rekmed/delete/<?= $rekmedPasien['id'] ?>/<?= $id ?>" method="post">
@@ -57,15 +56,20 @@
                 </form>
             </div>
         </div>
-        <?php endforeach ?>
+        <?php endforeach; endif ?>
+
+
 
         <?php 
-        if (empty($kunjunganId)) : ?>
+        if (empty($id)) : ?>
+
+        <p class="fs-6 fw-light text-center">Silahkan cari pasien pada kolom pencarian</p>
+        <?php 
+        elseif (empty($kunjunganId)) : ?>
 
         <p class="fs-6 fw-light text-center">Pasien belum melakukan pendaftaran kunjungan ke poli tertuju, silahkan
             daftarkan
             terlebih dahulu</p>
-
         <?php else :
             if (empty($generalConsent)) : ?>
         <div class="w-100 h-auto mt-5 d-flex flex-column justify-content-center align-items-center">
@@ -79,7 +83,7 @@
 
         <?php else : ?>
         <div class="w-100 h-auto mt-5 d-flex flex-column justify-content-center align-items-center">
-            <a href="/pemeriksaan/<?= $id ?>/new" class="btn btn-primary rounded-circle">
+            <a href="/rekmed/<?= $id ?>/new" class="btn btn-primary rounded-circle">
                 <i class="bi bi-plus fs-2 text-white mb-0"></i>
             </a>
             <p class="fs-5 ms-3 mb-0 fw-medium">Rekam Medis</p>

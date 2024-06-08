@@ -5,7 +5,7 @@
                 <h1 class="modal-title fs-5" id="rekmedModalLabel">Rekam Medis</h1>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            <div class="modal-body fs-6">
+            <div class="modal-body fs-6" id="rekmedModalBody">
                 <div class="mb-5">
                     <p class="mb-2 fs-5 fw-medium">Alergi</p>
 
@@ -390,7 +390,7 @@ $(document).ready(function() {
         const id = $(this).data('id');
 
         $.ajax({
-            url: '/rekmed/' + id,
+            url: '/rekmed/user/' + id,
             type: 'GET',
             success: function(data) {
                 console.log(data);
@@ -461,8 +461,8 @@ $(document).ready(function() {
         })
     })
 
-    $('.form-control').attr('readonly', true);
-    $('.form-check-input, .form-select-sm').attr('disabled', true);
+    $('#rekmedModalBody .form-control').attr('readonly', true);
+    $('#rekmedModalBody .form-check-input, #rekmedModalBody .form-select-sm').attr('disabled', true);
 })
 </script>
 <?= $this->endSection() ?>
