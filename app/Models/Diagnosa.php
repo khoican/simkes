@@ -54,6 +54,10 @@ class Diagnosa extends Model
         return $this->where('id', $id)->first();
     }
 
+    public function getMostDiagnosaPasien() {
+        return $this->select('COUNT(diagnosa_pasiens.id_diagnosa) as total, diagnosa, kode')->join('diagnosa_pasiens', 'diagnosa_pasiens.id_diagnosa = diagnosas.id')->groupBy('id_diagnosa')->orderBy('total', 'DESC')->limit(10)->findAll();
+    }
+
     public function getLastKodeDiagnosa() {
         $kode = $this->orderBy('id', 'desc')->first();
 

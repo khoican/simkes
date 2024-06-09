@@ -57,6 +57,10 @@
         </div>
     </div>
 
+    <div class="mt-3 text-end">
+        <a href="/report" class="btn btn-primary"><i class="bi bi-file-earmark-ruled"></i> Laporan</a>
+    </div>
+
     <div class=" mt-5 fs-6 p-4 bg-white rounded-3 d-flex gap-5">
         <div class="w-50">
             <div class="d-flex justify-content-between mb-4">
@@ -291,7 +295,7 @@ $(document).ready(function() {
             data: {
                 labels: pieChartLabels,
                 datasets: [{
-                    label: 'Diagnosa Terbanyak',
+                    label: '',
                     data: pieChartData,
                     backgroundColor: [
                         'rgb(54, 162, 235)',

@@ -50,6 +50,10 @@ class Tindakan extends Model
         return $this->findAll();
     }
 
+    public function getMostTindakanPasien() {
+        return $this->select('COUNT(tindakan_pasiens.id_tindakan) as total, tindakan, kode')->join('tindakan_pasiens', 'tindakan_pasiens.id_tindakan = tindakans.id')->groupBy('id_tindakan')->orderBy('total', 'DESC')->limit(10)->findAll();
+    }
+
     public function getTindakanById($id) {
         return $this->where('id', $id)->first();
     }
