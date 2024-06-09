@@ -57,6 +57,8 @@
                     data-bs-target="#rekmedModal" data-id="<?= $rekmedPasien['id'] ?>">
                     <i class="bi bi-eye-fill fs-4"></i>
                 </button>
+
+                <?php if(session()->get('role') != 'apotek') : ?>
                 <a href="/rekmed/<?= $id ?>/edit/<?= $rekmedPasien['id'] ?>" class="btn btn-sm h-100 btn-warning">
                     <i class="bi bi-pencil-square fs-4"></i>
                 </a>
@@ -66,10 +68,12 @@
                         <i class="bi bi-trash-fill fs-4"></i>
                     </button>
                 </form>
+                <?php endif; ?>
             </div>
         </div>
         <?php endforeach; endif ?>
 
+        <?php if(session()->get('role') != 'apotek') : ?>
         <?php 
         if (empty($id)) : ?>
 
@@ -98,7 +102,7 @@
             </a>
             <p class="fs-5 ms-3 mb-0 fw-medium">Rekam Medis</p>
         </div>
-        <?php endif; endif; ?>
+        <?php endif; endif; endif; ?>
     </div>
 </div>
 

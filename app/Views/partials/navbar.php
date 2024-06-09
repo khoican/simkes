@@ -23,9 +23,6 @@
                     <li><a class="dropdown-item" href="/tindakan"><i class="bi bi-bandaid-fill"></i> Data Tindakan</a>
                     </li>
                     <li><a class="dropdown-item" href="/obat"><i class="bi bi-capsule"></i> Data Obat</a></li>
-
-                    <?php elseif(session()->get('role') == 'apotek') : ?>
-                    <li><a class="dropdown-item" href="/obat"><i class="bi bi-capsule"></i> Data Obat</a></li>
                     <?php endif; ?>
 
                     <li>

@@ -43,7 +43,7 @@
                     <form class="fs-6" action="/user/login" method="post">
                         <?= csrf_field() ?>
                         <div class="mb-3">
-                            <label for="username" class="form-label">Email address</label>
+                            <label for="username" class="form-label">Username</label>
                             <input type="text" class="form-control form-control-sm" name="username" id="username"
                                 aria-describedby="emailHelp">
                         </div>

@@ -15,7 +15,7 @@
                     <th style="width: 10%;">Kode</th>
                     <th style="width: 25%;">Obat</th>
                     <th style="width: 12%;">Jenis</th>
-                    <th style="width: 15%;">Bentuk</th>
+                    <th style="width: 15%;">Kesediaan</th>
                     <th style="width: 10%;">Stok</th>
                     <th style="width: 10%;">Harga</th>
                     <th style="width: 13%;">Aksi</th>
@@ -50,7 +50,7 @@
                         <input type="text" class="form-control form-control-sm" id="jenis" name="jenis" required>
                     </div>
                     <div class="w-100 mb-3">
-                        <label for="bentuk" class="form-label mb-1">Bentuk Obat</label>
+                        <label for="bentuk" class="form-label mb-1">Kesediaan Obat</label>
                         <input type="text" class="form-control form-control-sm" id="bentuk" name="bentuk" required>
                     </div>
                     <div class="w-100 mb-3" id="stok-item">

@@ -51,8 +51,8 @@
                 </div>
             </div>
 
-            <div style="height: 400px; width: 100%">
-                <canvas id="chart" width="200" height="400"></canvas>
+            <div style="height: 400px;" class="w-100">
+                <canvas id="chart" height="400"></canvas>
             </div>
         </div>
 
