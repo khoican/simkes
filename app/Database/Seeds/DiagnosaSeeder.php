@@ -11,23 +11,23 @@ class DiagnosaSeeder extends Seeder
         $data = [
             [
                 'kode' => 'A01',
-                'diagnosa' => 'diabetes',
+                'diagnosa' => 'diagnosa 1',
             ],
             [
                 'kode' => 'A02',
-                'diagnosa' => 'hipertensi',
+                'diagnosa' => 'diagnosa 2',
             ],
             [
                 'kode' => 'A03',
-                'diagnosa' => 'asma',
+                'diagnosa' => 'diagnosa 3',
             ],
             [
                 'kode' => 'A04',
-                'diagnosa' => 'covid-19',
+                'diagnosa' => 'diagnosa 4',
             ],
             [
                 'kode' => 'A05',
-                'diagnosa' => 'diare',
+                'diagnosa' => 'diagnosa 5',
             ],
         ];
         $this->db->table('diagnosas')->insertBatch($data);
