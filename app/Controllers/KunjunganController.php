@@ -74,6 +74,11 @@ class KunjunganController extends BaseController
         return $this->response->setJSON($antrianData);
     }
 
+    public function getServiceTime() {
+        $serviceTime = $this->kunjunganModel->calculateServiceTime();
+        return $this->response->setJSON($serviceTime);
+    }
+
     public function show($id)
     {
         $pasien = $this->pasienModel->getPasienById($id);

@@ -62,6 +62,54 @@ class Kunjungan extends Model
         return $data;
     }
 
+    public function calculateServiceTime() {
+        $db = db_connect();
+        $builder = $db->table($this->table);
+
+        $builder->select('created_at, updated_at');
+        $builder->where('status', 'selesai');
+        $builder->where('DATE(created_at)', date('Y-m-d'));
+        $results = $builder->get()->getResult();
+
+        if (empty($results)) {
+            log_message('error', 'No results found for status=selesai');
+            return [
+                'under' => 0,
+                'over' => 0,
+            ];
+        }
+
+        $under = 0;
+        $over = 0;
+
+        foreach ($results as $row) {
+            $createdAt = strtotime($row->created_at);
+            $updatedAt = strtotime($row->updated_at);
+
+            if ($createdAt === false || $updatedAt === false) {
+                log_message('error', 'Error parsing date: created_at=' . $row->created_at . ', updated_at=' . $row->updated_at);
+                continue;
+            }
+
+            $diffSecond = $updatedAt - $createdAt;
+
+            log_message('info', 'Time difference in seconds: ' . $diffSecond);
+
+            $diffHour = $diffSecond / 3600;
+
+            if ($diffHour <= 1) {
+                $under++;
+            } else {
+                $over++;
+            }
+        }
+
+        return [
+            'under' => $under,
+            'over' => $over,
+        ];
+    }
+
     public function getLastAntrian($poli) {
         $today = date('Y-m-d');
         $data = $this->where('id_poli', $poli)

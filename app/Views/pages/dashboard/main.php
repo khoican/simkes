@@ -284,7 +284,7 @@ $(document).ready(function() {
         const ctx = $('#pie')[0].getContext('2d');
 
         const pieChartLabels = ['Dibawah 1 jam', 'Lebih dari 1 jam'];
-        const pieChartData = [20, 10];
+        const pieChartData = [<?= $serviceTime['under'] ?>, <?= $serviceTime['over'] ?>];
 
         new Chart(ctx, {
             type: 'doughnut',
@@ -304,7 +304,7 @@ $(document).ready(function() {
                 responsive: true,
                 maintainAspectRatio: false,
             }
-        });
+        })
     }
     pieChart()
 

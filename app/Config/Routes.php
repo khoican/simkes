@@ -53,6 +53,7 @@ $routes->group('kunjungan', ['filter' => 'auth'], function($routes) {
     $routes->post('store', 'KunjunganController::store');
     $routes->post('panggil/(:num)', 'KunjunganController::panggilAntrian/$1');
     $routes->put('update/(:num)', 'KunjunganController::update/$1');
+    $routes->get('servicetime', 'KunjunganController::getServiceTime');
 });
 
 // Rekam Medis

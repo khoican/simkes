@@ -40,9 +40,10 @@ class DashboardController extends BaseController
             $countObatKeluar = 0;
         }
         $historyObat = $this->quantityObatModel->getQuantityObat();
+        $serviceTime = $this->kunjunganModel->calculateServiceTime();
         
         if (session()->get('role') == 'kepala' || session()->get('role') == 'rekmed') {
-            return view('pages/dashboard/main', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan, 'countPasien' => $countPasien, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar, 'historyObat' => $historyObat]);
+            return view('pages/dashboard/main', ['countKunjungan' => $countKunjungan, 'mostDiagnosa' => $mostDiagnosa, 'mostTindakan' => $mostTindakan, 'countPasien' => $countPasien, 'countObatMasuk' => $countObatMasuk, 'countObatKeluar' => $countObatKeluar, 'historyObat' => $historyObat, 'serviceTime' => $serviceTime]);
         } else if (session()->get('role') == 'loket') {
             return view('pages/dashboard/loket', ['countKunjungan' => $countKunjungan, 'countPasien' => $countPasien]);
         } else if (session()->get('role') == 'dokter') {
