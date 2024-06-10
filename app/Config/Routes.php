@@ -13,8 +13,8 @@ $routes->post('user/login', 'UserController::auth');
 // Home
 
 $routes->get('/', 'DashboardController::index', ['filters' => 'auth']);
-$routes->get('/report', 'ExportController::index', ['filters' => 'auth']);
-$routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2', ['filter' => 'auth']);
+$routes->get('report', 'ExportController::index');
+$routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2');
 
 // Pasien
 $routes->group('pasien', ['filter' => 'auth'], function($routes) {
