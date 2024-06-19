@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class ObatPasien extends Migration
+class ObatRacikan extends Migration
 {
     public function up()
     {
@@ -20,11 +20,6 @@ class ObatPasien extends Migration
                 'null' => true
             ],
             'id_rekmed' => [
-                'type' => 'INT',
-                'constraint' => 11,
-                'null' => true
-            ],
-            'id_obat' => [
                 'type' => 'INT',
                 'constraint' => 11,
                 'null' => true
@@ -65,14 +60,14 @@ class ObatPasien extends Migration
         ]);
 
         $this->forge->addKey('id', true);
-        $this->forge->addForeignKey('id_pasien', 'pasiens', 'id', 'cascade', 'cascade', 'resep_pasien');
-        $this->forge->addForeignKey('id_rekmed', 'rekmeds', 'id', 'cascade', 'cascade', 'resep_rekmed');
-        $this->forge->addForeignKey('id_obat', 'obats', 'id', 'cascade', 'cascade', 'resep_obat');
-        $this->forge->createTable('obat_pasien');
+        $this->forge->addForeignKey('id_pasien', 'pasiens', 'id', 'cascade', 'cascade', 'racikan_pasien');
+        $this->forge->addForeignKey('id_rekmed', 'rekmeds', 'id', 'cascade', 'cascade', 'racikan_rekmed');
+        $this->forge->createTable('obat_racikans');
+        
     }
 
     public function down()
     {
-        $this->forge->dropTable('obat_pasien');
+        $this->forge->dropTable('obat_racikans');
     }
 }

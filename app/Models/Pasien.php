@@ -164,22 +164,11 @@ class Pasien extends Model
         return $newrm;
     } 
 
-    public function search($builder, $search) {
-        $builder->select('pasiens.*, alamats.*')->groupStart()
-                    ->like('pasiens.no_rekam_medis', $search)
-                    ->orLike('pasiens.nik', $search)
-                    ->orLike('pasiens.nama', $search)
-                    ->orLike('alamats.kelurahan', $search)
-                    ->orLike('alamats.kecamatan', $search)
-                    ->groupEnd();
-
-    }
-
     public function searchEngine($search)
     {
         $builder = $this->builder();
 
-        $builder->select('pasiens.*')->groupStart()
+        $builder->select('pasiens.*, pasiens.id as id')->groupStart()
                     ->like('pasiens.no_rekam_medis', $search)
                     ->orLike('pasiens.nik', $search)
                     ->orLike('pasiens.nama', $search)
@@ -194,6 +183,17 @@ class Pasien extends Model
         } else {
             return null;
         }
+    }
+
+    public function search($builder, $search) {
+        $builder->select('pasiens.*, alamats.*')
+            ->groupStart()
+            ->like('pasiens.no_rekam_medis', $search)
+            ->orLike('pasiens.nik', $search)
+            ->orLike('pasiens.nama', $search)
+            ->orLike('alamats.kelurahan', $search)
+            ->orLike('alamats.kecamatan', $search)
+            ->groupEnd();
     }
 
     public function searchPasien($primarySearch, $secondarySearch = null, $start, $length, $orderColumn, $orderDir)
@@ -214,6 +214,8 @@ class Pasien extends Model
 
         $builder->orderBy('pasiens.created_at', 'DESC');
 
+        $builder->select('pasiens.*, pasiens.id as id, alamats.kelurahan as kelurahan, alamats.kecamatan as kecamatan'); 
+
         $builder->join('alamats', 'pasiens.id_alamat = alamats.id');
 
         $recordsTotal = $builder->countAllResults(false);
@@ -230,6 +232,7 @@ class Pasien extends Model
             'data' => $data
         ];
     }
+
 
 
     public function postPasien($data) {

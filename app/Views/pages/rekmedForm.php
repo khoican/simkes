@@ -199,47 +199,71 @@
                 <div class="mb-3 row">
                     <div class="col-sm-4">
                         <label class="mb-1" for="bb">Berat Badan</label>
-                        <input type="number" class="form-control form-control-sm" id="bb" name="bb"
-                            value="<?php if($method != 'post') echo $kunjungan['bb'] ?>">
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="bb" name="bb"
+                                value="<?php if($method != 'post') echo $kunjungan['bb'] ?>">
+                            <span class="input-group-text fs-6" id="basic-addon2">kg</span>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <label class="mb-1" for="tb">Tinggi Badan</label>
-                        <input type="number" class="form-control form-control-sm" id="tb" name="tb"
-                            value="<?php if($method != 'post') echo $kunjungan['tb'] ?>">
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="tb" name="tb"
+                                value="<?php if($method != 'post') echo $kunjungan['tb'] ?>">
+                            <span class="input-group-text fs-6" id="basic-addon2">cm</span>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <label class="mb-1" for="imt">IMT</label>
-                        <input type="number" class="form-control form-control-sm" id="imt" name="imt"
-                            value="<?php if($method != 'post') echo $kunjungan['imt'] ?>">
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="imt" name="imt"
+                                value="<?php if($method != 'post') echo $kunjungan['imt'] ?>" readonly>
+                            <span class="input-group-text fs-6" id="basic-addon2">kg/m<sup>2</sup></span>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <div class="col-sm-4">
                         <label class="mb-1" for="sistole">Sistole</label>
-                        <input type="number" class="form-control form-control-sm" id="sistole" name="sistole"
-                            value="<?php if($method != 'post') echo $kunjungan['sistole'] ?>">
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="sistole" name="sistole"
+                                value="<?php if($method != 'post') echo $kunjungan['sistole'] ?>">
+                            <span class="input-group-text fs-6" id="basic-addon2">mmHg</span>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <label class="mb-1" for="diastole">Diastole</label>
-                        <input type="number" class="form-control form-control-sm" id="diastole" name="diastole"
-                            value="<?php if($method != 'post') echo $kunjungan['diastole'] ?>">
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="diastole" name="diastole"
+                                value="<?php if($method != 'post') echo $kunjungan['diastole'] ?>">
+                            <span class="input-group-text fs-6" id="basic-addon2">mmHg</span>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <label class="mb-1" for="nadi">Nadi</label>
-                        <input type="number" class="form-control form-control-sm" id="nadi" name="nadi"
-                            value="<?php if($method != 'post') echo $kunjungan['nadi'] ?>">
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="nadi" name="nadi"
+                                value="<?php if($method != 'post') echo $kunjungan['nadi'] ?>">
+                            <span class="input-group-text fs-6" id="basic-addon2">bpm</span>
+                        </div>
                     </div>
                 </div>
                 <div class="mb-3 row">
                     <div class="col-sm-4">
-                        <label class="mb-1" for="rr">RR</label>
-                        <input type="number" class="form-control form-control-sm" id="rr" name="rr"
-                            value="<?php if($method != 'post') echo $kunjungan['rr'] ?>">
+                        <label class="mb-1" for="rr">Respiratory Rate</label>
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="rr" name="rr"
+                                value="<?php if($method != 'post') echo $kunjungan['rr'] ?>">
+                            <span class="input-group-text fs-6" id="basic-addon2">/ minute</span>
+                        </div>
                     </div>
                     <div class="col-sm-4">
                         <label class="mb-1" for="suhu">Suhu (Celcius)</label>
-                        <input type="number" class="form-control form-control-sm" id="suhu" name="suhu"
-                            value="<?php if($method != 'post') echo $kunjungan['suhu'] ?>">
+                        <div class="input-group">
+                            <input type="number" class="form-control form-control-sm" id="suhu" name="suhu"
+                                value="<?php if($method != 'post') echo $kunjungan['suhu'] ?>">
+                            <span class="input-group-text fs-6" id="basic-addon2">℃</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -481,12 +505,29 @@
                         <?php endforeach; ?>
                     </select>
                 </div>
-                <div class="d-flex justify-content-between align-items-center mb-1">
-                    <p class="mb-0">Resep Obat</p>
-                    <div class="btn btn-sm btn-primary fs-6" id="tambah">
-                        <i class="bi bi-plus fs-6"></i>
-                        Tambah Resep
-                    </div>
+            </div>
+
+            <div class="row g-3 mb-5 align-items-center">
+                <label for="lokasi_nyeri" class="col-sm-2 col-form-label">Lokasi Nyeri</label>
+                <div class="col-sm-10">
+                    <select name="status_pulang" id="status_pulang" class="form-select form-select-sm">
+                        <option>Pilih Status Pulang</option>
+                        <option value="rujuk">Rujuk</option>
+                        <option value="obat">Berobat Jalan</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="mb-5" id="resep-obat" style="display: none;">
+                <p class="mb-2 fs-5 mt-4 fw-medium">Resep</p>
+                <div class="d-flex gap-2 align-items-center mb-1">
+                    <p class="mb-0" style="width: 35%;">Nama Obat</p>
+                    <p class="mb-0" style="width: 15%;">Satuan</p>
+                    <p class="mb-0" style="width: 10%;">Signa</p>
+                    <p class="mb-0" style="width: 15%;">Keterangan</p>
+                    <p class="mb-0" style="width: 15%;">Jumlah Resep</p>
+                    <p class="mb-0" style="width: 15%;">Jumlah Diterima</p>
+                    <p class="mb-0" style="width: 5%;">Aksi</p>
                 </div>
                 <div id="resep">
                     <?php
@@ -506,20 +547,20 @@
                         </select>
                         <div class="d-flex align-items-center gap-1" style="width: 20%;">
                             <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep[]"
-                                placeholder="eg. 3" value="<?= substr($obatPasien['note'], 0, 1) ?>">
+                                placeholder="" value="<?= substr($obatPasien['note'], 0, 1) ?>">
                             <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
                                 <i class="bi bi-x fs-4"></i>
                             </div>
                             <input type="number" class="form-control form-control-sm" style="width: 40%;"
-                                name="resep2[]" placeholder="eg. 1" value="<?= substr($obatPasien['note'], 4, 1) ?>">
+                                name="resep2[]" placeholder="" value="<?= substr($obatPasien['note'], 4, 1) ?>">
                         </div>
                         <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="<?= $index ?>"
                             style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
                     </div>
                     <?php endforeach; 
                     else : ?>
-                    <div class="d-flex gap-3 mb-2" id="resep-0">
-                        <select name="obat[]" data-width="75%" data-placeholder="Pilih Obat"
+                    <div class="d-flex gap-2 mb-2" id="resep-0">
+                        <select name="obat[]" data-width="35%" data-placeholder="Pilih Obat"
                             class="form-select-sm diagnosa w-75">
                             <option></option>
                             <?php foreach($obats as $obat) :?>
@@ -527,19 +568,27 @@
                                 <?= $obat['obat'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <div class="d-flex align-items-center gap-1" style="width: 20%;">
-                            <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep[]"
-                                placeholder="eg. 3">
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="satuan[]">
+                        <div class="d-flex align-items-center gap-1" style="width: 10%;">
+                            <input type="number" class="form-control form-control-sm" style="width: 40%;"
+                                name="resep[]">
                             <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
                                 <i class="bi bi-x fs-4"></i>
                             </div>
                             <input type="number" class="form-control form-control-sm" style="width: 40%;"
-                                name="resep2[]" placeholder="eg. 1">
+                                name="resep2[]">
                         </div>
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="ket[]">
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty[]">
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty2[]">
                         <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="0"
                             style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
                     </div>
                     <?php endif; ?>
+                </div>
+                <div class="text-end">
+                    <button type="button" id="tambah" class="btn btn-primary btn-sm text-end"><i class="bi bi-plus"></i>
+                        Tambah</button>
                 </div>
             </div>
 
@@ -560,6 +609,14 @@ $(document).ready(function() {
         $('#skala_nyeri').val($(this).val());
     })
 
+    $('#status_pulang').on('change', function() {
+        if ($(this).val() == 'obat') {
+            $('#resep-obat').show()
+        } else {
+            $('#resep-obat').hide()
+        }
+    })
+
     function method() {
         if ($('#method').val() == 'post') {
             console.log('POST');
@@ -575,6 +632,21 @@ $(document).ready(function() {
         }
     }
     method();
+
+    function imt() {
+        $('#bb, #tb').on('input', function() {
+            let bb = Number($('#bb').val());
+            let tb = Number($('#tb').val());
+
+            if (bb > 0 && tb > 0) {
+                let imtValue = bb / Math.pow((tb / 100), 2);
+                $('#imt').val(imtValue.toFixed(2));
+            } else {
+                $('#imt').val('');
+            }
+        });
+    }
+    imt()
 
     function select2Style() {
         $('.diagnosa').select2({
@@ -593,26 +665,30 @@ $(document).ready(function() {
     $('#tambah').on('click', () => {
         let id = $('#resep').children().length;
         $('#resep').append(`
-            <div class="d-flex gap-3 mb-2" id="resep-${id}">
-                <select name="obat[]" data-width="75%" data-placeholder="Pilih Obat"
+            <div class="d-flex gap-2 mb-2" id="resep-0">
+                <select name="obat[]" data-width="35%" data-placeholder="Pilih Obat"
                     class="form-select-sm diagnosa w-75">
                     <option></option>
-                    <option></option>
-                    <?php foreach($obats as $obat) : ?>
-                    <option value="<?= $obat['id'] ?>"><?= $obat['kode'] ?> - <?= $obat['obat'] ?></option>
+                    <?php foreach($obats as $obat) :?>
+                    <option value="<?= $obat['id'] ?>" class="text-uppercase"><?= $obat['kode'] ?> -
+                        <?= $obat['obat'] ?></option>
                     <?php endforeach; ?>
                 </select>
-                <div class="d-flex align-items-center gap-1" style="width: 20%;">
-                    <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep[]"
-                        placeholder="eg. 3">
+                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="satuan[]">
+                <div class="d-flex align-items-center gap-1" style="width: 10%;">
+                    <input type="number" class="form-control form-control-sm" style="width: 40%;"
+                        name="resep[]">
                     <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
                         <i class="bi bi-x fs-4"></i>
                     </div>
-                    <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep2[]"
-                        placeholder="eg. 1">
+                    <input type="number" class="form-control form-control-sm" style="width: 40%;"
+                        name="resep2[]">
                 </div>
-                <button type="button" class="btn btn-sm btn-danger fs-6" data-id="${id}" style="width: 5%;"><i
-                        class="bi bi-trash fs-6"></i></button>
+                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="ket[]">
+                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty[]">
+                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty2[]">
+                <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="0"
+                    style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
             </div>
         `);
 

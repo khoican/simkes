@@ -71,7 +71,6 @@ $(document).ready(function() {
                 } else {
                     $('#secondarySearch').show();
                 }
-                console.log(json);
                 return json.data;
             },
         },
