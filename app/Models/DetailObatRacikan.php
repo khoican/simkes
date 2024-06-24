@@ -4,15 +4,15 @@ namespace App\Models;
 
 use CodeIgniter\Model;
 
-class DiagnosaPasien extends Model
+class DetailObatRacikan extends Model
 {
-    protected $table            = 'diagnosa_pasiens';
+    protected $table            = 'detail_obat_racikans';
     protected $primaryKey       = 'id';
     protected $useAutoIncrement = true;
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_pasien', 'id_diagnosa', 'id_rekmed', 'status'];
+    protected $allowedFields    = ['id_obat_racikan', 'id_obat'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -28,11 +28,7 @@ class DiagnosaPasien extends Model
     protected $deletedField  = 'deleted_at';
 
     // Validation
-    protected $validationRules      = [
-        'id_pasien' => 'required',
-        'id_diagnosa' => 'required',
-        'id_rekmed' => 'required',
-    ];
+    protected $validationRules      = [];
     protected $validationMessages   = [];
     protected $skipValidation       = false;
     protected $cleanValidationRules = true;
@@ -48,25 +44,21 @@ class DiagnosaPasien extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
-    public function getMostDiagnosaPasien() {
-        return $this->select('COUNT(id_diagnosa) as total, diagnosas.diagnosa')->join('diagnosas', 'diagnosa_pasiens.id_diagnosa = diagnosas.id')->groupBy('diagnosa')->orderBy('total', 'DESC')->limit(10)->findAll();
+    public function getDetailObatRacikanByObatRacikanId($obatRacikanId) {
+        return $this->select('obats.obat, obats.id, (obats.harga * obat_racikans.jml_resep) AS harga')
+                    ->join('obats', 'obats.id = detail_obat_racikans.id_obat')
+                    ->join('obat_racikans', 'obat_racikans.id = detail_obat_racikans.id_obat_racikan')
+                    ->where('detail_obat_racikans.id_obat_racikan', $obatRacikanId)
+                    ->findAll();
     }
 
-    public function getDiagnosaByRekmedId($rekmedId) {
-        return $this->where('id_rekmed', $rekmedId)->select('diagnosas.diagnosa, diagnosas.kode, diagnosa_pasiens.*')->join('diagnosas', 'diagnosa_pasiens.id_diagnosa = diagnosas.id')->findAll();
-    }
-
-    public function postDiagnosaPasien($data) {
-        if ($this->insert($data) === false) {
+    public function postDetailObatRacikan($data) {
+        if($this->insert($data) == false) {
             $errors = $this->errors();
             log_message('error', print_r($errors, true));
             return $errors;
         }
-        return $this->db->insertID();
-    }
 
-    public function deleteDiagnosaPasienByRekmedId($rekmedId) {
-        $this->where('id_rekmed', $rekmedId)->set('id_pasien', null)->set('id_diagnosa', null)->update();
-        return $this->where('id_rekmed', $rekmedId)->delete();
+        return $this->db->insertID();
     }
 }

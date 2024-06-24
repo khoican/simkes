@@ -111,6 +111,10 @@ class Rekmed extends Model
         return $status['status'];
     }
 
+    public function getLatestRekmedByPasienId($id) {
+        return $this->where('id_pasien', $id)->select('rekmeds.*')->first();
+    }
+
     public function postRekmed($data) {
         if ($this->insert($data) === false) {
             $errors = $this->errors();

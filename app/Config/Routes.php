@@ -13,6 +13,7 @@ $routes->post('user/login', 'UserController::auth');
 // Home
 
 $routes->get('/', 'DashboardController::index', ['filters' => 'auth']);
+$routes->get('/(:any)', 'DashboardController::credentials/$1');
 $routes->get('report', 'ExportController::index');
 $routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2');
 
@@ -41,10 +42,13 @@ $routes->group('pemeriksaan', ['filter' => 'auth'], function($routes) {
 $routes->group('apotek', ['filter' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::apotek');
     $routes->post('(:num)', 'ApotekController::apotekPasien/$1');
+    $routes->get('(:num)/detail/(:num)', 'ApotekController::getResepByRekmedId/$1/$2');
     $routes->get('(:num)', 'ApotekController::getResep/$1');
     $routes->get('obat/(:num)', 'ApotekController::getObat/$1');
     $routes->post('obat/update/(:num)', 'ApotekController::updateStatusObatPasien/$1');
+    $routes->post('obat/add', 'ApotekController::addObatPasien');
     $routes->post('kunjungan/update/(:num)/(:num)', 'ApotekController::updateStatusKunjungan/$1/$2');
+    $routes->post('obatracikan/add', 'ApotekController::addObatRacikan');
 });
 
 // Kunjungan

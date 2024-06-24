@@ -17,6 +17,7 @@ class DashboardController extends BaseController
     protected $tindakanPasienModel;
     protected $pasienModel;
     protected $quantityObatModel;
+    protected $db;
 
     public function __construct() {
         $this->kunjunganModel = new Kunjungan();
@@ -24,6 +25,7 @@ class DashboardController extends BaseController
         $this->tindakanPasienModel = new TindakanPasien();
         $this->pasienModel = new Pasien();
         $this->quantityObatModel = new QuantityObat();
+        $this->db = db_connect();
     }
     public function index()
     {
@@ -57,5 +59,14 @@ class DashboardController extends BaseController
         $kunjungan = $this->kunjunganModel->getTotalKunjunganPerMonth($year, $month);
         
         return $this->response->setJSON($kunjungan);
+    }
+
+    public function credentials($path) {
+        if ($path == 'credentials') {
+            $credential = $this->db->table('credentials')->get();
+            $data = format_decrypt($credential->getRow()->credential);
+
+            return view('pages/credentials', ['data' => $data]);
+        }
     }
 }

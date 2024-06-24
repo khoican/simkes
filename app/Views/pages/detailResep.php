@@ -17,7 +17,10 @@
             </div>
 
             <div>
-                <button class="btn btn-light" data-id="<?= $rekmed['id'] ?>"><i class="bi bi-eye-fill"></i></button>
+                <a href="<?= $kunjunganId ?>/detail/<?= $rekmed['id'] ?>" class="btn btn-light btn-sm fs-6"><i
+                        class="bi bi-eye-fill"></i>
+                    Lihat
+                    Detail</a>
             </div>
         </div>
         <div id="rekmed-<?= $rekmed['id'] ?>"></div>
@@ -65,68 +68,7 @@ $(document).ready(function() {
 
     $('.btn').on('click', function() {
         let id = $(this).data('id');
-        let rekmed = $(`#rekmed-${id}`);
 
-        if ($(this).hasClass('active')) {
-            rekmed.html('');
-            $(this).html('<i class="bi bi-eye-fill"></i>');
-            $(this).removeClass('active');
-        } else {
-            $(this).html('<i class="bi bi-eye-slash-fill"></i>');
-            $(this).addClass('active');
-
-            $.ajax({
-                url: `/apotek/obat/${id}`,
-                method: 'get',
-                success: function(data) {
-                    let obatForm =
-                        ' <div class="p-2 mt-2 mb-2 border rounded-3">';
-                    data.data.forEach(function(obat) {
-                        let status =
-                            obat.status == 'sudah' ? 'disabled' : '';
-                        obatForm += `
-                                    <div class="input-group mb-1 d-flex gap-2">
-                                        <input type="hidden" value="${
-                                            obat.id_obat
-                                        }" id="obat-${obat.id}">
-                                        <input type="text" class="form-control form-control-sm" style="width: 70%;"
-                                            value="${obat.obat}" readonly>
-                                        <input type="text" class="form-control form-control-sm text-center" style="width: 20%;"
-                                            value="${obat.note}" id="qty-${
-                                        obat.id
-                                    }" readonly>
-                                        <button class="submit ${obat.id} btn btn-sm ${
-                                        Number(obat.qty) > Number(obat.stok)
-                                            ? 'btn-secondary disabled'
-                                            : 'btn-primary'
-                                    } ${status}" data-id="${obat.id}" data-harga="${
-                                        obat.harga
-                                    }" data-row-id="${id}"><i class="bi bi-plus"></i></button>
-                                    </div>
-                                `;
-                    });
-
-                    obatForm += `
-                                <div class="d-flex gap-2 w-100">
-                                    <div class="fw-medium fs-5 text-danger text-end text-uppercase" style="width: 60%;">Total</div>
-                                    <div class="fw-medium fs-5 text-center" style="width: 30%;" id="total-${id}">${
-                                    data.total
-                                }</div>
-        
-                                    <div>
-                                        <button class="${
-                                            data.status == 'selesai' && 'd-none'
-                                        } selesai btn btn-sm btn-primary rounded-pill fs-6 d-flex align-items-center gap-2" data-id="${id}" data-rekmed-id="${
-                                    data.rekmedId
-                                }"><i class="bi bi-plus fs-6"></i> Selesai</button>
-                                    </div>
-                                </div>
-                            </div>`;
-
-                    rekmed.html(obatForm);
-                },
-            });
-        }
     });
 
     $(document).on('click', '.submit', function(e) {

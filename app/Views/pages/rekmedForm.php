@@ -23,14 +23,14 @@
                         <label for="makanan" class="col-sm-2 col-form-label">Makanan</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control form-control-sm" id="makanan" name="alergi_makanan"
-                                value="<?php if($method != 'post') echo $kunjungan['alergi_makanan'] ?>">
+                                value="<?php if($method != 'post') echo $kunjungan['alergi_makanan']; elseif(isset($latestRekmed)) echo $latestRekmed['alergi_makanan'] ?>">
                         </div>
                     </div>
                     <div class="w-100 row g-3 align-items-center">
                         <label for="obat" class="col-sm-2 col-form-label">Obat</label>
                         <div class="col-sm-10">
                             <input type="text" class="form-control form-control-sm" id="obat" name="alergi_obat"
-                                value="<?php if($method != 'post') echo $kunjungan['alergi_obat'] ?>">
+                                value="<?php if($method != 'post') echo $kunjungan['alergi_obat']; elseif(isset($latestRekmed)) echo $latestRekmed['alergi_obat'] ?>">
                         </div>
                     </div>
                 </div>
@@ -43,18 +43,18 @@
                     <label for="rwt_pykt_terdahulu" class="form-label">Riwayat Penyakit Terdahulu</label>
                     <input type="text" class="form-control form-control-sm" id="rwt_pykt_terdahulu"
                         name="rwt_pykt_terdahulu"
-                        value="<?php if($method != 'post') echo $kunjungan['rwt_pykt_terdahulu'] ?>">
+                        value="<?php if($method != 'post') echo $kunjungan['rwt_pykt_terdahulu']; elseif(isset($latestRekmed)) echo $latestRekmed['rwt_pykt_terdahulu'] ?>">
                 </div>
                 <div class="w-100 mb-2">
                     <label for="rwt_pengobatan" class="form-label">Riwayat Pengobatan</label>
                     <input type="text" class="form-control form-control-sm" id="rwt_pengobatan" name="rwt_pengobatan"
-                        value="<?php if($method != 'post') echo $kunjungan['rwt_pengobatan'] ?>">
+                        value="<?php if($method != 'post') echo $kunjungan['rwt_pengobatan']; elseif(isset($latestRekmed)) echo $latestRekmed['rwt_pengobatan'] ?>">
                 </div>
                 <div class="w-100 mb-2">
                     <label for="rwt_pykt_keluarga" class="form-label">Riwayat Penyakit Keluarga</label>
                     <input type="text" class="form-control form-control-sm" id="rwt_pykt_keluarga"
                         name="rwt_pykt_keluarga"
-                        value="<?php if($method != 'post') echo $kunjungan['rwt_pykt_keluarga'] ?>">
+                        value="<?php if($method != 'post') echo $kunjungan['rwt_pykt_keluarga']; elseif(isset($latestRekmed)) echo $latestRekmed['rwt_pykt_keluarga'] ?>">
                 </div>
             </div>
 
@@ -508,17 +508,20 @@
             </div>
 
             <div class="row g-3 mb-5 align-items-center">
-                <label for="lokasi_nyeri" class="col-sm-2 col-form-label">Lokasi Nyeri</label>
+                <label for="lokasi_nyeri" class="col-sm-2 col-form-label">Status Pulang</label>
                 <div class="col-sm-10">
                     <select name="status_pulang" id="status_pulang" class="form-select form-select-sm">
-                        <option>Pilih Status Pulang</option>
-                        <option value="rujuk">Rujuk</option>
-                        <option value="obat">Berobat Jalan</option>
+                        <option selected>Pilih Status Pulang</option>
+                        <option value="rujuk"
+                            <?php if(isset($statusPulang) && $statusPulang == false) echo 'selected' ?>>Rujuk</option>
+                        <option value="obat" <?php if(isset($statusPulang) && $statusPulang == true) echo 'selected' ?>>
+                            Berobat Jalan</option>
                     </select>
                 </div>
             </div>
 
-            <div class="mb-5" id="resep-obat" style="display: none;">
+            <div class="mb-5" id="resep-obat"
+                style="<?php if(isset($statusPulang)) echo 'display: block'; else echo 'display: none' ?>">
                 <p class="mb-2 fs-5 mt-4 fw-medium">Resep</p>
                 <div class="d-flex gap-2 align-items-center mb-1">
                     <p class="mb-0" style="width: 35%;">Nama Obat</p>
@@ -526,7 +529,6 @@
                     <p class="mb-0" style="width: 10%;">Signa</p>
                     <p class="mb-0" style="width: 15%;">Keterangan</p>
                     <p class="mb-0" style="width: 15%;">Jumlah Resep</p>
-                    <p class="mb-0" style="width: 15%;">Jumlah Diterima</p>
                     <p class="mb-0" style="width: 5%;">Aksi</p>
                 </div>
                 <div id="resep">
@@ -534,7 +536,7 @@
                     if ($method != 'post' && count($obatPasiens) > 0) :
                         foreach ($obatPasiens as $index => $obatPasien) : ?>
                     <div class="d-flex gap-3 mb-2" id="resep-<?= $index ?>">
-                        <select name="obat[]" data-width="75%" data-placeholder="Pilih Obat"
+                        <select name="obat[]" data-width="35%" data-placeholder="Pilih Obat"
                             class="form-select-sm diagnosa w-75">
                             <option></option>
                             <?php foreach($obats as $obat) : 
@@ -545,30 +547,37 @@
                                 <?= $obat['obat'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <div class="d-flex align-items-center gap-1" style="width: 20%;">
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="jml_resep[]"
+                            value="<?= $obatPasien['jenis'] ?>">
+                        <div class="d-flex align-items-center gap-1" style="width: 10%;">
                             <input type="number" class="form-control form-control-sm" style="width: 40%;" name="resep[]"
-                                placeholder="" value="<?= substr($obatPasien['note'], 0, 1) ?>">
+                                placeholder="" value="<?= substr($obatPasien['signa'], 0, 1) ?>">
                             <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
                                 <i class="bi bi-x fs-4"></i>
                             </div>
                             <input type="number" class="form-control form-control-sm" style="width: 40%;"
-                                name="resep2[]" placeholder="" value="<?= substr($obatPasien['note'], 4, 1) ?>">
+                                name="resep2[]" placeholder="" value="<?= substr($obatPasien['signa'], 4, 1) ?>">
                         </div>
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="ket[]"
+                            value="<?= $obatPasien['ket'] ?>">
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="jml_resep[]"
+                            value="<?= $obatPasien['jml_resep'] ?>">
                         <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="<?= $index ?>"
                             style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
                     </div>
                     <?php endforeach; 
                     else : ?>
-                    <div class="d-flex gap-2 mb-2" id="resep-0">
+                    <div class="d-flex gap-2 mb-2 resep-data" id="resep-0">
                         <select name="obat[]" data-width="35%" data-placeholder="Pilih Obat"
-                            class="form-select-sm diagnosa w-75">
+                            class="form-select-sm diagnosa w-75 id-obat" data-col="0">
                             <option></option>
                             <?php foreach($obats as $obat) :?>
                             <option value="<?= $obat['id'] ?>" class="text-uppercase"><?= $obat['kode'] ?> -
                                 <?= $obat['obat'] ?></option>
                             <?php endforeach; ?>
                         </select>
-                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="satuan[]">
+                        <input type="text" class="form-control form-control-sm satuan-0" style="width: 15%;"
+                            name="satuan[]">
                         <div class="d-flex align-items-center gap-1" style="width: 10%;">
                             <input type="number" class="form-control form-control-sm" style="width: 40%;"
                                 name="resep[]">
@@ -579,8 +588,7 @@
                                 name="resep2[]">
                         </div>
                         <input type="text" class="form-control form-control-sm" style="width: 15%;" name="ket[]">
-                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty[]">
-                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty2[]">
+                        <input type="text" class="form-control form-control-sm" style="width: 15%;" name="jml_resep[]">
                         <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="0"
                             style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
                     </div>
@@ -665,16 +673,16 @@ $(document).ready(function() {
     $('#tambah').on('click', () => {
         let id = $('#resep').children().length;
         $('#resep').append(`
-            <div class="d-flex gap-2 mb-2" id="resep-0">
+            <div class="d-flex gap-2 mb-2 resep-data" id="resep-${id}">
                 <select name="obat[]" data-width="35%" data-placeholder="Pilih Obat"
-                    class="form-select-sm diagnosa w-75">
+                    class="form-select-sm diagnosa w-75 id-obat" data-col="${id}">
                     <option></option>
                     <?php foreach($obats as $obat) :?>
                     <option value="<?= $obat['id'] ?>" class="text-uppercase"><?= $obat['kode'] ?> -
                         <?= $obat['obat'] ?></option>
                     <?php endforeach; ?>
                 </select>
-                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="satuan[]">
+                <input type="text" class="form-control form-control-sm satuan-${id}" style="width: 15%;" name="satuan[]">
                 <div class="d-flex align-items-center gap-1" style="width: 10%;">
                     <input type="number" class="form-control form-control-sm" style="width: 40%;"
                         name="resep[]">
@@ -685,8 +693,7 @@ $(document).ready(function() {
                         name="resep2[]">
                 </div>
                 <input type="text" class="form-control form-control-sm" style="width: 15%;" name="ket[]">
-                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty[]">
-                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="qty2[]">
+                <input type="text" class="form-control form-control-sm" style="width: 15%;" name="jml_resep[]">
                 <button type="button" class="btn btn-sm btn-danger fs-6 delete-resep" data-id="0"
                     style="width: 5%;"><i class="bi bi-trash fs-6"></i></button>
             </div>
@@ -694,6 +701,26 @@ $(document).ready(function() {
 
         select2Style();
     })
+
+    $('#resep').on('change', '.id-obat', function() {
+        let obatId = $(this).val();
+        let col = $(this).data('col');
+        console.log('selected');
+
+        if (obatId) {
+            $.ajax({
+                url: `/obat/${obatId}`,
+                method: 'get',
+                success: function(data) {
+                    console.log(data);
+                    $(`#resep-${col} .satuan-${col}`).val(data.jenis);
+                },
+                error: function(xhr, status, error) {
+                    console.error('Terjadi kesalahan saat mengambil data obat:', error);
+                }
+            });
+        }
+    });
 
     $('#resep').on('click', 'button', function() {
         $(this).parent().remove();

@@ -365,14 +365,35 @@
                                 id="diagnosa-sekunder">
                         </div>
                     </div>
-                    <div class="w-100 mb-3">
+                    <div class="w-100 mb-5">
                         <p class="mb-1">Tindakan Terhadap Pasien</p>
                         <input type="text" class="form-control form-control-sm" name="tindakan" id="tindakan">
                     </div>
-                    <div class="d-flex justify-content-between align-items-center mb-1">
-                        <p class="mb-0">Resep Obat</p>
+                    <div class="mb-5">
+                        <p class="mb-1 fs-5 mt-4 fw-medium">Resep</p>
+                        <div class="d-flex gap-2 align-items-center mb-1">
+                            <p class="mb-0" style="width: 25%;">Nama Obat</p>
+                            <p class="mb-0" style="width: 10%;">Satuan</p>
+                            <p class="mb-0" style="width: 20%;">Signa</p>
+                            <p class="mb-0" style="width: 15%;">Keterangan</p>
+                            <p class="mb-0" style="width: 15%;">Jumlah Resep</p>
+                            <p class="mb-0" style="width: 15%;">Jumlah Diberikan</p>
+                        </div>
+                        <div id="resep">
+                        </div>
                     </div>
-                    <div id="resep">
+                    <div class="mb-5">
+                        <p class="mb-1 fs-5 mt-4 fw-medium">Obat Racikan</p>
+                        <div class="d-flex gap-2 align-items-center mb-1">
+                            <p class="mb-0" style="width: 25%;">Campuran Obat</p>
+                            <p class="mb-0" style="width: 10%;">Satuan</p>
+                            <p class="mb-0" style="width: 20%;">Signa</p>
+                            <p class="mb-0" style="width: 15%;">Keterangan</p>
+                            <p class="mb-0" style="width: 15%;">Jumlah Resep</p>
+                            <p class="mb-0" style="width: 15%;">Jumlah Diberikan</p>
+                        </div>
+                        <div id="resep-racikan">
+                        </div>
                     </div>
                 </div>
             </div>
@@ -445,14 +466,48 @@ $(document).ready(function() {
                     $('#resep').append(
                         `
                         <div class="d-flex gap-3 mb-2" id="resep-0">
-                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${obat.obat}' readonly>
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${obat.obat}' readonly style="width: 25%;">
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${obat.jenis}' readonly style="width: 10%;">
                             <div class="d-flex align-items-center gap-1" style="width: 20%;">
-                                <input type="text" class="form-control form-control-sm" style="width: 40%;" value='${obat.note.split('x')[0]}' readonly>
+                                <input type="text" class="form-control form-control-sm" style="width: 40%;" value='${obat.signa.split('x')[0]}' readonly>
                                 <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
                                     <i class="bi bi-x fs-4"></i>
                                 </div>
-                                <input type="text" class="form-control form-control-sm" style="width: 40%;" value='${obat.note.split('x')[1]}' readonly>
+                                <input type="text" class="form-control form-control-sm" style="width: 40%;" value='${obat.signa.split('x')[1]}' readonly>
                             </div>
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${obat.ket}' readonly style="width: 25%;">
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${obat.jml_resep}' readonly style="width: 15%;">
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${obat.jml_diberikan}' readonly style="width: 15%;">
+                        </div>
+                        `
+                    )
+                })
+
+                data.obatRacikan.forEach(racikan => {
+                    let dataRacikan = ''
+                    if (racikan.detail_obat.length > 0) {
+                        let counter = 0
+                        racikan.detail_obat.forEach(item => {
+                            counter++
+                            dataRacikan +=
+                                `${item.obat}${counter < racikan.detail_obat.length ? ', ' : ''}`
+                        })
+                    }
+                    $('#resep-racikan').append(
+                        `
+                        <div class="d-flex gap-3 mb-2" id="resep-0">
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${dataRacikan}' readonly style="width: 25%;">
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${racikan.satuan}' readonly style="width: 10%;">
+                            <div class="d-flex align-items-center gap-1" style="width: 20%;">
+                                <input type="text" class="form-control form-control-sm" style="width: 40%;" value='${racikan.signa.split('x')[0]}' readonly>
+                                <div class="d-flex align-items-center justify-content-center" style="width: 20%;">
+                                    <i class="bi bi-x fs-4"></i>
+                                </div>
+                                <input type="text" class="form-control form-control-sm" style="width: 40%;" value='${racikan.signa.split('x')[1]}' readonly>
+                            </div>
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${racikan.ket}' readonly style="width: 25%;">
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${racikan.jml_resep}' readonly style="width: 15%;">
+                            <input type="text" class="form-control form-control-sm" id="resep-obat" value='${racikan.jml_diberikan}' readonly style="width: 15%;">
                         </div>
                         `
                     )
@@ -463,6 +518,11 @@ $(document).ready(function() {
 
     $('#rekmedModalBody .form-control').attr('readonly', true);
     $('#rekmedModalBody .form-check-input, #rekmedModalBody .form-select-sm').attr('disabled', true);
+
+    $('#rekmedModal').on('hidden.bs.modal', function() {
+        $('#resep').html('')
+        $('#resep-racikan').html('')
+    })
 })
 </script>
 <?= $this->endSection() ?>

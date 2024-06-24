@@ -101,6 +101,7 @@
                         <tr>
                             <th style="width: 10%;">No</th>
                             <th style="width: 90%;">Diagnosa Penyakit</th>
+                            <th style="width: 20%;" class="text-center">Jumlah</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -110,6 +111,7 @@
                         <tr>
                             <td class="text-center fw-medium"><?= $key + 1 ?></td>
                             <td class="text-capitalize fw-medium"><?= $value['diagnosa'] ?></td>
+                            <td class="text-capitalize fw-medium text-center"><?= $value['total'] ?></td>
                         </tr>
                         <?php endforeach; ?>
                         <?php else : ?>
@@ -128,6 +130,7 @@
                         <tr>
                             <th style="width: 10%;">No</th>
                             <th style="width: 90%;">Jenis Tindakan</th>
+                            <th style="width: 20%;" class="text-center">Jumlah</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -137,6 +140,7 @@
                         <tr>
                             <td class="text-center fw-medium"><?= $key + 1 ?></td>
                             <td class="text-capitalize fw-medium"><?= $value['tindakan'] ?></td>
+                            <td class="text-capitalize fw-medium text-center"><?= $value['total'] ?></td>
                         </tr>
                         <?php endforeach; ?>
                         <?php else : ?>

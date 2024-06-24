@@ -12,7 +12,7 @@ class ObatPasien extends Model
     protected $returnType       = 'array';
     protected $useSoftDeletes   = false;
     protected $protectFields    = true;
-    protected $allowedFields    = ['id_pasien', 'id_obat', 'id_rekmed', 'note', 'status'];
+    protected $allowedFields    = ['id_pasien', 'id_obat', 'id_rekmed', 'signa', 'ket', 'jml_resep', 'jml_diberikan', 'status'];
 
     protected bool $allowEmptyInserts = false;
     protected bool $updateOnlyChanged = true;
@@ -58,11 +58,11 @@ class ObatPasien extends Model
     }
 
     public function getObatPasienById ($id) {
-        return $this->where('id', $id)->select('obat_pasien.*, obats.obat, obats.stok, obats.harga')->join('obats', 'obat_pasien.id_obat = obats.id')->first();
+        return $this->where('obat_pasien.id', $id)->select('obat_pasien.*, obats.obat, obats.stok, obats.harga')->join('obats', 'obat_pasien.id_obat = obats.id')->first();
     }
 
     public function getObatPasienByRekmedId ($rekmedId) {
-        return $this->where('id_rekmed', $rekmedId)->select('obat_pasien.*, obats.obat, obats.stok, obats.harga')->join('obats', 'obat_pasien.id_obat = obats.id')->findAll();
+        return $this->where('id_rekmed', $rekmedId)->select('obat_pasien.*, obats.obat, obats.stok, obats.kode, obats.jenis, (obats.harga * obat_pasien.jml_diberikan) AS harga')->join('obats', 'obat_pasien.id_obat = obats.id')->orderBy('created_at', 'ASC')->findAll();
     }
 
     public function deleteObatPasienByRekmedId ($rekmedId) {
@@ -89,6 +89,19 @@ class ObatPasien extends Model
             }
         }
         return format_numerik($total);
+
+    }
+
+    public function getTotalHargaByRekmedIdNonFormating ($rekmedId) {
+        $total = 0;
+        $obats = $this->getObatPasienByRekmedId($rekmedId);
+
+        foreach($obats as $obat) {
+            if ($obat['status'] == 'sudah') {
+                $total += $obat['harga'];
+            }
+        }
+        return $total;
 
     }
 

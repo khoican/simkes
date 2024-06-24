@@ -29,6 +29,11 @@ class ObatRacikan extends Migration
                 'constraint' => 255,
                 'null' => true
             ],
+            'satuan' => [
+                'type' => 'VARCHAR',
+                'constraint' => 255,
+                'null' => true
+            ],
             'ket' => [
                 'type' => 'VARCHAR',
                 'constraint' => 255,

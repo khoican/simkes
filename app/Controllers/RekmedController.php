@@ -9,6 +9,7 @@ use App\Models\GeneralConcent;
 use App\Models\Kunjungan;
 use App\Models\Obat;
 use App\Models\ObatPasien;
+use App\Models\ObatRacikan;
 use App\Models\Rekmed;
 use App\Models\Tindakan;
 use App\Models\TindakanPasien;
@@ -25,6 +26,7 @@ class RekmedController extends BaseController
     protected $tindakanPasienModel;
     protected $obatPasienModel;
     protected $generalConsentModel;
+    protected $obatRacikanModel;
     protected $db;
 
     public function __construct() 
@@ -38,6 +40,7 @@ class RekmedController extends BaseController
         $this->tindakanPasienModel = new TindakanPasien();
         $this->obatPasienModel = new ObatPasien();
         $this->generalConsentModel = new GeneralConcent();
+        $this->obatRacikanModel = new ObatRacikan();
         $this->db = db_connect();
     }
 
@@ -93,6 +96,7 @@ class RekmedController extends BaseController
         $tindakanPasiens = $this->tindakanPasienModel->getTindakanByRekmedId($id);
         $obatPasiens = $this->obatPasienModel->getObatPasienByRekmedId($id);
         $kunjunganId = $this->kunjunganModel->getKunjunganByRekmedId($id);
+        $obatRacikan = $this->obatRacikanModel->getObatRacikan($rekmedPasien['id']);
 
         $rekmedPasien['id_kunjungan'] = $kunjunganId['id'];
 
@@ -102,9 +106,9 @@ class RekmedController extends BaseController
             'kunjungan' => $rekmedPasien, 
             'diagnosaPasiens' => $diagnosaPasiens, 
             'tindakanPasiens' => $tindakanPasiens, 
-            'obatPasiens' => $obatPasiens]);
-
-        
+            'obatPasiens' => $obatPasiens,
+            'obatRacikan' => $obatRacikan
+        ]);
     }
 
     public function create($pasienId)
@@ -113,6 +117,7 @@ class RekmedController extends BaseController
         $kunjungan = $this->kunjunganModel->getKunjunganByPasienId($pasienId);
         $diagnosas = $this->diagnosaModel->getAllDiagnosa();
         $tindakans = $this->tindakanModel->getAllTindakan();
+        $latestRekmed = $this->rekmedModel->getLatestRekmedByPasienId($pasienId);
         $obats = $this->obatModel->getAllObat();
 
         return view('pages/rekmedForm', [
@@ -122,6 +127,7 @@ class RekmedController extends BaseController
             'kunjungan' => $kunjungan, 
             'diagnosas' => $diagnosas, 
             'tindakans' => $tindakans, 
+            'latestRekmed' => $latestRekmed,
             'obats' => $obats]);
     }
 
@@ -200,6 +206,8 @@ class RekmedController extends BaseController
         $idObats = $this->request->getVar('obat');
         $resep = $this->request->getVar('resep');
         $resep2 = $this->request->getVar('resep2');
+        $jmlResep = $this->request->getVar('jml_resep');
+        $ket = $this->request->getVar('ket');
 
         $status = 'selesai';
         if ($idObats[0] != null && $resep[0] != null && $resep2[0] != null) {
@@ -209,7 +217,9 @@ class RekmedController extends BaseController
                         'id_rekmed' => $idRekmed,
                         'id_pasien' => intval($id),
                         'id_obat'   => intval($idObat),
-                        'note'      => $resep[$index] . ' x ' . $resep2[$index],
+                        'signa'     => $resep[$index] . ' x ' . $resep2[$index],
+                        'ket'       => $ket[$index],
+                        'jml_resep' => $jmlResep[$index],
                     ];
                     $result = $this->obatPasienModel->postObatPasien($dataResep);
                     $status = 'antrian-obat';
@@ -248,6 +258,7 @@ class RekmedController extends BaseController
     public function edit ($id)
     {
         $method = 'edit';
+        $statusPulang = false;
         $rekmedPasien = $this->rekmedModel->getRekmedById($id);
         $diagnosas = $this->diagnosaModel->getAllDiagnosa();
         $tindakans = $this->tindakanModel->getAllTindakan();
@@ -259,8 +270,13 @@ class RekmedController extends BaseController
 
         $rekmedPasien['id_kunjungan'] = $kunjunganId['id'];
 
+        if (count($obatPasiens) > 0) {
+            $statusPulang = true;
+        }
+
         return view('pages/rekmedForm', [
             'id' => $rekmedPasien['id_pasien'], 
+            'statusPulang' => $statusPulang,
             'method' => $method, 
             'kunjungan' => $rekmedPasien, 
             'diagnosas' => $diagnosas, 
@@ -345,6 +361,8 @@ class RekmedController extends BaseController
         $idObats = $this->request->getPost('obat');
         $resep = $this->request->getPost('resep');
         $resep2 = $this->request->getPost('resep2');
+        $ket = $this->request->getPost('ket');
+        $jmlResep = $this->request->getPost('jml_resep');
         if ($idObats[0] != null && $resep[0] != null && $resep2[0] != null) {
             $this->obatPasienModel->deleteObatPasienByRekmedId($id);
             foreach ($idObats as $index => $idObat) {
@@ -352,7 +370,9 @@ class RekmedController extends BaseController
                     'id_rekmed'            => $id,
                     'id_pasien'            => intval($this->request->getPost('id_pasien')),
                     'id_obat'              => intval($idObat),
-                    'note'                  => $resep[$index]. ' x '.$resep2[$index],
+                    'signa'                => $resep[$index]. ' x '.$resep2[$index],
+                    'ket'                  => $ket[$index],
+                    'jml_resep'            => $jmlResep[$index] 
                 ];
     
                 $this->obatPasienModel->postObatPasien($dataResep);

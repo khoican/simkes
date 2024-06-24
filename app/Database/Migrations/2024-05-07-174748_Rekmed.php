@@ -75,7 +75,7 @@ class Rekmed extends Migration
                 'null' => true
             ],
             'imt' => [
-                'type' => 'INT',
+                'type' => 'FLOAT',
                 'constraint' => 11,
                 'null' => true
             ],
