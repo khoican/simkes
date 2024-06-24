@@ -24,8 +24,8 @@
                     <div class="d-flex gap-2 mb-5 justify-content-center align-items-center">
                         <img src="<?= base_url('images/pemkab.png') ?>" style="width: 50px; height: 100%;" alt="">
                         <div>
-                            <h5 class="mb-0 fw-medium fs-4">SISTEM INFORMASI</h5>
-                            <h4 class="mb-0 fw-semibold fs-3">KESEHATAN</h4>
+                            <h5 class="mb-0 fw-medium fs-4">REKAM MEDIS ELEKTRONIK</h5>
+                            <h4 class="mb-0 fw-semibold fs-3">SUMBERSARI</h4>
                         </div>
                     </div>
 

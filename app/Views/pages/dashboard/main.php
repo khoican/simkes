@@ -94,7 +94,7 @@
     <div class=" mt-5 fs-6">
         <div class="d-flex gap-3 mb-4">
             <div class="w-50 p-4 bg-white rounded-3">
-                <h5 class="fw-semibold fs-4">Penyakin Terbanyak</h5>
+                <h5 class="fw-semibold fs-4">Penyakit Terbanyak</h5>
 
                 <table class="mt-3 table table-hover border">
                     <thead class="table-primary">
