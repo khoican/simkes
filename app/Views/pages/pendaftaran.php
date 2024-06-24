@@ -58,7 +58,7 @@ $(document).ready(function() {
         ],
         searching: false,
         ajax: {
-            url: 'pendaftaran/get-pasien',
+            url: '/pendaftaran/get-pasien',
             type: 'POST',
             data: function(d) {
                 d.primarySearch = $('#primarySearch').val();

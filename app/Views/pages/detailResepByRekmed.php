@@ -204,6 +204,34 @@ $(document).ready(function() {
         })
     })
 
+    $('#resep-data').on('submit', 'form.submit', function(event) {
+        event.preventDefault();
+
+        let form = $(this);
+        let id = form.data('id');
+        let id_obat = $(`.id_obat-${id}`).val();
+        let id_rekmed = $(`.id_rekmed-${id}`).val();
+        let jml_diberikan = $(`.qty-${id}`).val();
+
+        $.ajax({
+            url: `/apotek/obat/update/${id}`,
+            method: 'post',
+            data: {
+                obatId: id_obat,
+                rekmedId: id_rekmed,
+                jml_diberikan: jml_diberikan
+            },
+            success: function(data) {
+                console.log(data);
+                $('#total-harga').val(data.total);
+                $(`.add-${id}`).prop('disabled', true);
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr.responseText);
+            }
+        })
+    })
+
     function select2Style() {
         $('.id-obat').select2({
             theme: "bootstrap-5",

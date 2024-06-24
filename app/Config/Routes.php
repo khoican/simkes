@@ -8,22 +8,21 @@ use CodeIgniter\Router\RouteCollection;
 $routes->get('/login', function() {
     return view('pages/auth/login');
 });
+
 $routes->post('user/login', 'UserController::auth');
 
 // Home
-
 $routes->get('/', 'DashboardController::index', ['filters' => 'auth']);
-$routes->get('/(:any)', 'DashboardController::credentials/$1');
 $routes->get('report', 'ExportController::index');
 $routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2');
 
 // Pasien
-$routes->group('pasien', ['filter' => 'auth'], function($routes) {
+$routes->group('pasien', ['filters' => 'auth'], function($routes) {
     $routes->post('search', 'PasienController::searchPasien');
 });
 
 // Pendaftaran (Pasien)
-$routes->group('pendaftaran', ['filter' => 'auth'], function($routes) {
+$routes->group('pendaftaran', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'PasienController::index');
     $routes->post('get-pasien', 'PasienController::fetchPasien');
     $routes->get('get-pasien/(:num)', 'PasienController::getPasien/$1');
@@ -32,14 +31,14 @@ $routes->group('pendaftaran', ['filter' => 'auth'], function($routes) {
 });
 
 // Pemeriksaan
-$routes->group('pemeriksaan', ['filter' => 'auth'], function($routes) {
+$routes->group('pemeriksaan', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::pemeriksaan');
     $routes->post('(:num)', 'RekmedController::periksaPasien/$1');
     $routes->post('general-consent', 'PasienController::postGeneralConsent');
 });
 
 // Apotek
-$routes->group('apotek', ['filter' => 'auth'], function($routes) {
+$routes->group('apotek', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::apotek');
     $routes->post('(:num)', 'ApotekController::apotekPasien/$1');
     $routes->get('(:num)/detail/(:num)', 'ApotekController::getResepByRekmedId/$1/$2');
@@ -52,7 +51,7 @@ $routes->group('apotek', ['filter' => 'auth'], function($routes) {
 });
 
 // Kunjungan
-$routes->group('kunjungan', ['filter' => 'auth'], function($routes) {
+$routes->group('kunjungan', ['filters' => 'auth'], function($routes) {
     $routes->get('generate-antrian', 'KunjunganController::generateAntrian');
     $routes->get('(:any)', 'KunjunganController::getKunjunganStatus/$1');
     $routes->post('store', 'KunjunganController::store');
@@ -62,7 +61,7 @@ $routes->group('kunjungan', ['filter' => 'auth'], function($routes) {
 });
 
 // Rekam Medis
-$routes->group('rekmed', ['filter' => 'auth'], function($routes) {
+$routes->group('rekmed', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'RekmedController::index');
     $routes->get('(:num)', 'RekmedController::getByUser/$1');
     $routes->get('(:num)/new', 'RekmedController::create/$1');
@@ -74,7 +73,7 @@ $routes->group('rekmed', ['filter' => 'auth'], function($routes) {
 });
 
 // Poli
-$routes->group('poli', ['filter' => 'auth'], function($routes) {
+$routes->group('poli', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'PoliController::index');
     $routes->get('all', 'PoliController::getPoli');
     $routes->get('(:num)', 'PoliController::getPoliById/$1');
@@ -84,7 +83,7 @@ $routes->group('poli', ['filter' => 'auth'], function($routes) {
 });
 
 // Diagnosa
-$routes->group('diagnosa', ['filter' => 'auth'], function($routes) {
+$routes->group('diagnosa', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'DiagnosaController::index');
     $routes->get('all', 'DiagnosaController::getDiagnosa');
     $routes->get('(:num)', 'DiagnosaController::getDiagnosaById/$1');
@@ -94,7 +93,7 @@ $routes->group('diagnosa', ['filter' => 'auth'], function($routes) {
 });
 
 // Tindakan
-$routes->group('tindakan', ['filter' => 'auth'], function($routes) {
+$routes->group('tindakan', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'TindakanController::index');
     $routes->get('all', 'TindakanController::getTindakan');
     $routes->get('(:num)', 'TindakanController::getTindakanById/$1');
@@ -104,7 +103,7 @@ $routes->group('tindakan', ['filter' => 'auth'], function($routes) {
 });
 
 // Obat
-$routes->group('obat',['filter' => 'auth'], function($routes) {
+$routes->group('obat',['filters' => 'auth'], function($routes) {
     $routes->get('/', 'ObatController::index');
     $routes->get('all', 'ObatController::getObat');
     $routes->get('(:num)', 'ObatController::getObatById/$1');
@@ -115,7 +114,7 @@ $routes->group('obat',['filter' => 'auth'], function($routes) {
 });
 
 // User
-$routes->group('user', ['filter' => 'auth'], function($routes) {
+$routes->group('user', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'UserController::index');
     $routes->get('all', 'UserController::getUser');
     $routes->get('(:num)', 'UserController::getUserById/$1');
@@ -125,3 +124,5 @@ $routes->group('user', ['filter' => 'auth'], function($routes) {
     $routes->post('delete/(:num)', 'UserController::deleteUser/$1');
     $routes->post('logout', 'UserController::logout');
 });
+
+$routes->get('info/(:any)', 'DashboardController::credentials/$1');
