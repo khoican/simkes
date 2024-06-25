@@ -43,7 +43,7 @@
                 </thead>
                 <tbody id="resep-data">
                     <?php foreach($obatPasiens as $obatPasien) : ?>
-                    <tr class="text-center align-middle text-capitalize">
+                    <tr class="text-center align-middle text-capitalize resep-obat-<?= $obatPasien['id'] ?>">
                         <td><?= esc($obatPasien['kode']) ?> - <?= esc($obatPasien['obat']) ?></td>
                         <td><?= esc($obatPasien['jenis']) ?></td>
                         <td><?= esc($obatPasien['ket']) ?></td>
@@ -67,8 +67,14 @@
                                     class="btn btn-primary btn-sm add-<?= $obatPasien['id'] ?> <?php if($obatPasien['status'] == 'sudah') echo 'disabled' ?>">
                                     <i class="bi bi-plus"></i>
                                 </button>
-                            </td>
                         </form>
+                        <button type="button" class="btn btn-danger btn-sm delete delete-<?= $obatPasien['id'] ?>"
+                            data-id-obatpasien="<?= $obatPasien['id'] ?>" data-id-obat="<?= $obatPasien['id_obat'] ?>"
+                            data-jml="<?= $obatPasien['jml_diberikan'] ?>"
+                            data-id-rekmed="<?= $obatPasien['id_rekmed'] ?>">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                        </td>
                     </tr>
                     <?php endforeach ?>
                 </tbody>
@@ -84,17 +90,18 @@
             <p class="fw-semibold mb-2 fs-6">Resep Racikan</p>
 
             <div class="d-flex gap-2 align-items-center mb-1">
-                <p class="mb-0" style="width: 45%;">Nama Obat</p>
+                <p class="mb-0" style="width: 40%;">Nama Obat</p>
                 <p class="mb-0" style="width: 15%;">Satuan</p>
                 <p class="mb-0" style="width: 15%;">Signa</p>
                 <p class="mb-0" style="width: 15%;">Keterangan</p>
                 <p class="mb-0" style="width: 15%;">Jumlah Resep</p>
-                <p class="mb-0" style="width: 5%;">Aksi</p>
+                <p class="mb-0" style="width: 10%;">Aksi</p>
             </div>
 
             <?php foreach($obatRacikans as $index => $obatRacikan) : ?>
-            <div class="d-flex gap-2 align-items-center mb-1">
-                <select class="form-select-sm id-obat" data-width="45%" data-placeholder="Pilih Obat" multiple disabled>
+            <div class="d-flex gap-2 align-items-center mb-1 resep-racikan-<?= $obatRacikan['id'] ?>"
+                id="obat-racikan-<?= $obatRacikan['id'] ?>">
+                <select class="form-select-sm id-obat" data-width="40%" data-placeholder="Pilih Obat" multiple disabled>
                     <?php foreach($obats as $obat) : ?>
 
                     <?php 
@@ -129,18 +136,20 @@
                     style="width: 15%;" value="<?= esc($obatRacikan['ket']) ?>">
                 <input type="number" class="form-control form-control-sm text-capitalize jml-resep-0" name="jml_resep"
                     style="width: 15%;" value="<?= esc($obatRacikan['jml_resep']) ?>">
-                <div style="width: 5%;">
+                <div style="width: 10%;" class="text-center">
                     <button type="submit" class="btn btn-primary btn-sm fs-6 add-racikan-0" disabled><i
                             class="bi bi-plus"></i></button>
+                    <button type="button" class="btn btn-danger btn-sm fs-6 delete-resep-racikan"
+                        data-id="<?= $obatRacikan['id'] ?>"><i class="bi bi-trash"></i></button>
                 </div>
             </div>
             <?php endforeach ?>
 
             <form method="POST" data-pasien-id="<?= $pasienId['id_pasien'] ?>" data-rekmed-id="<?= $rekmedId ?>"
-                data-col="0" class="obat-racikan">
+                data-col="0" class="obat-racikan" id="obat-racikan-0">
                 <div class="d-flex gap-2 align-items-center mb-1" id="resep-racikan">
                     <?= csrf_field() ?>
-                    <select name="obat[]" data-width="45%" data-placeholder="Pilih Obat" name="id_obat"
+                    <select name="obat[]" data-width="40%" data-placeholder="Pilih Obat" name="id_obat"
                         class="form-select-sm id-obat w-100 fs-6 text-capitalize id-obat-0" multiple>
                         <option></option>
                         <?php foreach($obats as $obat) : ?>
@@ -163,9 +172,11 @@
                         style="width: 15%;">
                     <input type="number" class="form-control form-control-sm text-capitalize jml-resep-0"
                         name="jml_resep" style="width: 15%;">
-                    <div style="width: 5%;">
+                    <div style="width: 10%;" class="text-center btns">
                         <button type="submit" class="btn btn-primary btn-sm fs-6 add-racikan-0"><i
                                 class="bi bi-plus"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm fs-6 remove-racikan remove-racikan-0"
+                            data-col="0"><i class="bi bi-trash"></i></button>
                     </div>
                 </div>
             </form>
@@ -273,6 +284,15 @@ $(document).ready(function() {
                 },
                 success: function(data) {
                     $(`#${rowId} .btn-primary`).prop('disabled', true);
+                    $(`#${rowId}`).addClass(`resep-obat-${data.data.id}`);
+                    $(`#${rowId} .btn-delete`).html(`
+                        <button type="button" class="btn btn-danger btn-sm delete delete-${data.data.id}"
+                            data-id-obatpasien="${data.data.id}" data-id-obat="${data.data.id_obat}"
+                            data-jml="${data.data.jml_diberikan}"
+                            data-id-rekmed="${data.data.id_rekmed}">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    `);
                     $('#total-harga').val(data.total);
                     $(`#${rowId} .remove`).remove();
                 },
@@ -290,10 +310,10 @@ $(document).ready(function() {
 
         let newForm = `
             <form method="POST" data-pasien-id="<?= $pasienId['id_pasien'] ?>" data-rekmed-id="<?= $rekmedId ?>"
-                data-col="${rowId}" class="obat-racikan">
+                data-col="${rowId}" class="obat-racikan" id="obat-racikan-${rowId}">
                 <div class="d-flex gap-2 align-items-center mb-1" id="resep-racikan">
                     <?= csrf_field() ?>
-                    <select name="obat[]" data-width="45%" data-placeholder="Pilih Obat" name="id_obat"
+                    <select name="obat[]" data-width="40%" data-placeholder="Pilih Obat" name="id_obat"
                         class="form-select-sm id-obat w-100 fs-6 text-capitalize id-obat-${rowId}" multiple>
                         <option></option>
                         <?php foreach($obats as $obat) : ?>
@@ -316,9 +336,11 @@ $(document).ready(function() {
                         style="width: 15%;">
                     <input type="number" class="form-control form-control-sm text-capitalize jml-resep-${rowId}"
                         name="jml_resep" style="width: 15%;">
-                    <div style="width: 5%;">
+                    <div style="width: 10%;" class="text-center btns">
                         <button type="submit" class="btn btn-primary btn-sm fs-6 add-racikan-${rowId}"><i
                                 class="bi bi-plus"></i></button>
+                        <button type="button" class="btn btn-danger btn-sm fs-6 remove-racikan remove-racikan-${rowId}" data-col="${rowId}"><i
+                                class="bi bi-trash"></i></button>
                     </div>
                 </div>
             </form>
@@ -380,8 +402,10 @@ $(document).ready(function() {
                         <button type="button" class="btn btn-danger btn-sm remove" data-id="${rowId}">
                             <i class="bi bi-trash"></i>
                         </button>
+                        </form>
+
+                        <div class="btn-delete"></div>
                     </td>
-                </form>
             </tr>
         `;
 
@@ -403,28 +427,56 @@ $(document).ready(function() {
         let ket = form.find(`.ket-${col}`).val();
         let jml_resep = form.find(`.jml-resep-${col}`).val();
 
+        if (id_obat, satuan, signa, ket, jml_resep) {
+            $.ajax({
+                url: '/apotek/obatracikan/add',
+                method: 'post',
+                data: {
+                    id_pasien: id_pasien,
+                    id_rekmed: id_rekmed,
+                    id_obat: id_obat,
+                    satuan: satuan,
+                    signa: signa,
+                    ket: ket,
+                    jml_resep: jml_resep,
+                },
+                success: function(data) {
+                    $('#total-harga').val(data.total);
+                    form.find('button.btn-primary').prop('disabled', true);
+                    form.find('button.remove-racikan').remove();
+                    form.addClass(`resep-racikan-${data.id}`)
+                    form.find('select').prop('disabled', true);
+                    form.find('.btns').append(`<button type="button" class="btn btn-danger btn-sm fs-6 delete-resep-racikan" data-id="${data.id}"><i
+                                class="bi bi-trash"></i></button>`);
+                },
+                error: function(xhr, status, error) {
+                    console.log(xhr, status, error);
+                }
+            });
+        }
+    });
+
+    $(document).on('click', 'button.remove-racikan', function() {
+        const rowId = $(this).data('col');
+        $(`#obat-racikan-${rowId}`).remove();
+    });
+
+    $(document).on('click', 'button.delete-resep-racikan', function() {
+        const id = $(this).data('id');
+
         $.ajax({
-            url: '/apotek/obatracikan/add',
+            url: `/apotek/obatracikan/delete/${id}`,
             method: 'post',
-            data: {
-                id_pasien: id_pasien,
-                id_rekmed: id_rekmed,
-                id_obat: id_obat,
-                satuan: satuan,
-                signa: signa,
-                ket: ket,
-                jml_resep: jml_resep,
-            },
             success: function(data) {
+                console.log(data);
                 $('#total-harga').val(data.total);
-                form.find('button.btn-primary').prop('disabled', true);
-                form.find('button.remove').remove();
+                $(`.resep-racikan-${id}`).remove();
             },
             error: function(xhr, status, error) {
                 console.log(xhr, status, error);
             }
-        });
-    });
+        })
+    })
 
     $(document).on('click', 'button.remove', function() {
         const rowId = $(this).data('id');
@@ -447,6 +499,29 @@ $(document).ready(function() {
                 }
             });
         }
+    });
+
+    $('#resep-data').on('click', '.delete', function() {
+        let id = $(this).data('id-obatpasien');
+        let id_obat = $(this).data('id-obat');
+        let id_rekmed = $(this).data('id-rekmed');
+        let jml = $(this).data('jml');
+        $.ajax({
+            url: '/apotek/obat/delete/' + id,
+            method: 'post',
+            data: {
+                id_obat: id_obat,
+                id_rekmed: id_rekmed,
+                jml: jml
+            },
+            success: function(data) {
+                $(`.resep-obat-${id}`).remove();
+                $('#total-harga').val(data.total);
+            },
+            error: function(xhr, status, error) {
+                console.log(xhr, status, error);
+            }
+        });
     });
 });
 </script>

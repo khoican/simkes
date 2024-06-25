@@ -81,6 +81,10 @@ class ObatRacikan extends Model
         return $data;
     }
 
+    public function getObatRacikanById($id) {
+        return $this->where('id', $id)->first();
+    }
+
     public function postObatRacikan($data) {
         if (!$this->insert($data)) {
             $errors = $this->errors();
@@ -89,5 +93,15 @@ class ObatRacikan extends Model
         }
 
         return $this->insertID();
+    }
+
+    public function deleteObatRacikan($id) {
+        if ($this->delete($id) === false) {
+            $errors = $this->errors();
+            log_message('error', print_r($errors, true));
+            return $errors;
+        }
+
+        return $this->db->affectedRows();
     }
 }

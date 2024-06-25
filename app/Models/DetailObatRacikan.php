@@ -52,6 +52,10 @@ class DetailObatRacikan extends Model
                     ->findAll();
     }
 
+    public function getDetailObatRacikan($obatRacikanId) {
+        return $this->select('detail_obat_racikans.*')->where('detail_obat_racikans.id_obat_racikan', $obatRacikanId)->findAll();
+    }
+
     public function postDetailObatRacikan($data) {
         if($this->insert($data) == false) {
             $errors = $this->errors();
@@ -60,5 +64,15 @@ class DetailObatRacikan extends Model
         }
 
         return $this->db->insertID();
+    }
+
+    public function deleteDetailObatRacikan($id) {
+        if($this->delete($id) == false) {
+            $errors = $this->errors();
+            log_message('error', print_r($errors, true));
+            return $errors;
+        }
+
+        return $this->db->affectedRows();
     }
 }

@@ -71,6 +71,9 @@ class QuantityObat extends Model
                     ->getResultArray();
     }
 
+    public function getQuantityObatByObatId($obatId, $qty) {
+        return $this->where('id_obat', $obatId)->where('keluar', $qty)->first();
+    } 
 
     public function postQuantityObat($data) {
         if ($this->insert($data) === false) {

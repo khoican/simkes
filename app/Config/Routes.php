@@ -48,6 +48,8 @@ $routes->group('apotek', ['filters' => 'auth'], function($routes) {
     $routes->post('obat/add', 'ApotekController::addObatPasien');
     $routes->post('kunjungan/update/(:num)/(:num)', 'ApotekController::updateStatusKunjungan/$1/$2');
     $routes->post('obatracikan/add', 'ApotekController::addObatRacikan');
+    $routes->post('obat/delete/(:num)', 'ApotekController::deleteObatPasien/$1');
+    $routes->post('obatracikan/delete/(:num)', 'ApotekController::deleteObatRacikan/$1');
 });
 
 // Kunjungan

@@ -70,6 +70,11 @@ class ObatPasien extends Model
         return $this->where('id_rekmed', $rekmedId)->delete();
     }
 
+    public function deleteObatPasienById($id) {
+        $this->where('id', $id)->set('id_obat', null)->set('id_pasien', null)->update();
+        return $this->where('id', $id)->delete();
+    }
+
     public function updateObatPasien ($id, $data) {
         if ($this->update($id, $data) === false) {
             $errors = $this->errors();
