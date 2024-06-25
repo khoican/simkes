@@ -195,7 +195,10 @@
 
         <div>
             <a href="/apotek/<?= $kunjunganId ?>" class="btn btn-secondary btn-sm">Kembali</a>
+
+            <?php if($rekmed['status'] != 'selesai') : ?>
             <button type="button" class="btn btn-primary btn-sm" id="kunjungan-selesai">Simpan</button>
+            <?php endif ?>
         </div>
     </div>
 </div>

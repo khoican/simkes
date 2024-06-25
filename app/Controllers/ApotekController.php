@@ -60,6 +60,7 @@ class ApotekController extends BaseController
         $obatRacikan = $this->obatRacikanModel->getObatRacikan($rekmedId);
         $totalObatPasien = $this->obatPasienModel->getTotalHargaByRekmedIdNonFormating($rekmedId);
         $totalObatRacikan = $this->obatRacikanModel->getTotalHargaObatRacikan($rekmedId);
+        $rekmed = $this->rekmedModel->getRekmedById($rekmedId);
 
         $total = intval($totalObatPasien) + intval($totalObatRacikan);
         $total = format_numerik($total);
@@ -72,6 +73,7 @@ class ApotekController extends BaseController
             'obatPasiens' => $obatPasiens,
             'obats' => $obats,
             'total' => $total,
+            'rekmed' => $rekmed,
             'obatRacikans' => $obatRacikan
         ]);
     }
