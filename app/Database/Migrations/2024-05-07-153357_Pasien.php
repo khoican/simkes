@@ -89,7 +89,8 @@ class Pasien extends Migration
             ],
             'knjn_sehat' => [
                 'type' => 'BOOLEAN',
-                'default' => false
+                'default' => false,
+                'null' => true
             ],
             'tkp' => [
                 'type' => 'ENUM',

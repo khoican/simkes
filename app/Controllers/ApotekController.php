@@ -188,7 +188,7 @@ class ApotekController extends BaseController
                     if ($this->obatModel->updateObat($idObat, $updateObat)) {
                         $updateQuantity = [
                             'id_obat' => $idObat,
-                            'keluar' => intval($this->request->getPost('jml_diberikan'))
+                            'keluar' => intval($this->request->getPost('jml_resep'))
                         ];
                         $this->quantityObatModel->postQuantityObat($updateQuantity);
                     }
@@ -213,6 +213,7 @@ class ApotekController extends BaseController
                     return $this->response->setJSON([
                         'status' => true,
                         'message' => 'Berhasil menambahkan detail obat racikan',
+                        'id' => $obatRacikanId,
                         'data' => $data,
                         'total' => $total
                     ]);
@@ -285,4 +286,121 @@ class ApotekController extends BaseController
 
         }
     }
+
+    public function deleteObatPasien($id) {
+        if ($this->request->isAJAX()) {
+            if ($this->obatPasienModel->deleteObatPasienById($id)) {
+                $idRekmed = $this->request->getPost('id_rekmed');
+
+                $totalObatPasien = $this->obatPasienModel->getTotalHargaByRekmedIdNonFormating($idRekmed);
+                $totalObatRacikan = $this->obatRacikanModel->getTotalHargaObatRacikan($idRekmed);
+
+                $total = intval($totalObatPasien) + intval($totalObatRacikan);
+                $total = format_numerik($total);
+
+                $jml = $this->request->getPost('jml');
+                if ($jml != 0) {
+                    $idObat = $this->request->getPost('id_obat');
+                    $obat = $this->obatModel->getObatById($idObat);
+
+                    $curentStok = intval($obat['stok']);
+                    $updateObat = [ 
+                        'stok' => $curentStok + intval($jml),
+                    ];
+                    
+                    $this->obatModel->updateObat($idObat, $updateObat);
+    
+                    $idQuantityObat = $this->quantityObatModel->getQuantityObatByObatId($idObat, $jml);
+                    if ($idQuantityObat) {
+                        $this->quantityObatModel->deleteQuantityObat($idQuantityObat['id']);
+    
+                        return $this->response->setJSON([
+                            'status' => true,
+                            'message' => 'Berhasil menghapus detail obat',
+                            'total' => $total
+                        ]);
+                    } else {
+                        return $this->response->setJSON([
+                            'status' => false,
+                            'message' => 'Gagal menghapus detail obat',
+                        ]);
+                    }
+                }
+
+                return $this->response->setJSON([
+                            'status' => true,
+                            'message' => 'Berhasil menghapus detail obat',
+                            'total' => $total
+                        ]);
+            } else {
+                return $this->response->setJSON([
+                    'status' => false,
+                    'message' => 'Gagal menghapus detail obat',
+                ]);
+            }
+        }
+    }
+
+    public function deleteObatRacikan($id) {
+        if ($this->request->isAJAX()) {
+            $this->db->transStart();
+            
+            try {
+                $obatRacikan = $this->obatRacikanModel->getObatRacikanById($id);
+                $detailObatRacikan = $this->detailObatRacikanModel->getDetailObatRacikan($id);
+                $jml = $obatRacikan['jml_diberikan'];
+                $idRekmed = $obatRacikan['id_rekmed'];
+
+                foreach ($detailObatRacikan as $item) {
+                    $itemId = $item['id'];
+                    $obatId = $item['id_obat'];
+
+                    if ($this->detailObatRacikanModel->deleteDetailObatRacikan($itemId)) {
+                        $obat = $this->obatModel->getObatById($obatId);
+                        $currentStok = intval($obat['stok']);
+                        $updateObat = ['stok' => $currentStok + intval($jml)];
+
+                        $this->obatModel->updateObat($obatId, $updateObat);
+
+                        $idQuantityObat = $this->quantityObatModel->getQuantityObatByObatId($obatId, $jml);
+                        if ($idQuantityObat) {
+                            $this->quantityObatModel->deleteQuantityObat($idQuantityObat['id']);
+                        }
+                    }
+                }
+
+                $totalObatPasien = $this->obatPasienModel->getTotalHargaByRekmedIdNonFormating($idRekmed);
+                $totalObatRacikan = $this->obatRacikanModel->getTotalHargaObatRacikan($idRekmed);
+                $total = intval($totalObatPasien) + intval($totalObatRacikan);
+                $totalFormatted = format_numerik($total);
+
+                if ($this->obatRacikanModel->deleteObatRacikan($id)) {
+                    $this->db->transComplete();
+
+                    return $this->response->setJSON([
+                        'status' => true,
+                        'message' => 'Berhasil menghapus obat racikan',
+                        'id' => $id,
+                        'total' => $totalFormatted
+                    ]);
+                } else {
+                    $this->db->transRollback();
+
+                    return $this->response->setJSON([
+                        'status' => false,
+                        'message' => 'Gagal menghapus obat racikan',
+                        'total' => $totalFormatted
+                    ]);
+                }
+            } catch (\Exception $e) {
+                $this->db->transRollback();
+
+                return $this->response->setJSON([
+                    'status' => false,
+                    'message' => 'Terjadi kesalahan: ' . $e->getMessage()
+                ]);
+            }
+        }
+    }
+
 }   
