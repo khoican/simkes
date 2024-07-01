@@ -126,5 +126,3 @@ $routes->group('user', ['filters' => 'auth'], function($routes) {
     $routes->post('delete/(:num)', 'UserController::deleteUser/$1');
     $routes->post('logout', 'UserController::logout');
 });
-
-$routes->get('info/(:any)', 'DashboardController::credentials/$1');
