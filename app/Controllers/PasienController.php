@@ -187,7 +187,6 @@ class PasienController extends BaseController
             return redirect()->back();
         } else {
             $dataPasien = array(
-                'no_rekam_medis'    => $this->request->getPost('no_rekam_medis'),   
                 'nik'               => $this->request->getPost('nik'),
                 'no_bpjs'           => $this->request->getPost('no_bpjs'),
                 'nama'              => $this->request->getPost('nama'),
@@ -204,12 +203,11 @@ class PasienController extends BaseController
                 'telepon'           => $this->request->getPost('telepon'),
                 'telepon2'          => $this->request->getPost('telepon2'),
                 'pembayaran'        => $this->request->getPost('pembayaran'),
-                'knjn_sehat'        => $this->request->getPost('knjn_sehat'),
+                'knjn_sehat'        => $this->request->getPost('knjn_sehat') ? 1 : 0,
                 'tkp'               => $this->request->getPost('tkp'),
                 'id_alamat'         => $alamatId,
             );
             $result = $this->pasienModel->updatePasien($id, $dataPasien);
-    
             if ($result == 'success') {
                 session()->setFlashData('pesan', 'Data pasien berhasil diperbarui');
             } else {

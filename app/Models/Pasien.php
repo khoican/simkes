@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use CodeIgniter\Model;
+use Config\Validation;
 use Michalsn\Uuid\UuidModel;
 
 class Pasien extends Model
@@ -30,9 +31,9 @@ class Pasien extends Model
 
     // Validation
     protected $validationRules = [
-        'nik' => 'required|is_unique[pasiens.nik]|min_length[16]|max_length[16]',
-        'no_bpjs' => 'permit_empty|is_unique[pasiens.no_bpjs]|min_length[13]|max_length[13]',
-        'nama' => 'required|is_unique[pasiens.nama]',
+        'nik' => 'required|min_length[16]|max_length[16]|is_unique_except_self[pasiens.nik]',
+        'no_bpjs' => 'permit_empty|min_length[13]|max_length[13]|is_unique_except_self[pasiens.bpjs]',
+        'nama' => 'required|is_unique_except_self[pasiens.nama]',
         'jk' => 'required',
         'tmp_lahir' => 'required',
         'tgl_lahir' => 'required',
@@ -52,15 +53,15 @@ class Pasien extends Model
     protected $validationMessages   = [
         'nik' => [
             'required' => 'NIK harus diisi',
-            'is_unique' => 'NIK sudah terdaftar',
+            'is_unique_except_self' => 'NIK sudah terdaftar',
             'min_length' => 'NIK minimal 16 karakter',
         ],
         'no_bpjs' => [
-            'is_unique' => 'No. BPJS sudah terdaftar',
+            'is_unique_except_self' => 'No. BPJS sudah terdaftar',
             'min_length' => 'No. BPJS minimal 13 karakter',
         ],
         'nama' => [
-            'is_unique' => 'Nama sudah terdaftar',
+            'is_unique_except_self' => 'Nama sudah terdaftar',
         ],
         'tkp' => [
             'required' => 'Tanda Kependudukan harus diisi'
@@ -113,6 +114,7 @@ class Pasien extends Model
     protected $beforeDelete   = [];
     protected $afterDelete    = [];
 
+    
     protected function addCreateAt(array $data) {
         $data['data']['created_at'] = date('Y-m-d H:i:s');
         $data['data']['updated_at'] = date('Y-m-d H:i:s');
@@ -245,11 +247,14 @@ class Pasien extends Model
     }
 
     public function updatePasien($id, $data) {
-       if($this->update( $id, $data)) {
-           return 'success';
-       } else {
-           return [$this->errors(), $this->validationErrors()];
-       }
+        $data['id'] = $id;
+        if($this->update( $id, $data) === false) {
+            $errors = $this->errors();
+            log_message('error', print_r($errors, true));
+            return $errors;
+        }
+
+        return 'success';
     }
 
     public function kunjungan() {
