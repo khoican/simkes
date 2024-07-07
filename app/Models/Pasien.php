@@ -32,7 +32,7 @@ class Pasien extends Model
     // Validation
     protected $validationRules = [
         'nik' => 'required|min_length[16]|max_length[16]|is_unique_except_self[pasiens.nik]',
-        'no_bpjs' => 'permit_empty|min_length[13]|max_length[13]|is_unique_except_self[pasiens.bpjs]',
+        'no_bpjs' => 'permit_empty|min_length[13]|max_length[13]|is_unique_except_self[pasiens.no_bpjs]',
         'nama' => 'required|is_unique_except_self[pasiens.nama]',
         'jk' => 'required',
         'tmp_lahir' => 'required',
