@@ -81,8 +81,8 @@
             </table>
 
             <div class="text-end">
-                <button type="button" class="btn btn-primary btn-sm" id="add-resep"
-                    data-pasienid="<?= $pasienId['id_pasien'] ?>" data-rekmedid="<?= $rekmedId ?>">
+                <button type="button" class="btn btn-primary btn-sm" id="add-resep" data-pasienid="<?= $pasienId ?>"
+                    data-rekmedid="<?= $rekmedId ?>">
                     <i class="bi bi-plus"></i> Tambah Resep</button>
             </div>
         </div>
@@ -145,8 +145,8 @@
             </div>
             <?php endforeach ?>
 
-            <form method="POST" data-pasien-id="<?= $pasienId['id_pasien'] ?>" data-rekmed-id="<?= $rekmedId ?>"
-                data-col="0" class="obat-racikan" id="obat-racikan-0">
+            <form method="POST" data-pasien-id="<?= $pasienId ?>" data-rekmed-id="<?= $rekmedId ?>" data-col="0"
+                class="obat-racikan" id="obat-racikan-0">
                 <div class="d-flex gap-2 align-items-center mb-1" id="resep-racikan">
                     <?= csrf_field() ?>
                     <select name="obat[]" data-width="40%" data-placeholder="Pilih Obat" name="id_obat"
@@ -194,7 +194,7 @@
         </div>
 
         <div>
-            <a href="/apotek/<?= $kunjunganId ?>" class="btn btn-secondary btn-sm">Kembali</a>
+            <a href="/rekob/<?= $pasienId ?>" class="btn btn-secondary btn-sm">Kembali</a>
 
             <?php if($rekmed['status'] != 'selesai') : ?>
             <button type="button" class="btn btn-primary btn-sm" id="kunjungan-selesai">Simpan</button>
@@ -210,10 +210,10 @@
 $(document).ready(function() {
     $('#kunjungan-selesai').on('click', function() {
         $.ajax({
-            url: '/apotek/kunjungan/update/<?= $kunjunganId ?>/<?= $rekmedId ?>',
+            url: '/apotek/kunjungan/update/<?= $kunjunganId['id_kunjungan'] ?>/<?= $rekmedId ?>',
             method: 'post',
             success: function(data) {
-                window.location.href = '/apotek/<?= $kunjunganId ?>'
+                window.location.href = '/rekob/<?= $pasienId ?>'
             }
         })
     })
@@ -312,7 +312,7 @@ $(document).ready(function() {
         const rowId = $('#resep-racikan-data form').length + 1;
 
         let newForm = `
-            <form method="POST" data-pasien-id="<?= $pasienId['id_pasien'] ?>" data-rekmed-id="<?= $rekmedId ?>"
+            <form method="POST" data-pasien-id="<?= $pasienId ?>" data-rekmed-id="<?= $rekmedId ?>"
                 data-col="${rowId}" class="obat-racikan" id="obat-racikan-${rowId}">
                 <div class="d-flex gap-2 align-items-center mb-1" id="resep-racikan">
                     <?= csrf_field() ?>

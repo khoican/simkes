@@ -25,7 +25,7 @@
 
                 <ul class="dropdown-menu dropdown-menu-sm-end fs-6">
                     <li><a class="dropdown-item" href="/apotek"><i class="bi bi-person-fill"></i> Antrian</a></li>
-                    <li><a class="dropdown-item" href="/rekmed"><i class="bi bi-file-text-fill"></i> Rekam Medis</a>
+                    <li><a class="dropdown-item" href="/rekon"><i class="bi bi-file-text-fill"></i> Rekam Obat</a>
                     <li><a class="dropdown-item" href="/obat"><i class="bi bi-capsule"></i> Data Obat</a></li>
                 </ul>
             </div>
@@ -48,7 +48,7 @@
 
                 <ul class="dropdown-menu dropdown-menu-sm-end fs-6">
                     <li><a class="dropdown-item" href="/apotek"><i class="bi bi-person-fill"></i> Antrian</a></li>
-                    <li><a class="dropdown-item" href="/rekmed"><i class="bi bi-file-text-fill"></i> Rekam Medis</a>
+                    <li><a class="dropdown-item" href="/rekob"><i class="bi bi-file-text-fill"></i> Rekam Obat</a>
                 </ul>
             </div>
 

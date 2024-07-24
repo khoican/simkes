@@ -112,6 +112,7 @@ $(document).ready(function() {
                     data: '',
                     render: function(data, type, row) {
                         if (url == '/kunjungan/antrian-obat') {
+                            console.log(row);
                             return `
                                     <div class="d-flex gap-1 w-100">
                                         <form action="/kunjungan/panggil/${
@@ -139,7 +140,7 @@ $(document).ready(function() {
                                         `;
                         } else {
                             return `
-                                    <a href="/apotek/${row.id_kunjungan}" class="btn rounded-pill btn-primary btn-sm">Lihat</a>
+                                    <a href="/rekob/${row.id_pasien}" class="btn rounded-pill btn-primary btn-sm">Lihat</a>
                                 `;
                         }
                     },

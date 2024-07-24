@@ -41,8 +41,6 @@ $routes->group('pemeriksaan', ['filters' => 'auth'], function($routes) {
 $routes->group('apotek', ['filters' => 'auth'], function($routes) {
     $routes->get('/', 'KunjunganController::apotek');
     $routes->post('(:num)', 'ApotekController::apotekPasien/$1');
-    $routes->get('(:num)/detail/(:num)', 'ApotekController::getResepByRekmedId/$1/$2');
-    $routes->get('(:num)', 'ApotekController::getResep/$1');
     $routes->get('obat/(:num)', 'ApotekController::getObat/$1');
     $routes->post('obat/update/(:num)', 'ApotekController::updateStatusObatPasien/$1');
     $routes->post('obat/add', 'ApotekController::addObatPasien');
@@ -50,6 +48,12 @@ $routes->group('apotek', ['filters' => 'auth'], function($routes) {
     $routes->post('obatracikan/add', 'ApotekController::addObatRacikan');
     $routes->post('obat/delete/(:num)', 'ApotekController::deleteObatPasien/$1');
     $routes->post('obatracikan/delete/(:num)', 'ApotekController::deleteObatRacikan/$1');
+});
+
+$routes->group('rekob', ['filters' => 'auth'], function($routes) {
+    $routes->get('/', 'ApotekController::index');
+    $routes->get('(:num)/detail/(:num)', 'ApotekController::getResepByRekmedId/$1/$2');
+    $routes->get('(:num)', 'ApotekController::getResep/$1');
 });
 
 // Kunjungan

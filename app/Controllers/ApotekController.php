@@ -41,19 +41,27 @@ class ApotekController extends BaseController
         $this->db = db_connect();
     }
 
+    public function index() {
+        $data = [
+            'id' => null
+        ];
+        return view('pages/rekob', $data);
+    }
+
     public function apotekPasien($kunjunganId) {
+        $pasienId = $this->kunjunganModel->getKunjunganById($kunjunganId);
         $data = [
             'panggil'   => 0,
             'status'    => 'pengambilan-obat',
         ];
 
         if ($this->kunjunganModel->updateKunjungan($kunjunganId, $data)) {
-            return redirect()->to('/apotek/'. $kunjunganId);
+            return redirect()->to('/rekob/'. $pasienId['id_pasien']);
         }
     }
 
-    public function getResepByRekmedId($kunjunganId, $rekmedId) {
-        $pasienId = $this->kunjunganModel->getPasienId($kunjunganId);
+    public function getResepByRekmedId($pasienId, $rekmedId) {
+        $kunjunganId = $this->kunjunganModel->getKunjunganByPasienId($pasienId);
         $diagnosaPasiens = $this->diagnosaPasienModel->getDiagnosaByRekmedId($rekmedId);
         $obatPasiens = $this->obatPasienModel->getObatPasienByRekmedId($rekmedId);
         $obats = $this->obatModel->getAllObat();
@@ -78,8 +86,8 @@ class ApotekController extends BaseController
         ]);
     }
 
-    public function getResep($kunjunganId) {
-        $pasienId = $this->kunjunganModel->getPasienId($kunjunganId);
+    public function getResep($pasienId) {
+        $kunjunganId = $this->kunjunganModel->getKunjunganByPasienId($pasienId);
         $rekmeds = $this->rekmedModel->getRekmedByPasienId($pasienId);
         return view('pages/detailResep', [
             'pasienId' => $pasienId,

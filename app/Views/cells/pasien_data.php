@@ -3,6 +3,7 @@
         <?= csrf_field() ?>
         <input type="text" class="form-control form-control-sm w-100 text-capitalize" id="search" name="search"
             placeholder="Cari berdasarkan Nama/NIK/No. Rekam Medis">
+        <input type="hidden" name="route" id="route">
         <button type="submit" class="btn btn-sm btn-primary position-absolute end-0 rounded-end"><i
                 class="bi bi-search"></i></button>
     </div>
@@ -151,8 +152,10 @@
 <script type="module">
 $(document).ready(function() {
     let path = window.location.pathname;
-    if (path.includes('apotek')) {
-        $('#search-form').remove();
+    if (path.includes('rekob')) {
+        $('#route').val('rekob')
+    } else if (path.includes('rekmed')) {
+        $('#route').val('rekmed')
     }
 })
 </script>

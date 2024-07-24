@@ -17,7 +17,7 @@
             </div>
 
             <div>
-                <a href="<?= $kunjunganId ?>/detail/<?= $rekmed['id'] ?>" class="btn btn-light btn-sm fs-6"><i
+                <a href="<?= $pasienId ?>/detail/<?= $rekmed['id'] ?>" class="btn btn-light btn-sm fs-6"><i
                         class="bi bi-eye-fill"></i>
                     Lihat
                     Detail</a>
