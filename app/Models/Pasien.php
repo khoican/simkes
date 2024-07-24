@@ -238,12 +238,13 @@ class Pasien extends Model
 
 
     public function postPasien($data) {
-        if ($this->insert($data)) {
-            $response = $this->db->insertID();
-            return $response;
-        } 
+        if ($this->insert($data) === false) {
+            $errors = $this->errors();
+            log_message('error', print_r($errors, true));
+            return $errors;
+        }
 
-        return false;
+        return $this->db->insertID();
     }
 
     public function updatePasien($id, $data) {
@@ -251,7 +252,10 @@ class Pasien extends Model
         if($this->update( $id, $data) === false) {
             $errors = $this->errors();
             log_message('error', print_r($errors, true));
-            return $errors;
+            return [
+                'status' => false,
+                'errors' => $errors
+            ];
         }
 
         return 'success';

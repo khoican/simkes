@@ -124,7 +124,7 @@ class PasienController extends BaseController
             );
             $pasienId = $this->pasienModel->postPasien($dataPasien);
             
-            if ($pasienId == false) {
+            if (is_array($pasienId)) {
                 session()->setFlashData('error', 'Gagal menambahkan pasien');
             } 
         

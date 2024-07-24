@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Validation;
 
 class CustomRules
@@ -8,22 +9,21 @@ class CustomRules
         list($table, $column) = explode('.', $field);
         $id = $data['id'] ?? null;
 
-        if (!$id) {
-            $error = 'ID is required for the unique check.';
-            return false;
+        $db = db_connect();
+        $builder = $db->table($table)
+                      ->where($column, $str);
+
+        if ($id) {
+            $builder->where('id !=', $id);
         }
 
-        $db = db_connect();
-        $result = $db->table($table)
-                     ->where($column, $str)
-                     ->where('id !=', $id)
-                     ->countAllResults();
+        $result = $builder->countAllResults();
 
         if ($result == 0) {
             return true;
         }
 
-        $error = "The $column field must contain a unique value.";
+        $error = "$column sudah terdaftar, periksa kembali $column anda";
         return false;
     }
 }
