@@ -33,7 +33,7 @@ class Pasien extends Model
     protected $validationRules = [
         'nik' => 'required|min_length[16]|max_length[16]|is_unique_except_self[pasiens.nik]',
         'no_bpjs' => 'permit_empty|min_length[13]|max_length[13]|is_unique_except_self[pasiens.no_bpjs]',
-        'nama' => 'required|is_unique_except_self[pasiens.nama]',
+        'nama' => 'required',
         'jk' => 'required',
         'tmp_lahir' => 'required',
         'tgl_lahir' => 'required',
@@ -61,7 +61,7 @@ class Pasien extends Model
             'min_length' => 'No. BPJS minimal 13 karakter',
         ],
         'nama' => [
-            'is_unique_except_self' => 'Nama sudah terdaftar',
+            'required' => 'Nama harus diisi',
         ],
         'tkp' => [
             'required' => 'Tanda Kependudukan harus diisi'
