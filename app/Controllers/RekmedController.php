@@ -190,17 +190,24 @@ class RekmedController extends BaseController
                 'status'               => 'sekunder'
             ];
             $this->diagnosaPasienModel->postDiagnosaPasien($dataDiagnosa);
+        } else {
+            session()->setFlashdata('error', 'Diagnosa sekunder harus diisi.');
+            return redirect()->back()->withInput();
         }
         
-        $idTindakans = $this->request->getPost('tindakan');
-        foreach ($idTindakans as $key => $value) {
-            $dataTindakan = [
-                'id_rekmed'            => $idRekmed,
-                'id_pasien'            => intval($id),
-                'id_tindakan'             => intval($value),
-            ];
-            
-            $this->tindakanPasienModel->postTindakanPasien($dataTindakan);
+        $idTindakans = $this->request->getVar('tindakan');
+        if ($idTindakans != null) {
+            foreach ($idTindakans as $key => $value) {
+                $dataTindakan = [
+                    'id_rekmed'            => $idRekmed,
+                    'id_pasien'            => intval($id),
+                    'id_tindakan'          => intval($value),
+                ];
+                $this->tindakanPasienModel->postTindakanPasien($dataTindakan);
+            }
+        } else {
+            session()->setFlashdata('error', 'Tindakan harus diisi.');
+            return redirect()->back()->withInput();
         }
         
         $idObats = $this->request->getVar('obat');
