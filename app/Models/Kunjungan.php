@@ -151,7 +151,20 @@ class Kunjungan extends Model
                 ->join('alamats', 'alamats.id = pasiens.id_alamat')
                 ->where('DATE(kunjungans.created_at)', $today)
                 ->findAll();
-}
+    }
+
+    public function getKunjunganByDate($from, $to) {
+        return $this->select('kunjungans.id as id_kunjungan, pasiens.*, polis.nama as nama_poli, alamats.*, kunjungans.*')
+                    ->join('pasiens', 'pasiens.id = kunjungans.id_pasien', 'left')
+                    ->join('polis', 'polis.id = kunjungans.id_poli', 'left')
+                    ->join('alamats', 'alamats.id = pasiens.id_alamat', 'left')
+                    ->where('DATE(kunjungans.created_at) >=', $from)
+                    ->where('DATE(kunjungans.created_at) <=', $to)
+                    ->groupBy('kunjungans.id, pasiens.no_rekam_medis, pasiens.nama, polis.nama, alamats.alamat')
+                    ->orderBy('kunjungans.created_at', 'ASC')
+                    ->findAll();
+    }
+
 
     public function getKunjunganByStatus($status) {
         $today = date('Y-m-d');

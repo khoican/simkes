@@ -63,12 +63,23 @@ class QuantityObat extends Model
     }
 
     public function getQuantityObat() {
-    return $this->db->table('quantity_obats')
-                    ->select('obats.id, obats.obat, obats.stok, SUM(quantity_obats.masuk) as masuk, SUM(quantity_obats.keluar) as keluar')
-                    ->join('obats', 'obats.id = quantity_obats.id_obat')
-                    ->groupBy('quantity_obats.id_obat, obats.id, obats.obat, obats.stok')
-                    ->get()
-                    ->getResultArray();
+        return $this->db->table('quantity_obats')
+                        ->select('obats.id, obats.obat, obats.stok, SUM(quantity_obats.masuk) as masuk, SUM(quantity_obats.keluar) as keluar')
+                        ->join('obats', 'obats.id = quantity_obats.id_obat')
+                        ->groupBy('quantity_obats.id_obat, obats.id, obats.obat, obats.stok')
+                        ->get()
+                        ->getResultArray();
+    }
+
+    public function getQuantityObatByDate($from, $to) {
+        return $this->select('obats.id, obats.obat, obats.kode, obats.stok, 
+                             COALESCE(SUM(quantity_obats.masuk), 0) as masuk, COALESCE(SUM(quantity_obats.keluar), 0) as keluar')
+                    ->join('obats', 'obats.id = quantity_obats.id_obat', 'left')
+                    ->where('DATE(quantity_obats.created_at) >=', $from)
+                    ->where('DATE(quantity_obats.created_at) <=', $to)
+                    ->groupBy('quantity_obats.id_obat, obats.id, obats.obat, obats.kode, obats.stok')
+                    ->orderBy('obats.kode', 'ASC')
+                    ->findAll();
     }
 
     public function getQuantityObatByObatId($obatId, $qty) {
