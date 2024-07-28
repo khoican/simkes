@@ -41,7 +41,7 @@ class ExportController extends BaseController
     public function kunjunganPdf() {
         set_time_limit(120);
 
-        $pdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'margin_top' => 60, 'margin_right' => 10, 'margin_bottom' => 10, 'margin_left' => 10]);
+        $pdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'margin_top' => 60, 'margin_right' => 10, 'margin_bottom' => 10, 'margin_left' => 10, 'orientation' => 'L']);
         $template = 'kunjungan';
         $title = 'Laporan Kunjungan Pasien';
 
@@ -88,9 +88,14 @@ class ExportController extends BaseController
                     <thead>
                         <tr>
                             <th>No. RM</th>
+                            <th>NIK/th>
+                            <th>No. BPJS</th>
                             <th>Nama Pasien</th>
+                            <th>Umur</th>
                             <th>Alamat</th>
+                            <th>Jenis Kelamin</th>
                             <th>Tujuan</th>
+                            <th>Status</th>
                         </tr>
                     </thead>
                     <tbody>';
@@ -105,9 +110,21 @@ class ExportController extends BaseController
                 $tableHTML .= '
                     <tr>
                         <td>' . $row['no_rekam_medis'] . '</td>
+                        <td>' . $row['nik'] . '</td>
+                        <td>' . $row['no_bpjs'] . '</td>
                         <td>' . $row['nama'] . '</td>
-                        <td>' . $row['alamat'] . ', ' . $row['kelurahan'] . ' - ' . $row['kecamatan'] . '</td>
+                        <td>' . $row['usia'] . '</td>
+                        <td>' . $row['alamat'] . ', ' . $row['kelurahan'] . ' - ' . $row['kecamatan'] . '</td>';
+                        
+                if($row['jk'] == 'l') {
+                    $tableHTML .= '<td>Laki-laki</td>';
+                } else if ($row['jk'] == 'p') {
+                    $tableHTML .= '<td>Perempuan</td>';
+                }
+
+                $tableHTML .= '
                         <td style="text-transform: capitalize">' . $row['nama_poli'] . '</td>
+                        <td style="text-transform: capitalize">' . $row['status'] . '</td>
                     </tr>';
             }
         }

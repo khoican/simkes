@@ -154,15 +154,41 @@ class Kunjungan extends Model
     }
 
     public function getKunjunganByDate($from, $to) {
-        return $this->select('kunjungans.id as id_kunjungan, pasiens.*, polis.nama as nama_poli, alamats.*, kunjungans.*')
-                    ->join('pasiens', 'pasiens.id = kunjungans.id_pasien', 'left')
-                    ->join('polis', 'polis.id = kunjungans.id_poli', 'left')
-                    ->join('alamats', 'alamats.id = pasiens.id_alamat', 'left')
-                    ->where('DATE(kunjungans.created_at) >=', $from)
-                    ->where('DATE(kunjungans.created_at) <=', $to)
-                    ->groupBy('kunjungans.id, pasiens.no_rekam_medis, pasiens.nama, polis.nama, alamats.alamat')
-                    ->orderBy('kunjungans.created_at', 'ASC')
-                    ->findAll();
+        $today = date('Y-m-d');
+    
+        $sql = '
+            SELECT 
+                kunjungans.id AS id_kunjungan,
+                kunjungans.created_at AS kunjungan_created_at,
+                pasiens.no_rekam_medis AS no_rekam_medis,
+                pasiens.id AS id_pasien,
+                pasiens.no_bpjs AS no_bpjs,
+                pasiens.nik AS nik,
+                pasiens.tgl_lahir AS pasien_tgl_lahir,
+                pasiens.nama AS nama,
+                pasiens.jk AS jk,
+                DATE_FORMAT(FROM_DAYS(DATEDIFF(NOW(), pasiens.tgl_lahir)), "%Y") + 0 AS usia,
+                pasiens.created_at AS pasien_created_at,
+                polis.id AS id_poli,
+                polis.nama AS nama_poli,
+                alamats.id AS id_alamat,
+                alamats.alamat AS alamat,
+                alamats.kelurahan AS kelurahan,
+                alamats.kecamatan AS kecamatan,
+                CASE 
+                    WHEN DATE(pasiens.created_at) = DATE(?) THEN "baru" 
+                    WHEN DATE(pasiens.created_at) < DATE(?) THEN "lama" 
+                END AS status
+            FROM kunjungans
+            LEFT JOIN pasiens ON pasiens.id = kunjungans.id_pasien
+            LEFT JOIN polis ON polis.id = kunjungans.id_poli
+            LEFT JOIN alamats ON alamats.id = pasiens.id_alamat
+            WHERE DATE(kunjungans.created_at) >= ?
+            AND DATE(kunjungans.created_at) <= ?
+            GROUP BY kunjungans.id, pasiens.id, polis.id, alamats.id, pasiens.created_at, pasiens.tgl_lahir, pasiens.no_rekam_medis, pasiens.no_bpjs, pasiens.nik, polis.nama, alamats.alamat, alamats.kelurahan, alamats.kecamatan, pasiens.jk
+            ORDER BY kunjungans.created_at ASC';
+        
+        return $this->db->query($sql, [$today, $today, $from, $to])->getResultArray();
     }
 
 
