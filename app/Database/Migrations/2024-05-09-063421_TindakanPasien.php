@@ -26,6 +26,14 @@ class TindakanPasien extends Migration
                 'type' => 'INT',
                 'null' => true
             ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ]
         ]);
 
         $this->forge->addKey('id', true);

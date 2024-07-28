@@ -1,14 +1,15 @@
 <?php
-
 namespace App\Controllers;
 
 use App\Controllers\BaseController;
+use App\Libraries\Pdf;
 use App\Models\Diagnosa;
 use App\Models\DiagnosaPasien;
 use App\Models\Kunjungan;
 use App\Models\Obat;
 use App\Models\Tindakan;
 use CodeIgniter\HTTP\ResponseInterface;
+use Mpdf\Mpdf;
 use PhpOffice\PhpSpreadsheet\Spreadsheet;
 use PhpOffice\PhpSpreadsheet\Style\Color;
 use PhpOffice\PhpSpreadsheet\Style\Fill;
@@ -29,7 +30,179 @@ class ExportController extends BaseController
         $this->kunjunganModel = new Kunjungan();
     }
 
-    public function index()
+    public function index($status) {
+        return view('pages/laporan', ['status' => $status]);
+    }
+
+    public function diagnosaPdf() {
+        set_time_limit(120);
+
+        $pdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'margin_top' => 60, 'margin_right' => 10, 'margin_bottom' => 10, 'margin_left' => 10]);
+        $template = 'diagnosa';
+        $title = 'Laporan Diagnosa Penyakit Terbanyak';
+
+        $from = $this->request->getPost('dari');
+        $to = $this->request->getPost('sampai');
+        $data = $this->diagnosaModel->getMostDiagnosaPasienByDate($from, $to);
+        
+        $filePath = 'uploads/' . $template . '.pdf';
+
+        $headerHTML = '
+            <div style="text-align: center; line-height: 1;">
+                <h1 style="font-size: 14px; font-weight: bold;">PEMERINTAH KABUPATEN JEMBER</h1>
+                <h1 style="font-size: 14px; font-weight: bold;">DINAS KESEHATAN</h1>
+                <h1 style="font-size: 14px; font-weight: bold;">UNIT PELAKSANA TEKNIS DAERAH PUSKESMAS SUMBERSARI</h1>
+                <p style="font-size: 11px;">Alamat: Jl. Letjen Panjaitan No. 42 - 0331-337344</p>
+                <p style="font-size: 11px;">website : pkmsumbersarijember.com email : pkmsumbersari.jember@gmail.com</p>
+                <h1 style="font-size: 14px; font-weight: bold;">JEMBER</h1>
+            </div>
+            <hr />';
+
+        $pdf->SetHTMLHeader($headerHTML);
+
+        $tableHTML = '
+            <style>
+                .table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    font-size: 12px;
+                }
+                .table th,
+                .table td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }
+                .table th {
+                    background-color: #f2f2f2;
+                    text-align: left;
+                }
+            </style>
+            <main style="font-size: 12px;">
+                <h1 style="font-size: 12px; font-weight: bold;">' . $title . '</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Diagnosa Penyakit</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        
+        if (count($data) == 0) {
+            $tableHTML .= '
+                    <tr>
+                        <td colspan="3">Tidak ada data</td>
+                    </tr>';
+        } else {
+            foreach ($data as $row) {
+                $tableHTML .= '
+                    <tr>
+                        <td>' . $row['kode'] . '</td>
+                        <td>' . $row['diagnosa'] . '</td>
+                        <td>' . $row['total'] . '</td>
+                    </tr>';
+            }
+        }
+
+        $tableHTML .= '
+                    </tbody>
+                </table>
+            </main>';
+
+        $pdf->WriteHTML($tableHTML);
+
+        $pdf->Output($filePath, 'F');
+
+        return redirect()->to(base_url('laporan/view/diagnosa'));
+    }
+
+    public function tindakanPdf() {
+        set_time_limit(120);
+
+        $pdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'margin_top' => 60, 'margin_right' => 10, 'margin_bottom' => 10, 'margin_left' => 10]);
+        $template = 'tindakan';
+        $title = 'Laporan Tindakan Terbanyak';
+
+        $from = $this->request->getPost('dari');
+        $to = $this->request->getPost('sampai');
+        $data = $this->tindakanModel->getMostTindakanPasienByDate($from, $to);
+        
+        $filePath = 'uploads/' . $template . '.pdf';
+
+        $headerHTML = '
+            <div style="text-align: center; line-height: 1;">
+                <h1 style="font-size: 14px; font-weight: bold;">PEMERINTAH KABUPATEN JEMBER</h1>
+                <h1 style="font-size: 14px; font-weight: bold;">DINAS KESEHATAN</h1>
+                <h1 style="font-size: 14px; font-weight: bold;">UNIT PELAKSANA TEKNIS DAERAH PUSKESMAS SUMBERSARI</h1>
+                <p style="font-size: 11px;">Alamat: Jl. Letjen Panjaitan No. 42 - 0331-337344</p>
+                <p style="font-size: 11px;">website : pkmsumbersarijember.com email : pkmsumbersari.jember@gmail.com</p>
+                <h1 style="font-size: 14px; font-weight: bold;">JEMBER</h1>
+            </div>
+            <hr />';
+
+        $pdf->SetHTMLHeader($headerHTML);
+
+        $tableHTML = '
+            <style>
+                .table {
+                    width: 100%;
+                    border-collapse: collapse;
+                    margin: 20px 0;
+                    font-size: 12px;
+                }
+                .table th,
+                .table td {
+                    border: 1px solid #ddd;
+                    padding: 8px;
+                }
+                .table th {
+                    background-color: #f2f2f2;
+                    text-align: left;
+                }
+            </style>
+            <main style="font-size: 12px;">
+                <h1 style="font-size: 12px; font-weight: bold;">' . $title . '</h1>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Kode</th>
+                            <th>Tindakan</th>
+                            <th>Jumlah</th>
+                        </tr>
+                    </thead>
+                    <tbody>';
+        
+        if (count($data) == 0) {
+            $tableHTML .= '
+                    <tr>
+                        <td colspan="3">Tidak ada data</td>
+                    </tr>';
+        } else {
+            foreach ($data as $row) {
+                $tableHTML .= '
+                    <tr>
+                        <td>' . $row['kode'] . '</td>
+                        <td>' . $row['tindakan'] . '</td>
+                        <td>' . $row['total'] . '</td>
+                    </tr>';
+            }
+        }
+
+        $tableHTML .= '
+                    </tbody>
+                </table>
+            </main>';
+
+        $pdf->WriteHTML($tableHTML);
+
+        $pdf->Output($filePath, 'F');
+
+        return redirect()->to(base_url('laporan/view/tindakan'));
+    }
+
+    public function notuse()
     {
         $spreadsheet = new Spreadsheet();
 
@@ -120,4 +293,5 @@ class ExportController extends BaseController
             $row++;
         }
     }
+    
 }

@@ -13,6 +13,7 @@
         "php": "^8.1",
         "codeigniter4/framework": "^4.0",
         "michalsn/codeigniter4-uuid": "^1.1",
+        "mpdf/mpdf": "^8.2",
         "phpoffice/phpspreadsheet": "^2.1"
     },
     "require-dev": {

@@ -54,6 +54,17 @@ class Tindakan extends Model
         return $this->select('COUNT(tindakan_pasiens.id_tindakan) as total, tindakan, kode')->join('tindakan_pasiens', 'tindakan_pasiens.id_tindakan = tindakans.id')->groupBy('id_tindakan')->orderBy('total', 'DESC')->limit(10)->findAll();
     }
 
+    public function getMostTindakanPasienByDate($from, $to) {
+        return $this->select('COUNT(tindakan_pasiens.id_tindakan) as total, tindakans.tindakan, tindakans.kode')
+                ->join('tindakan_pasiens', 'tindakan_pasiens.id_tindakan = tindakans.id')
+                ->where('DATE(tindakan_pasiens.created_at) >=', $from)
+                ->where('DATE(tindakan_pasiens.created_at) <=', $to)
+                ->groupBy('tindakan_pasiens.id_tindakan, tindakans.tindakan, tindakans.kode')
+                ->orderBy('total', 'DESC')
+                ->limit(10)
+                ->findAll();
+    }
+
     public function getTindakanById($id) {
         return $this->where('id', $id)->first();
     }

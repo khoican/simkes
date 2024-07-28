@@ -51,6 +51,23 @@
                     <li><a class="dropdown-item" href="/rekob"><i class="bi bi-file-text-fill"></i> Rekam Obat</a>
                 </ul>
             </div>
+            <div class="btn-group">
+                <button type="button" href="/laporan" class="nav-link fw-medium text-secondary"
+                    data-bs-toggle="dropdown"><i class="bi bi-file-earmark-ruled-fill"></i>
+                    Laporan</a></button>
+
+                <ul class="dropdown-menu dropdown-menu-sm-end fs-6">
+                    <li><a class="dropdown-item" href="/laporan/kunjungan"><i class="bi bi-file-text-fill"></i> Laporan
+                            Kunjungan</a>
+                    </li>
+                    <li><a class="dropdown-item" href="/laporan/diagnosa"><i class="bi bi-file-text-fill"></i> Laporan
+                            Diagnosa</a>
+                    <li><a class="dropdown-item" href="/laporan/tindakan"><i class="bi bi-file-text-fill"></i> Laporan
+                            Tindakan</a>
+                    <li><a class="dropdown-item" href="/laporan/obat"><i class="bi bi-file-text-fill"></i> Laporan
+                            Obat</a>
+                </ul>
+            </div>
 
             <?php endif; ?>
         </div>
@@ -66,6 +83,11 @@
 <?= $this->section('script') ?>
 <script type="module">
 $(document).ready(function() {
+    setInterval(() => {
+        $('#date').text(moment().format('DD MMMM YYYY'));
+        $('#time').text(moment().format('HH:mm:ss'));
+    }, 1000);
+
     let path = window.location.pathname.split('/');
 
     $('.nav-link').each(function() {
@@ -82,10 +104,6 @@ $(document).ready(function() {
         }
     });
 
-    setInterval(() => {
-        $('#date').text(moment().format('DD MMMM YYYY'));
-        $('#time').text(moment().format('HH:mm:ss'));
-    }, 1000);
 })
 </script>
 <?= $this->endSection() ?>

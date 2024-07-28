@@ -58,7 +58,9 @@
     </div>
 
     <div class="mt-3 text-end">
-        <a href="/report" class="btn btn-primary"><i class="bi bi-file-earmark-ruled"></i> Laporan</a>
+        <a href="<?= site_url('pdfviewer'); ?>" target="_blank" class="btn btn-primary"><i
+                class="bi bi-file-earmark-ruled"></i>
+            Laporan</a>
     </div>
 
     <div class=" mt-5 fs-6 p-4 bg-white rounded-3 d-flex gap-5">

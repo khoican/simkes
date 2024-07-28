@@ -30,6 +30,14 @@ class DiagnosaPasien extends Migration
                 'type' => 'ENUM',
                 'constraint' => ['utama', 'sekunder'],
                 'default' => 'sekunder'
+            ],
+            'created_at' => [
+                'type' => 'DATETIME',
+                'null' => true
+            ],
+            'updated_at' => [
+                'type' => 'DATETIME',
+                'null' => true
             ]
         ]);
 

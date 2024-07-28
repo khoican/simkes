@@ -13,7 +13,6 @@ $routes->post('user/login', 'UserController::auth');
 
 // Home
 $routes->get('/', 'DashboardController::index', ['filters' => 'auth']);
-$routes->get('report', 'ExportController::index');
 $routes->get('dashboard/kunjungan/total/(:num)/(:any)', 'DashboardController::getTotalKunjungan/$1/$2');
 
 // Pasien
@@ -129,4 +128,13 @@ $routes->group('user', ['filters' => 'auth'], function($routes) {
     $routes->post('changepassword/(:num)', 'UserController::changePassword/$1');
     $routes->post('delete/(:num)', 'UserController::deleteUser/$1');
     $routes->post('logout', 'UserController::logout');
+});
+
+$routes->group('laporan', ['filters' => 'auth'], function($routes) {
+    $routes->get('view/(:any)', 'PdfViewer::index/$1');
+    $routes->get('(:any)', 'ExportController::index/$1');
+    $routes->post('diagnosa', 'ExportController::diagnosaPdf');
+    $routes->post('tindakan', 'ExportController::tindakanPdf');
+    $routes->post('obat', 'ExportController::obatPdf');
+    $routes->post('kunjungan', 'ExportController::kunjunganPdf');
 });
