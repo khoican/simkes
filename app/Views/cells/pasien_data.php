@@ -100,9 +100,13 @@
     </div>
 </div>
 
-<button class="btn btn-primary w-100 mt-3" data-bs-toggle="modal" data-bs-target="#consent">
-    General Consent
-</button>
+<form action="<?= base_url('pemeriksaan/generalConsentPdf') ?>" method="post">
+    <?= csrf_field() ?>
+    <input type="hidden" name="id" value="<?= $pasienData['pasien_id'] ?>">
+    <button type="submit" class="btn btn-primary w-100 mt-3">
+        General Consent
+    </button>
+</form>
 
 <?php if($generalConsent != null) : ?>
 <div class="modal fade" id="consent" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

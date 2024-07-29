@@ -135,7 +135,7 @@ class Pasien extends Model
     }
 
     public function getPasienById($id) {
-        return $this->select('pasiens.*, alamats.*')
+        return $this->select('pasiens.id as pasien_id, pasiens.*, alamats.*')
                     ->join('alamats', 'pasiens.id_alamat = alamats.id')
                     ->where('pasiens.id', $id)
                     ->first();
