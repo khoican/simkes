@@ -38,10 +38,20 @@ class ExportController extends BaseController
     }
 
     public function index($status) {
+        $uploadPath = FCPATH . 'uploads';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
         return view('pages/laporan', ['status' => $status]);
     }
 
     public function generalConsentPdf() {
+        $uploadPath = FCPATH . 'uploads';
+        if (!is_dir($uploadPath)) {
+            mkdir($uploadPath, 0777, true);
+        }
+
         set_time_limit(120);
 
         $pdf = new Mpdf(['mode' => 'utf-8', 'format' => 'A4', 'margin_top' => 60, 'margin_right' => 10, 'margin_bottom' => 10, 'margin_left' => 10, 'orientation' => 'P']);
